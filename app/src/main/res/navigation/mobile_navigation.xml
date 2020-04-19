@@ -13,9 +13,9 @@
 
     <fragment
         android:id="@+id/navigation_dashboard"
-        android:name="com.rpandey.covid19tracker_india.ui.dashboard.DashboardFragment"
-        android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_dashboard" />
+        android:name="com.rpandey.covid19tracker_india.ui.dashboard.ListStatesFragment"
+        android:label="@string/state_tracker"
+        tools:layout="@layout/fragment_bookmared" />
 
     <fragment
         android:id="@+id/navigation_notifications"

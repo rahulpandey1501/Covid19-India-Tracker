@@ -4,13 +4,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
+import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
-import com.rpandey.covid19tracker_india.data.repository.CovidIndiaRepository
-import com.rpandey.covid19tracker_india.database.provider.CovidDatabase
+import com.rpandey.covid19tracker_india.R
 import com.rpandey.covid19tracker_india.databinding.FragmentHomeBinding
 import com.rpandey.covid19tracker_india.ui.BaseFragment
+import com.rpandey.covid19tracker_india.ui.bookmark.BookmarkedFragment
 import com.rpandey.covid19tracker_india.util.Util.formatNumber
+import com.rpandey.covid19tracker_india.util.attachChildFragment
 import com.rpandey.covid19tracker_india.util.getViewModel
 
 class HomeFragment : BaseFragment() {
@@ -30,6 +32,9 @@ class HomeFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        attachChildFragment(BookmarkedFragment.TAG, R.id.bookmark_container, false) {
+            BookmarkedFragment()
+        }
     }
 
     override fun observeLiveData() {
@@ -42,23 +47,37 @@ class HomeFragment : BaseFragment() {
             viewModel.getConfirmedCount().observe(viewLifecycleOwner, Observer {
                 it?.let {
                     confirmedCount.text = formatNumber(it.totalCount)
-                    confirmedCurrent.text = "+${formatNumber(it.currentCount)}"
+                    setDelta(confirmedCurrent, it.currentCount)
                 }
             })
 
             viewModel.getRecoveredCount().observe(viewLifecycleOwner, Observer {
                 it?.let {
                     recoveredCount.text = formatNumber(it.totalCount)
-                    recoveredCurrent.text = "+${formatNumber(it.currentCount)}"
+                    setDelta(recoveredCurrent, it.currentCount)
                 }
             })
 
             viewModel.getDeceasedCount().observe(viewLifecycleOwner, Observer {
                 it?.let {
                     deceasedCount.text = formatNumber(it.totalCount)
-                    deceasedCurrent.text = "+${formatNumber(it.currentCount)}"
+                    setDelta(deceasedCurrent, it.currentCount)
                 }
             })
+
+            viewModel.lastUpdatedTime().observe(viewLifecycleOwner, Observer {
+                val title = String.format("%s %s", "Last updated: ", it)
+                (activity as AppCompatActivity?)?.supportActionBar?.subtitle = title
+            })
+        }
+    }
+
+    private fun setDelta(textView: TextView, count: Int) {
+        if (count > 0) {
+            textView.visibility = View.VISIBLE
+            textView.text = formatNumber(count)
+        } else {
+            textView.visibility = View.GONE
         }
     }
 }

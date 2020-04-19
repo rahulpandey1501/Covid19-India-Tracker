@@ -28,4 +28,7 @@ interface ConfirmedDao {
 
     @Query("delete from confirmed_cases")
     fun delete()
+
+    @Query("select max(date) from confirmed_cases")
+    fun lastUpdatedTime(): LiveData<Long?>
 }

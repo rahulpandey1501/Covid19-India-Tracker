@@ -13,7 +13,7 @@
         android:ellipsize="end"
         android:padding="10dp"
         android:singleLine="true"
-        android:textSize="16sp"
+        android:textSize="18sp"
         android:textColor="@color/textColorGrey"
         app:fontFamily="sans-serif-medium"
         app:layout_constraintLeft_toLeftOf="parent"

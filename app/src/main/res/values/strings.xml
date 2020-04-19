@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Covid19 Tracker- India</string>
+    <string name="app_name">Covid-19 Tracker, India</string>
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
@@ -13,6 +13,10 @@
     <string name="select_state">Select state</string>
     <string name="District">Districts</string>
     <string name="states">States</string>
-    <string name="search_district">Enter district</string>
+    <string name="search_city">Enter city name</string>
     <string name="Search">Search</string>
+    <string name="state_ut">State/UT</string>
+    <string name="monitoring_district">Monitor Cities</string>
+    <string name="monitoring_states">Monitor States</string>
+    <string name="state_tracker">Tracker</string>
 </resources>

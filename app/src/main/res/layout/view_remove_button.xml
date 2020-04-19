@@ -6,8 +6,8 @@
     <ImageView
         android:layout_width="28dp"
         android:layout_height="28dp"
-        android:background="@drawable/ic_sharp_add_circle_24"
-        android:backgroundTint="#74BD8B" />
+        android:background="@drawable/ic_baseline_remove_circle_24"
+        android:backgroundTint="#f28989" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

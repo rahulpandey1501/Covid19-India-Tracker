@@ -13,7 +13,7 @@ import java.util.*
 class OverallDataProcessor(covidDatabase: CovidDatabase) :
     ResponseProcessor<OverAllDataResponse>(covidDatabase) {
 
-    private val dateFormat = SimpleDateFormat("dd/mm/yyyy HH:mm:ss", Locale.getDefault())
+    private val dateFormat = SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.getDefault())
 
     override fun process(data: OverAllDataResponse) {
         data.stateData?.let { processStateData(it) }

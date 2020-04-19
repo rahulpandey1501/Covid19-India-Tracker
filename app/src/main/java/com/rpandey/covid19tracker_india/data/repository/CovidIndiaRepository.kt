@@ -48,4 +48,12 @@ class CovidIndiaRepository(private val covidDatabase: CovidDatabase) {
         return covidDatabase.bookmarkDao().getCombinedCases()
     }
 
+    fun getCombinedCases(): LiveData<List<CombinedCasesModel>> {
+        return covidDatabase.combinedCasesDao().getOverall()
+    }
+
+    fun lastUpdatedTime(): LiveData<Long?> {
+        return covidDatabase.confirmedDao().lastUpdatedTime()
+    }
+
 }

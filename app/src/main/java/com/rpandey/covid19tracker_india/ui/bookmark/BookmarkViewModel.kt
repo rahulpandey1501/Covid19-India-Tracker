@@ -1,4 +1,4 @@
-package com.rpandey.covid19tracker_india.ui.dashboard
+package com.rpandey.covid19tracker_india.ui.bookmark
 
 import androidx.lifecycle.ViewModel
 import com.rpandey.covid19tracker_india.data.repository.CovidIndiaRepository
@@ -6,7 +6,7 @@ import com.rpandey.covid19tracker_india.database.dao.CombinedCasesModel
 import com.rpandey.covid19tracker_india.database.entity.BookmarkType
 import com.rpandey.covid19tracker_india.database.entity.StateEntity
 
-class DashboardViewModel(private val repository: CovidIndiaRepository) : ViewModel() {
+class BookmarkViewModel(private val repository: CovidIndiaRepository) : ViewModel() {
 
 
     fun onSateSelected(stateEntity: StateEntity) {

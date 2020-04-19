@@ -6,6 +6,7 @@ import com.rpandey.covid19tracker_india.network.APIProvider
 import com.rpandey.covid19tracker_india.network.ApiHelper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import javax.security.auth.callback.Callback
 
 class CovidIndiaDataProcessor(private val apiProvider: APIProvider, private val covidDatabase: CovidDatabase) {
 
@@ -13,12 +14,14 @@ class CovidIndiaDataProcessor(private val apiProvider: APIProvider, private val 
     private val districtDataProcessor by lazy { DistrictDataProcessor(covidDatabase) }
     private val overallDataProcessor by lazy { OverallDataProcessor(covidDatabase) }
 
-    suspend fun startSync() {
+    suspend fun startSync(callback: (Status<*>) -> Unit) {
         withContext(Dispatchers.IO) {
 
-            when(val status = ApiHelper.handleRequest { apiProvider.covidIndia.getOverAllData() }) {
+            val status = ApiHelper.handleRequest { apiProvider.covidIndia.getOverAllData() }
+            when(status) {
                 is Status.Success -> overallDataProcessor.process(status.data)
             }
+            callback(status)
 
             when(val status = ApiHelper.handleRequest { apiProvider.covidIndia.getDistrictData() }) {
                 is Status.Success -> districtDataProcessor.process(status.data)
