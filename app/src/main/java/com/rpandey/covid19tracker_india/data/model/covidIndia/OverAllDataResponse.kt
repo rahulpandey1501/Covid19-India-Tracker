@@ -1,12 +1,15 @@
 package com.rpandey.covid19tracker_india.data.model.covidIndia
 
+import androidx.annotation.Keep
 import com.google.gson.annotations.SerializedName
 
+@Keep
 class OverAllDataResponse {
     @SerializedName("statewise")
     val stateData: List<StateData>? = null
 }
 
+@Keep
 data class StateData(
     @SerializedName("active") val active: Int,
     @SerializedName("confirmed") val confirmed: Int,

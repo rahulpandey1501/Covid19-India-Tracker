@@ -7,7 +7,6 @@ import com.rpandey.covid19tracker_india.data.model.covidIndia.StateData
 import com.rpandey.covid19tracker_india.database.entity.*
 import com.rpandey.covid19tracker_india.database.provider.CovidDatabase
 import java.text.SimpleDateFormat
-import java.time.format.DateTimeFormatter
 import java.util.*
 
 class OverallDataProcessor(covidDatabase: CovidDatabase) :

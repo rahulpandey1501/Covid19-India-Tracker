@@ -4,6 +4,14 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
 android {
+    signingConfigs {
+        release {
+            storeFile file('release-key-pandey')
+            storePassword 'Rahul@1501'
+            keyAlias 'Rahul@1501'
+            keyPassword 'Rahul@1501'
+        }
+    }
     compileSdkVersion 29
 
     dataBinding {

@@ -1,7 +1,9 @@
 package com.rpandey.covid19tracker_india.data.model.covidIndia
 
+import androidx.annotation.Keep
 import com.google.gson.annotations.SerializedName
 
+@Keep
 class DistrictResponse {
 
     @SerializedName("state")
@@ -11,6 +13,7 @@ class DistrictResponse {
     val districtData: List<DistrictData>? = null
 }
 
+@Keep
 class DistrictData(
 
     @SerializedName("district")
