@@ -15,14 +15,17 @@ interface DeceasedDao {
     fun getByState(country: String, state: String): LiveData<List<DeceasedEntity>>
 
     @Query("SELECT * FROM deceased_cases WHERE country = :country and state = :state and date = :date")
-    fun getByState(country: String, state: String, date: String): LiveData<DeceasedEntity>
+    fun getByState(country: String, state: String, date: String): LiveData<DeceasedEntity?>
 
     @Query("SELECT * FROM deceased_cases WHERE country = :country")
     fun getAll(country: String): LiveData<List<DeceasedEntity>>
 
     @Query("SELECT sum(total_deceased) as totalCount, sum(deceased) as currentCount FROM deceased_cases WHERE country = :country")
-    fun getCurrentCount(country: String): LiveData<CountModel>
+    fun getCurrentCount(country: String): LiveData<CountModel?>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(data: List<DeceasedEntity>)
+
+    @Query("delete from deceased_cases")
+    fun delete()
 }

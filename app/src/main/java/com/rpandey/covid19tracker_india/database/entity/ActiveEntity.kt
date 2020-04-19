@@ -6,7 +6,7 @@ import androidx.room.Index
 
 @Entity(
     tableName = "active_cases",
-    primaryKeys = ["date", "country", "state"]
+    primaryKeys = ["country", "state"]
 )
 data class ActiveEntity(
     @ColumnInfo(name = "date", index = true) val date: Long,

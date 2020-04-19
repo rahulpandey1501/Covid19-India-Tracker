@@ -6,21 +6,18 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import com.rpandey.covid19tracker_india.R
 import com.rpandey.covid19tracker_india.data.repository.CovidIndiaRepository
 import com.rpandey.covid19tracker_india.database.provider.CovidDatabase
 import com.rpandey.covid19tracker_india.databinding.FragmentHomeBinding
+import com.rpandey.covid19tracker_india.ui.BaseFragment
+import com.rpandey.covid19tracker_india.util.Util.formatNumber
 import com.rpandey.covid19tracker_india.util.getViewModel
 
-class HomeFragment : Fragment() {
+class HomeFragment : BaseFragment() {
 
     private lateinit var binding: FragmentHomeBinding
 
-    private val repository by lazy {
-        CovidIndiaRepository(CovidDatabase.getInstance(requireContext()))
-    }
-
-    private val homeViewModel: HomeViewModel by lazy {
+    private val viewModel: HomeViewModel by lazy {
         getViewModel { HomeViewModel(repository) }
     }
 
@@ -33,29 +30,34 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        observeLiveData()
     }
 
-    private fun observeLiveData() {
+    override fun observeLiveData() {
 
         with(binding) {
-            homeViewModel.getActiveCount().observe(viewLifecycleOwner, Observer {
-                activeCount.text = it.toString()
+            viewModel.getActiveCount().observe(viewLifecycleOwner, Observer {
+                it?.let { activeCount.text = formatNumber(it) }
             })
 
-            homeViewModel.getConfirmedCount().observe(viewLifecycleOwner, Observer {
-                confirmedCount.text = it.totalCount.toString()
-                confirmedCurrent.text = "+${it.currentCount}"
+            viewModel.getConfirmedCount().observe(viewLifecycleOwner, Observer {
+                it?.let {
+                    confirmedCount.text = formatNumber(it.totalCount)
+                    confirmedCurrent.text = "+${formatNumber(it.currentCount)}"
+                }
             })
 
-            homeViewModel.getRecoveredCount().observe(viewLifecycleOwner, Observer {
-                recoveredCount.text = it.totalCount.toString()
-                recoveredCurrent.text = "+${it.currentCount}"
+            viewModel.getRecoveredCount().observe(viewLifecycleOwner, Observer {
+                it?.let {
+                    recoveredCount.text = formatNumber(it.totalCount)
+                    recoveredCurrent.text = "+${formatNumber(it.currentCount)}"
+                }
             })
 
-            homeViewModel.getDeceasedCount().observe(viewLifecycleOwner, Observer {
-                deceasedCount.text = it.totalCount.toString()
-                deceasedCurrent.text = "+${it.currentCount}"
+            viewModel.getDeceasedCount().observe(viewLifecycleOwner, Observer {
+                it?.let {
+                    deceasedCount.text = formatNumber(it.totalCount)
+                    deceasedCurrent.text = "+${formatNumber(it.currentCount)}"
+                }
             })
         }
     }

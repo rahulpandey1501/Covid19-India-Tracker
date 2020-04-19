@@ -8,4 +8,11 @@
     <string name="active">Active</string>
     <string name="recovered">Recovered</string>
     <string name="Saved">Saved</string>
+    <string name="add_city">Add City</string>
+    <string name="add_state">Add State</string>
+    <string name="select_state">Select state</string>
+    <string name="District">Districts</string>
+    <string name="states">States</string>
+    <string name="search_district">Enter district</string>
+    <string name="Search">Search</string>
 </resources>

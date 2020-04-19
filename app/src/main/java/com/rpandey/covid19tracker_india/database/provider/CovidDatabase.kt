@@ -14,7 +14,8 @@ import com.rpandey.covid19tracker_india.database.entity.*
         DeceasedEntity::class,
         RecoverEntity::class,
         StateEntity::class,
-        DistrictEntity::class
+        DistrictEntity::class,
+        BookmarkedEntity::class
     ],
     exportSchema = false,
     version = 1
@@ -39,4 +40,6 @@ abstract class CovidDatabase : RoomDatabase() {
     abstract fun deceasedDao(): DeceasedDao
     abstract fun stateDao(): StateDao
     abstract fun districtDao(): DistrictDao
+    abstract fun bookmarkDao(): BookmarkDao
+    abstract fun combinedCasesDao(): CombinedCasesDao
 }

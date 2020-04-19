@@ -5,7 +5,7 @@ import androidx.room.Entity
 
 @Entity(
     tableName = "deceased_cases",
-    primaryKeys = ["date", "country", "state"]
+    primaryKeys = ["country", "state"]
 )
 data class DeceasedEntity(
     @ColumnInfo(name = "date") val date: Long,

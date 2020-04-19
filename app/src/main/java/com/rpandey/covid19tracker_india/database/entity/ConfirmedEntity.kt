@@ -5,7 +5,7 @@ import androidx.room.Entity
 
 @Entity(
     tableName = "confirmed_cases",
-    primaryKeys = ["date", "country", "state"]
+    primaryKeys = ["country", "state"]
 )
 data class ConfirmedEntity(
     @ColumnInfo(name = "date") val date: Long,

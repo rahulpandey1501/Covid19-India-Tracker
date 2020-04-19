@@ -1,13 +1,31 @@
 package com.rpandey.covid19tracker_india.ui.dashboard
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.rpandey.covid19tracker_india.data.repository.CovidIndiaRepository
+import com.rpandey.covid19tracker_india.database.dao.CombinedCasesModel
+import com.rpandey.covid19tracker_india.database.entity.BookmarkType
+import com.rpandey.covid19tracker_india.database.entity.StateEntity
 
-class DashboardViewModel : ViewModel() {
+class DashboardViewModel(private val repository: CovidIndiaRepository) : ViewModel() {
 
-    private val _text = MutableLiveData<String>().apply {
-        value = "This is dashboard Fragment"
+
+    fun onSateSelected(stateEntity: StateEntity) {
+        repository.setBookmark(stateEntity.code, BookmarkType.STATE)
     }
-    val text: LiveData<String> = _text
+
+    fun onCombinedCasesBookmarkRemoved(combinedCasesModel: CombinedCasesModel) {
+        repository.removeBookmark(combinedCasesModel.state, BookmarkType.STATE)
+    }
+
+    fun onDistrictSelected(districtId: Int) {
+        repository.setBookmark(districtId.toString(), BookmarkType.DISTRICT)
+    }
+
+    fun onDistrictRemoved(districtId: Int) {
+        repository.removeBookmark(districtId.toString(), BookmarkType.DISTRICT)
+    }
+
+    fun getBookmarkedDistricts() = repository.getBookmarkedDistricts()
+
+    fun getBookmarkedCombinedCases() = repository.getBookmarkedCombinedCases()
 }

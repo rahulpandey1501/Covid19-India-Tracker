@@ -5,7 +5,7 @@ import androidx.room.Entity
 
 @Entity(
     tableName = "recovered_cases",
-    primaryKeys = ["date", "country", "state"]
+    primaryKeys = ["country", "state"]
 )
 data class RecoverEntity(
     @ColumnInfo(name = "date") val date: Long,

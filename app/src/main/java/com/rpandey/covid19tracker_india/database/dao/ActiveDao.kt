@@ -14,14 +14,17 @@ interface ActiveDao {
     fun getByState(country: String, state: String): LiveData<List<ActiveEntity>>
 
     @Query("SELECT * FROM active_cases WHERE country = :country and state = :state and date = :date")
-    fun getByState(country: String, state: String, date: String): LiveData<ActiveEntity>
+    fun getByState(country: String, state: String, date: String): LiveData<ActiveEntity?>
 
     @Query("SELECT * FROM active_cases WHERE country = :country")
     fun getAll(country: String): LiveData<List<ActiveEntity>>
 
     @Query("SELECT sum(active) FROM active_cases WHERE country = :country")
-    fun getCurrentCount(country: String): LiveData<Int>
+    fun getCurrentCount(country: String): LiveData<Int?>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(data: List<ActiveEntity>)
+
+    @Query("delete from active_cases")
+    fun delete()
 }
