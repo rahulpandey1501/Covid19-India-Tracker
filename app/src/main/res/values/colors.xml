@@ -3,7 +3,8 @@
     <color name="colorPrimary">#eeeef4</color>
     <color name="colorPrimaryDark">#eeeef4</color>
     <color name="colorAccent">#323437</color>
-    <color name="textColorGrey">#5e636a</color>
+    <color name="textColorGrey">#435161</color>
+    <color name="textColorDark">#2c3b4f</color>
     <color name="page_background">#eeeef4</color>
     <color name="item_background">#FFF</color>
     <color name="red_affected">#FD504F</color>

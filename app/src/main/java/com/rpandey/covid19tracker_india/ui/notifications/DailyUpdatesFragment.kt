@@ -31,23 +31,28 @@ class DailyUpdatesFragment : BaseFragment() {
     override fun observeLiveData() {
         viewModel.getDailyUpdates().observe(this) {
             binding.noUpdates.visibility = if (it.isEmpty()) View.VISIBLE else View.GONE
-
+            binding.container.removeAllViews()
             it.forEach { data ->
-                val message = getSentence(data.confirmedCases, data.recoveredCases, data.deceasedCases, data.stateName)
+                val message = getSentence(
+                    data.confirmedCases,
+                    data.recoveredCases,
+                    data.deceasedCases
+                )
                 val binding = ItemUpdatesBinding.inflate(LayoutInflater.from(requireContext()), binding.container, true)
+                binding.title.text = data.stateName
                 binding.message.text = message
             }
         }
     }
 
-    private fun getSentence(confirmedCount: Int, recoveredCount: Int, deathCount: Int, state: String): String {
+    private fun getSentence(confirmedCount: Int, recoveredCount: Int, deathCount: Int): String {
 
         val confirmedText = getConfirmedText(confirmedCount)
         val recoveryText = getRecoveryText(recoveredCount)
         val deathText = getDeathsText(deathCount)
 
         return if (confirmedCount > 0 && recoveredCount > 0 && deathCount > 0) {
-            String.format("%s new $confirmedText, %s $recoveryText and %s $deathText in %s", confirmedCount, recoveredCount, deathCount, state)
+            String.format("%s new $confirmedText, %s $recoveryText and %s $deathText", confirmedCount, recoveredCount, deathCount)
 
         } else {
 
@@ -63,10 +68,6 @@ class DailyUpdatesFragment : BaseFragment() {
 
             if (deathCount > 0)  {
                 message += if (message.isEmpty()) "$deathCount $deathText" else " and $deathCount $deathText"
-            }
-
-            if (message.isNotEmpty()) {
-                message += " in $state"
             }
 
             message

@@ -39,7 +39,6 @@
                     android:textAlignment="center"
                     android:textColor="@color/textColorGrey"
                     android:textSize="20sp"
-                    app:fontFamily="sans-serif-medium"
                     tools:ignore="RtlSymmetry" />
 
                 <include
@@ -96,8 +95,7 @@
                     android:text="@string/monitoring_states"
                     android:textAlignment="center"
                     android:textColor="@color/textColorGrey"
-                    android:textSize="20sp"
-                    app:fontFamily="sans-serif-medium" />
+                    android:textSize="20sp" />
 
                 <include
                     android:id="@+id/remove_state"

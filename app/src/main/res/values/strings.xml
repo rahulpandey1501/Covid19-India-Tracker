@@ -19,6 +19,6 @@
     <string name="monitoring_district">Monitor Cities</string>
     <string name="monitoring_states">Monitor States</string>
     <string name="state_tracker">Tracker</string>
-    <string name="title_daily_updates">Daily updates</string>
+    <string name="title_daily_updates">Today\'s updates</string>
     <string name="no_new_updates">No new updates</string>
 </resources>
