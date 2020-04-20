@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
+import com.rpandey.covid19tracker_india.R
 import com.rpandey.covid19tracker_india.databinding.FragmentStatesDataBinding
 import com.rpandey.covid19tracker_india.ui.BaseFragment
 import com.rpandey.covid19tracker_india.util.getViewModel
@@ -29,8 +30,8 @@ class ListStatesFragment : BaseFragment() {
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun setToolbarTitle(): String {
+        return getString(R.string.state_tracker)
     }
 
     override fun observeLiveData() {

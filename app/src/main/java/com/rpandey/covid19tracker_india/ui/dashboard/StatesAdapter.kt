@@ -56,7 +56,7 @@ class ViewHolder(private val binding: ItemCombinedViewBinding) : RecyclerView.Vi
             textView.visibility = View.VISIBLE
             textView.text = Util.formatNumber(count)
         } else {
-            textView.visibility = View.INVISIBLE
+            textView.visibility = View.GONE
         }
     }
 }

@@ -37,6 +37,10 @@ class HomeFragment : BaseFragment() {
         }
     }
 
+    override fun setToolbarTitle(): String {
+        return getString(R.string.title_home)
+    }
+
     override fun observeLiveData() {
 
         with(binding) {

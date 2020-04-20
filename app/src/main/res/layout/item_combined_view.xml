@@ -25,9 +25,9 @@
                     android:id="@+id/tv_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
                     android:gravity="center_horizontal"
                     android:paddingBottom="8dp"
-                    android:layout_marginStart="8dp"
                     android:textColor="@color/textColorGrey"
                     android:textSize="16sp"
                     app:fontFamily="sans-serif-medium"
@@ -64,7 +64,7 @@
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tv_confirmed_delta"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="20dp"
                     android:drawableStart="@drawable/ic_baseline_trending_up_24"
                     android:drawablePadding="4dp"
                     android:gravity="center"
@@ -93,7 +93,7 @@
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tv_recovered_delta"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="20dp"
                     android:drawableStart="@drawable/ic_baseline_trending_up_24"
                     android:drawablePadding="2dp"
                     android:gravity="center"
@@ -122,7 +122,7 @@
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tv_death_delta"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="20dp"
                     android:drawableStart="@drawable/ic_baseline_trending_up_24"
                     android:drawablePadding="2dp"
                     android:gravity="center"
