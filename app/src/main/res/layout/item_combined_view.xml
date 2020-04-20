@@ -13,7 +13,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:cardBackgroundColor="@color/item_background"
-            app:cardCornerRadius="6dp"
+            app:cardCornerRadius="8dp"
             app:cardElevation="0dp">
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -28,7 +28,7 @@
                     android:layout_marginStart="8dp"
                     android:gravity="center_horizontal"
                     android:paddingBottom="8dp"
-                    android:textColor="@color/textColorGrey"
+                    android:textColor="@android:color/black"
                     android:textSize="16sp"
                     app:fontFamily="sans-serif-medium"
                     app:layout_constraintLeft_toLeftOf="parent"
@@ -40,7 +40,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:textColor="@android:color/black"
+
                     android:textSize="16sp"
                     app:fontFamily="sans-serif-medium"
                     app:layout_constraintLeft_toLeftOf="parent"
@@ -53,7 +53,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:textColor="@android:color/black"
+
                     android:textSize="16sp"
                     app:fontFamily="sans-serif-medium"
                     app:layout_constraintLeft_toRightOf="@+id/tv_active"
@@ -82,7 +82,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:textColor="@android:color/black"
+
                     android:textSize="16sp"
                     app:fontFamily="sans-serif-medium"
                     app:layout_constraintLeft_toRightOf="@+id/tv_confirmed"
@@ -111,7 +111,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:textColor="@android:color/black"
+
                     android:textSize="16sp"
                     app:fontFamily="sans-serif-medium"
                     app:layout_constraintLeft_toRightOf="@+id/tv_recovered"

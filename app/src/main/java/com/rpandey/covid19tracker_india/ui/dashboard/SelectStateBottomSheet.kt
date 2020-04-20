@@ -31,10 +31,9 @@ class SelectStateBottomSheet : BaseBottomSheetFragment() {
         CovidIndiaRepository(CovidDatabase.getInstance(requireContext()))
     }
 
-    private lateinit var viewModel: SelectStateViewModel
-//            = getViewModel {
-//        SelectStateViewModel(repository)
-//    }
+    private val viewModel by lazy {
+        getViewModel { SelectStateViewModel(repository) }
+    }
 
     private lateinit var binding: LayoutSelectStateBsBinding
 
@@ -52,7 +51,6 @@ class SelectStateBottomSheet : BaseBottomSheetFragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = LayoutSelectStateBsBinding.inflate(inflater, container, false)
-        viewModel = SelectStateViewModel(repository)
         return binding.root
     }
 

@@ -25,7 +25,7 @@ object Util {
 
     fun timestampToDate(timestamp: Long): String? {
         return try {
-            val sdf = SimpleDateFormat("dd MMM, hh:mm", Locale.getDefault())
+            val sdf = SimpleDateFormat("dd MMM, HH:mm", Locale.getDefault())
             val netDate = Date(timestamp)
             sdf.format(netDate)
         } catch (e: Exception) {
