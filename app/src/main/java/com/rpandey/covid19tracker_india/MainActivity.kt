@@ -8,6 +8,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.bottomnavigation.LabelVisibilityMode
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.rpandey.covid19tracker_india.data.Status
 import com.rpandey.covid19tracker_india.data.processor.CovidIndiaDataProcessor
 import com.rpandey.covid19tracker_india.database.provider.CovidDatabase
@@ -20,6 +21,8 @@ import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
 
+    lateinit var firebaseAnalytics: FirebaseAnalytics
+
     private val covidIndia by lazy {  CovidIndiaDataProcessor(
         APIProvider(NetworkBuilder.apiService), CovidDatabase.getInstance(applicationContext))
     }
@@ -27,6 +30,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        firebaseAnalytics = FirebaseAnalytics.getInstance(this)
         val navView: BottomNavigationView = findViewById(R.id.nav_view)
 
         val navController = findNavController(R.id.nav_host_fragment)
@@ -42,6 +46,14 @@ class MainActivity : AppCompatActivity() {
         navView.labelVisibilityMode = LabelVisibilityMode.LABEL_VISIBILITY_UNLABELED
 
         startSync()
+
+        appOpenEvent()
+    }
+
+    private fun appOpenEvent() {
+        val bundle = Bundle()
+        bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "Homepage")
+        firebaseAnalytics.logEvent(FirebaseAnalytics.Event.APP_OPEN, bundle)
     }
 
     private fun setupRefresh() {
