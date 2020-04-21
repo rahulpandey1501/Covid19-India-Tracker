@@ -4,7 +4,7 @@
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
     <string name="deaths">Deaths</string>
-    <string name="affected">Affected</string>
+    <string name="affected">Confirmed</string>
     <string name="active">Active</string>
     <string name="recovered">Recovered</string>
     <string name="Saved">Saved</string>

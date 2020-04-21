@@ -5,17 +5,17 @@
     android:layout_height="wrap_content"
     android:background="@android:color/white"
     android:orientation="horizontal"
-    android:paddingTop="16dp"
-    android:paddingBottom="12dp">
+    android:paddingTop="14dp"
+    android:paddingBottom="14dp">
 
     <androidx.appcompat.widget.AppCompatTextView
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_weight="1"
         android:gravity="center"
         android:text="@string/active"
         android:textColor="@color/textColorDark"
-        android:textSize="15sp"
+        android:textSize="14sp"
         android:fontFamily="@font/roboto_medium"
         app:fontFamily="@font/roboto_medium" />
 
@@ -31,7 +31,7 @@
         android:gravity="center"
         android:text="@string/affected"
         android:textColor="@color/textColorDark"
-        android:textSize="15sp"
+        android:textSize="14sp"
         android:fontFamily="@font/roboto_medium"
         app:fontFamily="@font/roboto_medium" />
 
@@ -47,15 +47,14 @@
         android:gravity="center"
         android:text="@string/recovered"
         android:textColor="@color/textColorDark"
-        android:textSize="15sp"
+        android:textSize="14sp"
         android:fontFamily="@font/roboto_medium"
         app:fontFamily="@font/roboto_medium" />
 
     <View
         android:layout_width="0.5dp"
         android:layout_height="match_parent"
-        android:fontFamily="@font/roboto_medium"
-        app:fontFamily="@font/roboto_medium" />
+        android:background="@color/textColorGrey" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:layout_width="0dp"
@@ -64,6 +63,6 @@
         android:gravity="center"
         android:text="@string/deaths"
         android:textColor="@color/textColorDark"
-        android:textSize="15sp" />
+        android:textSize="14sp" />
 
 </LinearLayout>

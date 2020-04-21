@@ -54,9 +54,9 @@ class ViewHolder(private val binding: ItemCombinedViewBinding) : RecyclerView.Vi
     private fun setDelta(textView: TextView, count: Int) {
         if (count > 0) {
             textView.visibility = View.VISIBLE
-            textView.text = Util.formatNumber(count)
+            textView.text = String.format("+%s", Util.formatNumber(count))
         } else {
-            textView.visibility = View.GONE
+            textView.visibility = View.INVISIBLE
         }
     }
 }

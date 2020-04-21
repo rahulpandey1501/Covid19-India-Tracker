@@ -8,5 +8,8 @@
     <color name="page_background">#eeeef4</color>
     <color name="item_background">#FFF</color>
     <color name="red_affected">#FD504F</color>
+    <color name="number_increase_color">#ff0c3c</color>
     <color name="green_recovered">#3AB553</color>
+    <color name="background_deceased">#6c757b</color>
+    <color name="background_active">#007bfe</color>
 </resources>

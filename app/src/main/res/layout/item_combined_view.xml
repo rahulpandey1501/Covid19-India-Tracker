@@ -6,7 +6,7 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="6dp"
+        android:layout_marginBottom="8dp"
         android:orientation="vertical">
 
         <androidx.cardview.widget.CardView
@@ -19,44 +19,42 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:padding="12dp">
+                android:padding="10dp">
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tv_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center_horizontal"
-                    android:paddingBottom="6dp"
+                    android:paddingBottom="10dp"
                     android:textColor="@color/textColorDark"
-                    android:textSize="14sp"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:text="Bhopal" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tv_active"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
                     android:textSize="15sp"
                     android:fontFamily="@font/open_sans"
                     app:fontFamily="@font/open_sans"
-                    android:textColor="@android:color/black"
                     app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toLeftOf="@+id/tv_confirmed"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_title"
-                    tools:text="12,345" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="Bhopal" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tv_confirmed"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:textSize="15sp"
-                    android:fontFamily="@font/open_sans"
-                    app:fontFamily="@font/open_sans"
-                    android:textColor="@android:color/black"
-                    app:layout_constraintLeft_toRightOf="@+id/tv_active"
+                    android:textSize="16sp"
+                    android:textColor="@color/textColorDark"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toLeftOf="@+id/tv_active"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_title"
+                    tools:text="12,345" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_active"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textSize="16sp"
+                    android:textColor="@color/textColorDark"
+                    app:layout_constraintLeft_toRightOf="@+id/tv_confirmed"
                     app:layout_constraintRight_toLeftOf="@+id/tv_recovered"
                     app:layout_constraintTop_toBottomOf="@+id/tv_title"
                     tools:text="12,345" />
@@ -65,14 +63,13 @@
                     android:id="@+id/tv_confirmed_delta"
                     android:layout_width="wrap_content"
                     android:layout_height="20dp"
-                    android:drawableStart="@drawable/ic_baseline_trending_up_24"
-                    android:drawablePadding="4dp"
                     android:gravity="center"
-                    android:textColor="@color/red_affected"
+                    android:textColor="@color/number_increase_color"
                     android:textSize="12sp"
-                    app:drawableTint="@color/red_affected"
-                    app:layout_constraintLeft_toRightOf="@+id/tv_active"
-                    app:layout_constraintRight_toLeftOf="@+id/tv_recovered"
+                    android:fontFamily="@font/open_sans_semibold"
+                    app:fontFamily="@font/open_sans_semibold"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toLeftOf="@+id/tv_active"
                     app:layout_constraintTop_toBottomOf="@+id/tv_confirmed"
                     tools:text="12,345" />
 
@@ -81,11 +78,9 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:textSize="15sp"
-                    android:fontFamily="@font/open_sans"
-                    app:fontFamily="@font/open_sans"
-                    android:textColor="@android:color/black"
-                    app:layout_constraintLeft_toRightOf="@+id/tv_confirmed"
+                    android:textSize="16sp"
+                    android:textColor="@color/textColorDark"
+                    app:layout_constraintLeft_toRightOf="@+id/tv_active"
                     app:layout_constraintRight_toLeftOf="@+id/tv_death"
                     app:layout_constraintTop_toBottomOf="@+id/tv_title"
                     tools:text="12,345" />
@@ -94,13 +89,10 @@
                     android:id="@+id/tv_recovered_delta"
                     android:layout_width="wrap_content"
                     android:layout_height="20dp"
-                    android:drawableStart="@drawable/ic_baseline_trending_up_24"
-                    android:drawablePadding="2dp"
                     android:gravity="center"
                     android:textColor="@color/green_recovered"
                     android:textSize="12sp"
-                    app:drawableTint="@color/green_recovered"
-                    app:layout_constraintLeft_toRightOf="@+id/tv_confirmed"
+                    app:layout_constraintLeft_toRightOf="@+id/tv_active"
                     app:layout_constraintRight_toLeftOf="@+id/tv_death"
                     app:layout_constraintTop_toBottomOf="@+id/tv_recovered"
                     tools:text="12,345" />
@@ -110,10 +102,8 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:textColor="@android:color/black"
-                    android:textSize="15sp"
-                    android:fontFamily="@font/open_sans"
-                    app:fontFamily="@font/open_sans"
+                    android:textSize="16sp"
+                    android:textColor="@color/textColorDark"
                     app:layout_constraintLeft_toRightOf="@+id/tv_recovered"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tv_title"
@@ -123,12 +113,11 @@
                     android:id="@+id/tv_death_delta"
                     android:layout_width="wrap_content"
                     android:layout_height="20dp"
-                    android:drawableStart="@drawable/ic_baseline_trending_up_24"
-                    android:drawablePadding="2dp"
                     android:gravity="center"
-                    android:textColor="@color/red_affected"
+                    android:textColor="@color/number_increase_color"
                     android:textSize="12sp"
-                    app:drawableTint="@color/red_affected"
+                    android:fontFamily="@font/open_sans_semibold"
+                    app:fontFamily="@font/open_sans_semibold"
                     app:layout_constraintLeft_toRightOf="@+id/tv_recovered"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tv_death"

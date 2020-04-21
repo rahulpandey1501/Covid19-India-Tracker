@@ -150,9 +150,9 @@ class BookmarkedFragment : BaseFragment(),
 
     private fun setDelta(textView: TextView, count: Int) {
         if (count > 0) {
-            textView.text = Util.formatNumber(count)
+            textView.text = String.format("+%s", Util.formatNumber(count))
         } else {
-            textView.visibility = View.GONE
+            textView.visibility = View.INVISIBLE
         }
     }
 
