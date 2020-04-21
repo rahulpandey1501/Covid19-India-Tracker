@@ -20,6 +20,28 @@ class DistrictData(
     val district: String,
 
     @SerializedName("confirmed")
-    val confirmed: Int
+    val confirmed: Int,
+
+    @SerializedName("deceased")
+    val deceased: Int,
+
+    @SerializedName("recovered")
+    val recovered: Int,
+
+    @SerializedName("delta")
+    val delta: Delta
+
+)
+
+@Keep
+class Delta(
+    @SerializedName("confirmed")
+    val confirmed: Int,
+
+    @SerializedName("deceased")
+    val deceased: Int,
+
+    @SerializedName("recovered")
+    val recovered: Int
 
 )

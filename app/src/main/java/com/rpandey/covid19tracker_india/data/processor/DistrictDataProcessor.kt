@@ -2,7 +2,6 @@ package com.rpandey.covid19tracker_india.data.processor
 
 import androidx.room.Transaction
 import com.rpandey.covid19tracker_india.data.model.Country
-import com.rpandey.covid19tracker_india.data.model.covidIndia.DistrictData
 import com.rpandey.covid19tracker_india.data.model.covidIndia.DistrictResponse
 import com.rpandey.covid19tracker_india.database.entity.DistrictEntity
 import com.rpandey.covid19tracker_india.database.provider.CovidDatabase
@@ -17,13 +16,19 @@ class DistrictDataProcessor(covidDatabase: CovidDatabase) :
             val stateName = it.state?.trim() ?: ""
             it.districtData?.forEach { districtData ->
                 val district = districtData.district.trim()
+                val delta = districtData.delta
                 districtEntities.add(
                     DistrictEntity(
                         getDistrictId(stateName, district),
                         Country.INDIA.code,
                         stateName,
                         district,
-                        districtData.confirmed
+                        delta.confirmed,
+                        districtData.confirmed,
+                        delta.recovered,
+                        districtData.recovered,
+                        delta.deceased,
+                        districtData.deceased
                     )
                 )
             }

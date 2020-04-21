@@ -107,6 +107,8 @@ class BookmarkedFragment : BaseFragment(),
 
                 tvTitle.text = district.district
                 tvCount.text = Util.formatNumber(district.totalConfirmed)
+                if (district.confirmed > 0)
+                    tvConfirmedDelta.text = String.format("+%s", Util.formatNumber(district.confirmed))
 
                 ivCancel.setOnClickListener {
                     viewModel.onDistrictRemoved(district.districtId)

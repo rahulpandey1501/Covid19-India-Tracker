@@ -18,7 +18,7 @@ import com.rpandey.covid19tracker_india.database.entity.*
         BookmarkedEntity::class
     ],
     exportSchema = false,
-    version = 1
+    version = 2
 )
 abstract class CovidDatabase : RoomDatabase() {
 
@@ -28,7 +28,7 @@ abstract class CovidDatabase : RoomDatabase() {
 
         fun getInstance(context: Context): CovidDatabase {
             database = database ?: Room.databaseBuilder(context.applicationContext, CovidDatabase::class.java, "covid_database")
-                .addMigrations()
+                .addMigrations(Migrations1to2())
                 .build()
             return database!!
         }

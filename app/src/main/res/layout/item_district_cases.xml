@@ -36,11 +36,27 @@
                     android:layout_height="wrap_content"
                     android:textColor="@color/textColorGrey"
                     android:textSize="20sp"
+                    app:layout_constraintHorizontal_bias="0"
+                    app:layout_constraintRight_toLeftOf="@+id/tv_confirmed_delta"
                     app:fontFamily="@font/open_sans_semibold"
                     android:fontFamily="@font/open_sans_semibold"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tv_title"
                     tools:text="12,345" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_confirmed_delta"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:gravity="center"
+                    android:paddingStart="4dp"
+                    android:textColor="@color/red_affected"
+                    android:textSize="12sp"
+                    app:fontFamily="@font/open_sans_semibold"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    tools:text="12,345"
+                    tools:ignore="RtlSymmetry" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
