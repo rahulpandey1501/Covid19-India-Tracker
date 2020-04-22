@@ -6,6 +6,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.rpandey.covid19tracker_india.database.dao.*
 import com.rpandey.covid19tracker_india.database.entity.*
+import com.rpandey.covid19tracker_india.database.provider.CovidDatabase.Companion.VERSION
 
 @Database(
     entities = [
@@ -15,20 +16,24 @@ import com.rpandey.covid19tracker_india.database.entity.*
         RecoverEntity::class,
         StateEntity::class,
         DistrictEntity::class,
-        BookmarkedEntity::class
+        BookmarkedEntity::class,
+        TestEntity::class
     ],
     exportSchema = false,
-    version = 2
+    version = VERSION
 )
 abstract class CovidDatabase : RoomDatabase() {
 
     companion object {
 
+        const val VERSION = 3
+        private const val NAME = "covid_database"
+
         private var database: CovidDatabase? = null
 
         fun getInstance(context: Context): CovidDatabase {
-            database = database ?: Room.databaseBuilder(context.applicationContext, CovidDatabase::class.java, "covid_database")
-                .addMigrations(Migrations1to2())
+            database = database ?: Room.databaseBuilder(context.applicationContext, CovidDatabase::class.java, NAME)
+                .addMigrations(Migrations1to2(), Migrations2to3())
                 .build()
             return database!!
         }
@@ -42,4 +47,5 @@ abstract class CovidDatabase : RoomDatabase() {
     abstract fun districtDao(): DistrictDao
     abstract fun bookmarkDao(): BookmarkDao
     abstract fun combinedCasesDao(): CombinedCasesDao
+    abstract fun testDao(): TestDao
 }
