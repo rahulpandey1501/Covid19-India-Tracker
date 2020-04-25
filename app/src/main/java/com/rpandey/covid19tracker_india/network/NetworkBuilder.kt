@@ -9,8 +9,6 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object NetworkBuilder {
 
-
-
     private fun getRetrofit(baseUrl: String): Retrofit {
 
         val httpClient = OkHttpClient.Builder()

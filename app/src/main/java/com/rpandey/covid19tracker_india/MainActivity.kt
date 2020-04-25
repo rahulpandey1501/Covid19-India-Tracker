@@ -40,7 +40,7 @@ class MainActivity : AppCompatActivity() {
 //                R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications))
 
         setSupportActionBar(toolbar)
-        setupRefresh()
+        setupRefreshClick()
 
         navView.setupWithNavController(navController)
         navView.labelVisibilityMode = LabelVisibilityMode.LABEL_VISIBILITY_UNLABELED
@@ -56,15 +56,14 @@ class MainActivity : AppCompatActivity() {
         firebaseAnalytics.logEvent(FirebaseAnalytics.Event.APP_OPEN, bundle)
     }
 
-    private fun setupRefresh() {
-        val animation = AnimationUtils.loadAnimation(this, R.anim.rotate_image)
+    private fun setupRefreshClick() {
         iv_refresh.setOnClickListener {
-            iv_refresh.startAnimation(animation)
             startSync()
         }
     }
 
     private fun startSync(callback: (Status<*>) -> Unit = {}) {
+        showRefreshAnimation()
         CoroutineScope(Dispatchers.IO).launch {
             covidIndia.startSync {
                 callback(it)
@@ -76,5 +75,10 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    private fun showRefreshAnimation() {
+        val animation = AnimationUtils.loadAnimation(this, R.anim.rotate_image)
+        iv_refresh.startAnimation(animation)
     }
 }

@@ -11,14 +11,17 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:cardBackgroundColor="@color/item_background"
-            android:layout_margin="6dp"
+            android:layout_margin="4dp"
             app:cardCornerRadius="8dp"
             app:cardElevation="0dp">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:padding="16dp">
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:paddingTop="12dp"
+                android:paddingBottom="12dp">
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tv_title"
@@ -36,6 +39,7 @@
                     android:layout_height="wrap_content"
                     android:textColor="@color/textColorGrey"
                     android:textSize="20sp"
+                    android:layout_marginTop="4dp"
                     app:layout_constraintHorizontal_bias="0"
                     app:layout_constraintRight_toLeftOf="@+id/tv_confirmed_delta"
                     app:fontFamily="@font/open_sans_semibold"
