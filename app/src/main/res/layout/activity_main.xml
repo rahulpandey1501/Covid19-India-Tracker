@@ -25,6 +25,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
+                android:tint="@color/refresh_icon"
                 android:src="@drawable/ic_baseline_autorenew_24" />
 
         </androidx.appcompat.widget.Toolbar>
@@ -50,7 +51,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="0dp"
         android:layout_marginEnd="0dp"
-        android:background="@android:color/white"
+        android:background="@color/item_background"
         app:itemIconTint="@color/bottom_nav_color"
         app:itemTextColor="@color/bottom_nav_color"
         app:layout_constraintBottom_toBottomOf="parent"

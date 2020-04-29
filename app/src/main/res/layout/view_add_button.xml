@@ -7,7 +7,7 @@
         android:layout_width="28dp"
         android:layout_height="28dp"
         android:background="@drawable/ic_sharp_add_circle_24"
-        android:backgroundTint="@color/green_recovered" />
+        android:backgroundTint="@color/background_recovered" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -7,7 +7,7 @@
         android:layout_width="28dp"
         android:layout_height="28dp"
         android:background="@drawable/ic_baseline_remove_circle_24"
-        android:backgroundTint="@color/red_affected" />
+        android:backgroundTint="@color/background_confirmed" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

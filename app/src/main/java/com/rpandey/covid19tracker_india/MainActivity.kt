@@ -14,6 +14,7 @@ import com.rpandey.covid19tracker_india.data.processor.CovidIndiaDataProcessor
 import com.rpandey.covid19tracker_india.database.provider.CovidDatabase
 import com.rpandey.covid19tracker_india.network.APIProvider
 import com.rpandey.covid19tracker_india.network.NetworkBuilder
+import com.rpandey.covid19tracker_india.util.ThemeHelper
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -29,6 +30,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        ThemeHelper.applyTheme(ThemeHelper.LIGHT_MODE)
         setContentView(R.layout.activity_main)
         firebaseAnalytics = FirebaseAnalytics.getInstance(this)
         val navView: BottomNavigationView = findViewById(R.id.nav_view)

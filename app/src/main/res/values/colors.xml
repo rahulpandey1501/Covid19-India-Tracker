@@ -3,13 +3,16 @@
     <color name="colorPrimary">#eeeef4</color>
     <color name="colorPrimaryDark">#eeeef4</color>
     <color name="colorAccent">#323437</color>
-    <color name="textColorGrey">#435161</color>
-    <color name="textColorDark">#2c3b4f</color>
+    <color name="text_secondary">#435161</color>
+    <color name="text_primary">#2c3b4f</color>
     <color name="page_background">#eeeef4</color>
     <color name="item_background">#FFF</color>
-    <color name="red_affected">#FD504F</color>
-    <color name="number_increase_color">#ff0c3c</color>
-    <color name="green_recovered">#3AB553</color>
+    <color name="background_confirmed">#ff3636</color>
+    <color name="number_increase_color">#ff3636</color>
+    <color name="background_recovered">#1CB142</color>
     <color name="background_deceased">#6c757b</color>
     <color name="background_active">#007bfe</color>
+    <color name="refresh_icon">#1d2025</color>
+    <color name="navigation_icon_selected">#435161</color>
+    <color name="navigation_icon_unselected">#aaa</color>
 </resources>

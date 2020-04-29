@@ -28,7 +28,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="14sp"
-                    android:textColor="@color/textColorDark"
+                    android:textColor="@color/text_primary"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     tools:text="Bhopal" />
@@ -37,7 +37,7 @@
                     android:id="@+id/tv_count"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/textColorGrey"
+                    android:textColor="@color/text_secondary"
                     android:textSize="20sp"
                     android:layout_marginTop="4dp"
                     app:layout_constraintHorizontal_bias="0"
@@ -56,8 +56,8 @@
                     android:paddingStart="4dp"
                     android:textColor="@color/number_increase_color"
                     android:textSize="14sp"
-                    android:fontFamily="@font/open_sans_semibold"
-                    app:fontFamily="@font/open_sans_semibold"
+                    android:fontFamily="@font/roboto_medium"
+                    app:fontFamily="@font/roboto_medium"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
                     tools:text="12,345"
@@ -74,7 +74,7 @@
             android:id="@+id/iv_cancel"
             android:visibility="gone"
             android:src="@drawable/ic_round_cancel_24"
-            android:tint="@color/red_affected"
+            android:tint="@color/background_confirmed"
             android:translationZ="100dp" />
 
     </FrameLayout>
