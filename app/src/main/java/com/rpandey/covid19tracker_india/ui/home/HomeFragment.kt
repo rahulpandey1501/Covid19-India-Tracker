@@ -69,6 +69,14 @@ class HomeFragment : BaseFragment() {
                 }
             })
 
+            viewModel.getTestingCount().observe(viewLifecycleOwner, Observer {
+                it?.let {
+                    testingCount.text = formatNumber(it.totalCount)
+                    setDelta(testingCurrent, it.currentCount)
+                    testingCurrent.text = "(+${testingCurrent.text})"
+                }
+            })
+
             viewModel.lastUpdatedTime().observe(viewLifecycleOwner, Observer {
                 val title = String.format("%s %s", "Last updated: ", it)
                 (activity as AppCompatActivity?)?.supportActionBar?.subtitle = title

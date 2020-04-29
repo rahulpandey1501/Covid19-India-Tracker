@@ -10,13 +10,12 @@ import java.util.*
 
 class TestDataProcessor(database: CovidDatabase) : ResponseProcessor<TestResponse>(database) {
 
-    private val _dateFormat = "dd/mm/yyyy"
+    val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
 
     override fun process(data: TestResponse) {
 
         val testingEntities = mutableListOf<TestEntity>()
         val stateDataMapping = hashMapOf<String, MutableList<TestData>>()
-        val dateFormat = SimpleDateFormat(_dateFormat, Locale.getDefault())
 
         data.testData.forEach loop@{ testData ->
             if (testData.totalTest.isNullOrEmpty())

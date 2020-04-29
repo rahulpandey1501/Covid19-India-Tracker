@@ -6,6 +6,7 @@ import com.rpandey.covid19tracker_india.database.dao.CombinedCasesModel
 import com.rpandey.covid19tracker_india.database.entity.BookmarkType
 import com.rpandey.covid19tracker_india.database.entity.BookmarkedEntity
 import com.rpandey.covid19tracker_india.database.entity.DistrictEntity
+import com.rpandey.covid19tracker_india.database.entity.TestEntity
 import com.rpandey.covid19tracker_india.database.provider.CovidDatabase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -20,6 +21,8 @@ class CovidIndiaRepository(private val covidDatabase: CovidDatabase) {
     fun getRecoveredCount() = covidDatabase.recoveredDao().getCurrentCount(Country.INDIA.code)
 
     fun getDeceasedCount() = covidDatabase.deceasedDao().getCurrentCount(Country.INDIA.code)
+
+    fun getTestingCount() = covidDatabase.testDao().getTotalCount(TestEntity.OVER_ALL)
 
     fun searchDistrict(district: String?) =
         covidDatabase.districtDao().getByDistrictName("%${district}%")

@@ -21,4 +21,5 @@
     <string name="state_tracker">Tracker</string>
     <string name="title_daily_updates">Today\'s updates</string>
     <string name="no_new_updates">No new updates</string>
+    <string name="total_testing">Total testing </string>
 </resources>

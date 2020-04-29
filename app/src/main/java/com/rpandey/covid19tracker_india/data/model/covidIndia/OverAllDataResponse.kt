@@ -7,7 +7,15 @@ import com.google.gson.annotations.SerializedName
 class OverAllDataResponse {
     @SerializedName("statewise")
     val stateData: List<StateData>? = null
+    @SerializedName("tested")
+    val testData: List<OverAllTestData>? = null
 }
+
+@Keep
+data class OverAllTestData(
+    @SerializedName("totalsamplestested") val totalTested: String,
+    @SerializedName("updatetimestamp") val date: String // "dd/MM/yyyy hh:mm:ss"
+)
 
 @Keep
 data class StateData(

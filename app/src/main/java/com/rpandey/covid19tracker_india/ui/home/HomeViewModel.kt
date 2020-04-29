@@ -21,6 +21,8 @@ class HomeViewModel(private val repository: CovidIndiaRepository) : ViewModel() 
 
     fun getDeceasedCount() = repository.getDeceasedCount()
 
+    fun getTestingCount() = repository.getTestingCount()
+
     fun lastUpdatedTime(): LiveData<String> {
         return Transformations.map(repository.lastUpdatedTime()) {
             if (it != null)

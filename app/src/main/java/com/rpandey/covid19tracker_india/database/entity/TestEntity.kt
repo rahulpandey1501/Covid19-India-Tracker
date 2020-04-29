@@ -13,4 +13,9 @@ data class TestEntity constructor(
     @ColumnInfo(name = "stateName") val stateName: String,
     @ColumnInfo(name = "tested") val tested: Int,
     @ColumnInfo(name = "total_tested") val totalTested: Int
-)
+) {
+
+    companion object {
+        const val OVER_ALL = "OVER_ALL"
+    }
+}
