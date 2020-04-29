@@ -15,4 +15,5 @@
     <color name="refresh_icon">#1d2025</color>
     <color name="navigation_icon_selected">#435161</color>
     <color name="navigation_icon_unselected">#aaa</color>
+    <color name="ui_mode_selection">@color/refresh_icon</color>
 </resources>

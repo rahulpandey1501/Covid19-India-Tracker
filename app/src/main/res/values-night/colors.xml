@@ -10,4 +10,5 @@
     <color name="refresh_icon">#FFF</color>
     <color name="navigation_icon_selected">#FFF</color>
     <color name="navigation_icon_unselected">#6c757b</color>
+    <color name="ui_mode_selection">#ffc200</color>
 </resources>

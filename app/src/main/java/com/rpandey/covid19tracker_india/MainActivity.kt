@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.animation.AnimationUtils
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -24,25 +25,21 @@ class MainActivity : AppCompatActivity() {
 
     lateinit var firebaseAnalytics: FirebaseAnalytics
 
-    private val covidIndia by lazy {  CovidIndiaDataProcessor(
-        APIProvider(NetworkBuilder.apiService), CovidDatabase.getInstance(applicationContext))
+    private val covidIndia by lazy {
+        CovidIndiaDataProcessor(
+            APIProvider(NetworkBuilder.apiService), CovidDatabase.getInstance(applicationContext)
+        )
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        ThemeHelper.applyTheme(ThemeHelper.LIGHT_MODE)
         setContentView(R.layout.activity_main)
         firebaseAnalytics = FirebaseAnalytics.getInstance(this)
         val navView: BottomNavigationView = findViewById(R.id.nav_view)
 
         val navController = findNavController(R.id.nav_host_fragment)
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
-//        val appBarConfiguration = AppBarConfiguration(setOf(
-//                R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications))
-
         setSupportActionBar(toolbar)
-        setupRefreshClick()
+        setupToolbarIcon()
 
         navView.setupWithNavController(navController)
         navView.labelVisibilityMode = LabelVisibilityMode.LABEL_VISIBILITY_UNLABELED
@@ -58,10 +55,35 @@ class MainActivity : AppCompatActivity() {
         firebaseAnalytics.logEvent(FirebaseAnalytics.Event.APP_OPEN, bundle)
     }
 
-    private fun setupRefreshClick() {
+    private fun setupToolbarIcon() {
+        val currentTheme = ThemeHelper.getTheme(this)
+
+        if (currentTheme == ThemeHelper.LIGHT_MODE) {
+            iv_ui_mode.setImageDrawable(
+                ContextCompat.getDrawable(
+                    this,
+                    R.drawable.ic_outline_nights_stay_24
+                )
+            )
+            iv_ui_mode.setOnClickListener {
+                ThemeHelper.applyTheme(ThemeHelper.DARK_MODE)
+            }
+        } else {
+            iv_ui_mode.setImageDrawable(
+                ContextCompat.getDrawable(
+                    this,
+                    R.drawable.ic_twotone_wb_sunny_24
+                )
+            )
+            iv_ui_mode.setOnClickListener {
+                ThemeHelper.applyTheme(ThemeHelper.LIGHT_MODE)
+            }
+        }
+
         iv_refresh.setOnClickListener {
             startSync()
         }
+
     }
 
     private fun startSync(callback: (Status<*>) -> Unit = {}) {
@@ -71,8 +93,10 @@ class MainActivity : AppCompatActivity() {
                 callback(it)
                 if (it is Status.Error) {
                     CoroutineScope(Dispatchers.Main).launch {
-                        Toast.makeText(this@MainActivity,
-                            "Oops! something went wrong, unable to update", Toast.LENGTH_LONG).show()
+                        Toast.makeText(
+                            this@MainActivity,
+                            "Oops! something went wrong, unable to update", Toast.LENGTH_LONG
+                        ).show()
                     }
                 }
             }

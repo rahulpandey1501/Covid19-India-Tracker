@@ -20,13 +20,28 @@
             android:elevation="0dp"
             app:subtitleTextAppearance="@style/TextAppearance.AppCompat.Caption">
 
-            <ImageView
-                android:id="@+id/iv_refresh"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
-                android:tint="@color/refresh_icon"
-                android:src="@drawable/ic_baseline_autorenew_24" />
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/iv_ui_mode"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="12dp"
+                    android:src="@drawable/ic_outline_nights_stay_24"
+                    android:tint="@color/ui_mode_selection" />
+
+                <ImageView
+                    android:id="@+id/iv_refresh"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_baseline_autorenew_24"
+                    android:tint="@color/refresh_icon" />
+            </LinearLayout>
 
         </androidx.appcompat.widget.Toolbar>
 
