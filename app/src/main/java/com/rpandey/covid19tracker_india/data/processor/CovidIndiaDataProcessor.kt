@@ -4,8 +4,7 @@ import com.rpandey.covid19tracker_india.data.Status
 import com.rpandey.covid19tracker_india.database.provider.CovidDatabase
 import com.rpandey.covid19tracker_india.network.APIProvider
 import com.rpandey.covid19tracker_india.network.ApiHelper
-import kotlinx.coroutines.async
-import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.*
 
 class CovidIndiaDataProcessor(
     private val apiProvider: APIProvider,
@@ -25,8 +24,7 @@ class CovidIndiaDataProcessor(
         }
         callback(status)
 
-        coroutineScope {
-
+        CoroutineScope(Dispatchers.IO + CoroutineExceptionHandler {_,_ ->}).launch {
             val districtResponse = async { apiProvider.covidIndia.getDistrictData() }
             val testDataResponse = async { apiProvider.covidIndia.getTestingData() }
 
