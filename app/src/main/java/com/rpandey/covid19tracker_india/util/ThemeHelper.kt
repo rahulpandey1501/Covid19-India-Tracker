@@ -6,11 +6,14 @@ import androidx.appcompat.app.AppCompatDelegate
 
 object ThemeHelper {
 
+    private const val KEY_USER_SELECTED = "KEY_USER_SELECTED"
+
     const val LIGHT_MODE = 0
     const val DARK_MODE = 1
     const val DEFAULT = 2
 
     fun applyTheme(theme: Int) {
+        PreferenceHelper.putInt(KEY_USER_SELECTED, theme)
         when (theme) {
             LIGHT_MODE -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
             DARK_MODE -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
@@ -26,4 +29,8 @@ object ThemeHelper {
             else -> LIGHT_MODE
         }
     }
- }
+
+    fun applyUserPrefTheme() {
+        applyTheme(PreferenceHelper.getInt(KEY_USER_SELECTED, DEFAULT))
+    }
+}
