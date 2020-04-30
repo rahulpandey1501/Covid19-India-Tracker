@@ -15,7 +15,7 @@
         android:fontFamily="sans-serif-medium"
         android:gravity="center"
         android:text="@string/affected"
-        android:textColor="@color/text_primary"
+        android:textColor="@color/text_secondary"
         android:textSize="14sp"
         app:fontFamily="sans-serif-medium" />
 
@@ -31,7 +31,7 @@
         android:fontFamily="sans-serif-medium"
         android:gravity="center"
         android:text="@string/active"
-        android:textColor="@color/text_primary"
+        android:textColor="@color/text_secondary"
         android:textSize="14sp"
         app:fontFamily="sans-serif-medium" />
 
@@ -47,7 +47,7 @@
         android:fontFamily="sans-serif-medium"
         android:gravity="center"
         android:text="@string/recovered"
-        android:textColor="@color/text_primary"
+        android:textColor="@color/text_secondary"
         android:textSize="14sp"
         app:fontFamily="sans-serif-medium" />
 
@@ -63,7 +63,7 @@
         android:fontFamily="sans-serif-medium"
         android:gravity="center"
         android:text="@string/deaths"
-        android:textColor="@color/text_primary"
+        android:textColor="@color/text_secondary"
         android:textSize="14sp"
         app:fontFamily="sans-serif-medium" />
 

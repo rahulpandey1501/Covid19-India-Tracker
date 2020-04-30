@@ -30,7 +30,7 @@
                     android:textSize="14sp"
                     app:fontFamily="@font/open_sans"
                     android:fontFamily="@font/open_sans"
-                    android:textColor="@color/text_secondary"
+                    android:textColor="@color/text_primary"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     tools:text="Bhopal" />
