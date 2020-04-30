@@ -35,7 +35,7 @@
                     android:id="@+id/testing_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
+                    android:gravity="bottom"
                     android:orientation="horizontal"
                     android:paddingBottom="12dp"
                     app:cardBackgroundColor="@color/page_background"
@@ -53,12 +53,15 @@
                         android:textSize="14sp"
                         app:fontFamily="@font/open_sans" />
 
-                    <TextView
+                    <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/testing_count"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp"
                         android:includeFontPadding="false"
+                        android:fontFamily="@font/open_sans_semibold"
+                        app:fontFamily="@font/open_sans_semibold"
                         android:textColor="@color/text_primary"
                         android:textSize="18sp"
                         tools:text="1234" />
@@ -67,7 +70,6 @@
                         android:id="@+id/testing_current"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
                         android:includeFontPadding="false"
                         app:fontFamily="@font/open_sans"
                         android:fontFamily="@font/open_sans"
