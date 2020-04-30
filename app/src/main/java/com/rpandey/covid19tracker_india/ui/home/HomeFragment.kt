@@ -4,14 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.rpandey.covid19tracker_india.R
+import com.rpandey.covid19tracker_india.database.model.CountModel
 import com.rpandey.covid19tracker_india.databinding.FragmentHomeBinding
 import com.rpandey.covid19tracker_india.ui.BaseFragment
 import com.rpandey.covid19tracker_india.ui.bookmark.BookmarkedFragment
-import com.rpandey.covid19tracker_india.util.Util.formatNumber
 import com.rpandey.covid19tracker_india.util.attachChildFragment
 import com.rpandey.covid19tracker_india.util.getViewModel
 
@@ -26,7 +25,6 @@ class HomeFragment : BaseFragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
         binding.lifecycleOwner = this
-//        binding.vm = homeViewModel
         return binding.root
     }
 
@@ -42,54 +40,29 @@ class HomeFragment : BaseFragment() {
     }
 
     override fun observeLiveData() {
+        viewModel.lastUpdatedTime().observe(viewLifecycleOwner, Observer {
+            val title = String.format("%s %s", "Last updated: ", it)
+            (activity as AppCompatActivity?)?.supportActionBar?.subtitle = title
+        })
 
-        with(binding) {
-            viewModel.getActiveCount().observe(viewLifecycleOwner, Observer {
-                it?.let { activeCount.text = formatNumber(it) }
-            })
-
-            viewModel.getConfirmedCount().observe(viewLifecycleOwner, Observer {
-                it?.let {
-                    confirmedCount.text = formatNumber(it.totalCount)
-                    setDelta(confirmedCurrent, it.currentCount)
-                }
-            })
-
-            viewModel.getRecoveredCount().observe(viewLifecycleOwner, Observer {
-                it?.let {
-                    recoveredCount.text = formatNumber(it.totalCount)
-                    setDelta(recoveredCurrent, it.currentCount)
-                }
-            })
-
-            viewModel.getDeceasedCount().observe(viewLifecycleOwner, Observer {
-                it?.let {
-                    deceasedCount.text = formatNumber(it.totalCount)
-                    setDelta(deceasedCurrent, it.currentCount)
-                }
-            })
-
-            viewModel.getTestingCount().observe(viewLifecycleOwner, Observer {
-                it?.let {
-                    testingCount.text = formatNumber(it.totalCount)
-                    setDelta(testingCurrent, it.currentCount)
-                    testingCurrent.text = "(+${testingCurrent.text})"
-                }
-            })
-
-            viewModel.lastUpdatedTime().observe(viewLifecycleOwner, Observer {
-                val title = String.format("%s %s", "Last updated: ", it)
-                (activity as AppCompatActivity?)?.supportActionBar?.subtitle = title
-            })
-        }
+        viewModel.getCount().observe(viewLifecycleOwner, Observer {
+            it.keys.forEach { uiCase ->
+                setUiCaseModel(uiCase, it)
+            }
+        })
     }
 
-    private fun setDelta(textView: TextView, count: Int) {
-        if (count > 0) {
-            textView.visibility = View.VISIBLE
-            textView.text = formatNumber(count)
-        } else {
-            textView.visibility = View.GONE
+    private fun setUiCaseModel(caseType: UICaseType, allCases: Map<UICaseType, CountModel>) {
+        with(binding.casesLayout) {
+            val itemModel = ItemCountCaseBindingModel(requireContext().applicationContext)
+            itemModel.init(caseType, allCases)
+            when (caseType) {
+                UICaseType.TYPE_CONFIRMED -> confirmVm = itemModel
+                UICaseType.TYPE_ACTIVE -> activeVm = itemModel
+                UICaseType.TYPE_RECOVERED -> recoverVm = itemModel
+                UICaseType.TYPE_DEATH -> deathVm = itemModel
+                UICaseType.TYPE_TESTING -> testingVm = itemModel
+            }
         }
     }
 }
