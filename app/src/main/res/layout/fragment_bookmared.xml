@@ -37,8 +37,8 @@
                     android:paddingStart="16dp"
                     android:text="@string/monitoring_district"
                     android:textAlignment="center"
-                    android:textColor="@color/text_secondary"
-                    android:textSize="20sp"
+                    android:textColor="@color/text_primary"
+                    android:textSize="16sp"
                     tools:ignore="RtlSymmetry" />
 
                 <include
@@ -94,8 +94,8 @@
                     android:layout_height="wrap_content"
                     android:text="@string/monitoring_states"
                     android:textAlignment="center"
-                    android:textColor="@color/text_secondary"
-                    android:textSize="20sp" />
+                    android:textColor="@color/text_primary"
+                    android:textSize="16sp" />
 
                 <include
                     android:id="@+id/remove_state"
@@ -125,7 +125,7 @@
                     android:id="@+id/header"
                     android:layout_height="wrap_content"
                     android:layout_width="match_parent"
-                    android:layout_marginTop="24dp"
+                    android:layout_marginTop="20dp"
                     android:visibility="gone"
                     layout="@layout/view_header_combined"
                     app:layout_constraintTop_toBottomOf="@+id/states_title" />

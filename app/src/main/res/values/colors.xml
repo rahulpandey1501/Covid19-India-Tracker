@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#eeeef4</color>
-    <color name="colorPrimaryDark">#eeeef4</color>
+    <color name="colorPrimary">@color/page_background</color>
+    <color name="colorPrimaryDark">@color/page_background</color>
     <color name="colorAccent">#323437</color>
-    <color name="text_secondary">#435161</color>
-    <color name="text_primary">#2c3b4f</color>
-    <color name="page_background">#eeeef4</color>
+    <color name="text_secondary">#42484b</color>
+    <color name="text_primary">#1d2025</color>
+    <color name="page_background">#f7f7ff</color>
     <color name="item_background">#FFF</color>
     <color name="background_confirmed">#ff3e3e</color>
     <color name="number_increase_color">#ff3e3e</color>
@@ -14,7 +14,7 @@
     <color name="background_testing">#3174f3</color>
     <color name="background_active">#007bfe</color>
     <color name="refresh_icon">#1d2025</color>
-    <color name="navigation_icon_selected">#435161</color>
+    <color name="navigation_icon_selected">@color/refresh_icon</color>
     <color name="navigation_icon_unselected">#aaa</color>
     <color name="ui_mode_selection">@color/refresh_icon</color>
 </resources>

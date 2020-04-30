@@ -4,8 +4,8 @@
     android:layout_height="wrap_content">
 
     <ImageView
-        android:layout_width="28dp"
-        android:layout_height="28dp"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
         android:background="@drawable/ic_sharp_add_circle_24"
         android:backgroundTint="@color/background_recovered" />
 

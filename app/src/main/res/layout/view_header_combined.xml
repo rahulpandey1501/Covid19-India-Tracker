@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/item_background"
+    android:background="@drawable/rounded_corner_bottomsheet"
     android:orientation="horizontal"
     android:paddingTop="14dp"
     android:paddingBottom="14dp">
@@ -12,12 +12,12 @@
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
+        android:fontFamily="sans-serif-medium"
         android:gravity="center"
         android:text="@string/affected"
         android:textColor="@color/text_primary"
         android:textSize="14sp"
-        android:fontFamily="@font/roboto_medium"
-        app:fontFamily="@font/roboto_medium" />
+        app:fontFamily="sans-serif-medium" />
 
     <View
         android:layout_width="0.5dp"
@@ -28,12 +28,12 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
+        android:fontFamily="sans-serif-medium"
         android:gravity="center"
         android:text="@string/active"
         android:textColor="@color/text_primary"
         android:textSize="14sp"
-        android:fontFamily="@font/roboto_medium"
-        app:fontFamily="@font/roboto_medium" />
+        app:fontFamily="sans-serif-medium" />
 
     <View
         android:layout_width="0.5dp"
@@ -44,12 +44,12 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
+        android:fontFamily="sans-serif-medium"
         android:gravity="center"
         android:text="@string/recovered"
         android:textColor="@color/text_primary"
         android:textSize="14sp"
-        android:fontFamily="@font/roboto_medium"
-        app:fontFamily="@font/roboto_medium" />
+        app:fontFamily="sans-serif-medium" />
 
     <View
         android:layout_width="0.5dp"
@@ -60,9 +60,11 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
+        android:fontFamily="sans-serif-medium"
         android:gravity="center"
         android:text="@string/deaths"
         android:textColor="@color/text_primary"
-        android:textSize="14sp" />
+        android:textSize="14sp"
+        app:fontFamily="sans-serif-medium" />
 
 </LinearLayout>

@@ -18,7 +18,8 @@
             android:layout_marginStart="8dp"
             android:layout_marginEnd="16dp"
             android:elevation="0dp"
-            app:subtitleTextAppearance="@style/TextAppearance.AppCompat.Caption">
+            app:titleTextAppearance="@style/TextAppearance.Toolbar.Title"
+            app:subtitleTextAppearance="@style/TextAppearance.Toolbar.Subtitle">
 
             <LinearLayout
                 android:layout_width="wrap_content"
