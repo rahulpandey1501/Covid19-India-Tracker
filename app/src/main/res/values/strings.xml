@@ -22,4 +22,6 @@
     <string name="title_daily_updates">Today\'s updates</string>
     <string name="no_new_updates">No new updates</string>
     <string name="total_testing">Total testing </string>
+    <string name="top_district">Top Districts</string>
+    <string name="view_all">View All</string>
 </resources>

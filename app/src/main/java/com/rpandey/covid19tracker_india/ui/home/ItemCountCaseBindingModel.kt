@@ -20,7 +20,8 @@ class ItemCountCaseBindingModel(private val context: Context) {
         val countModel = caseMapping[caseType] ?: error("$caseType not found")
         val confirmCaseModel = caseMapping[UICaseType.TYPE_CONFIRMED]
         totalCount.set(Util.formatNumber(countModel.totalCount))
-        currentCount.set(Util.formatNumber(countModel.currentCount))
+        if (countModel.currentCount > 0)
+            currentCount.set(Util.formatNumber(countModel.currentCount))
 
         when(caseType) {
 

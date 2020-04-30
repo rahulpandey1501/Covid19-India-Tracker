@@ -6,8 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import com.rpandey.covid19tracker_india.R
+import com.rpandey.covid19tracker_india.database.dao.CombinedCasesModel
 import com.rpandey.covid19tracker_india.databinding.FragmentStatesDataBinding
 import com.rpandey.covid19tracker_india.ui.BaseFragment
+import com.rpandey.covid19tracker_india.ui.statedetails.StateDetailsActivity
 import com.rpandey.covid19tracker_india.util.getViewModel
 
 class ListStatesFragment : BaseFragment() {
@@ -25,9 +27,15 @@ class ListStatesFragment : BaseFragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentStatesDataBinding.inflate(inflater, container, false)
-        adapter = StatesAdapter(emptyList())
+        adapter = StatesAdapter(emptyList()) {
+            openStateDetailsActivity(it)
+        }
         binding.recyclerView.adapter = adapter
         return binding.root
+    }
+
+    private fun openStateDetailsActivity(model: CombinedCasesModel) {
+        startActivity(StateDetailsActivity.getIntent(requireActivity(), model.state, model.stateName))
     }
 
     override fun setToolbarTitle(): String {

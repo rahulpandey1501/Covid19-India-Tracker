@@ -41,7 +41,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_baseline_autorenew_24"
-                    android:tint="@color/refresh_icon" />
+                    android:tint="@color/toolbar_icon" />
             </LinearLayout>
 
         </androidx.appcompat.widget.Toolbar>

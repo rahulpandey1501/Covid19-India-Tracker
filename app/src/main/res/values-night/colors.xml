@@ -7,8 +7,8 @@
     <color name="text_primary">#FFF</color>
     <color name="page_background">#1d2025</color>
     <color name="item_background">#26292e</color>
-    <color name="refresh_icon">#FFF</color>
     <color name="navigation_icon_selected">#FFF</color>
     <color name="navigation_icon_unselected">#6c757b</color>
     <color name="ui_mode_selection">#ffc200</color>
+    <color name="toolbar_icon">#FFF</color>
 </resources>

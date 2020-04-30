@@ -22,6 +22,9 @@ interface ActiveDao {
     @Query("SELECT sum(active) FROM active_cases WHERE country = :country")
     fun getCurrentCount(country: String): LiveData<Int>
 
+    @Query("SELECT sum(active) FROM active_cases WHERE country = :country and state = :state")
+    fun getCurrentCount(country: String, state: String): LiveData<Int>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(data: List<ActiveEntity>)
 

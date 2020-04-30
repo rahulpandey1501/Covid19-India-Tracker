@@ -17,6 +17,7 @@ import com.rpandey.covid19tracker_india.databinding.ItemDistrictCasesBinding
 import com.rpandey.covid19tracker_india.ui.BaseFragment
 import com.rpandey.covid19tracker_india.ui.dashboard.SelectStateBottomSheet
 import com.rpandey.covid19tracker_india.ui.search.SearchDistrictActivity
+import com.rpandey.covid19tracker_india.ui.statedetails.StateDetailsActivity
 import com.rpandey.covid19tracker_india.util.Util
 import com.rpandey.covid19tracker_india.util.getViewModel
 import com.rpandey.covid19tracker_india.util.observe
@@ -144,6 +145,10 @@ class BookmarkedFragment : BaseFragment(),
                 }
 
                 statesCancelVies.add(ivCancel)
+
+                root.setOnClickListener {
+                    startActivity(StateDetailsActivity.getIntent(requireActivity(), model.state, model.stateName))
+                }
             }
         }
     }

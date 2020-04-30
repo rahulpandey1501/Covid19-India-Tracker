@@ -21,7 +21,10 @@ interface DeceasedDao {
     fun getAll(country: String): LiveData<List<DeceasedEntity>>
 
     @Query("SELECT sum(total_deceased) as totalCount, sum(deceased) as currentCount FROM deceased_cases WHERE country = :country")
-    fun getCurrentCount(country: String): LiveData<CountModel?>
+    fun getCurrentCount(country: String): LiveData<CountModel>
+
+    @Query("SELECT sum(total_deceased) as totalCount, sum(deceased) as currentCount FROM deceased_cases WHERE country = :country and state = :state")
+    fun getCurrentCount(country: String, state: String): LiveData<CountModel>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(data: List<DeceasedEntity>)

@@ -21,7 +21,10 @@ interface ConfirmedDao {
     fun getAll(country: String): LiveData<List<ConfirmedEntity>>
 
     @Query("SELECT sum(total_confirmed) as totalCount, sum(confirmed) as currentCount FROM confirmed_cases WHERE country = :country")
-    fun getCurrentCount(country: String): LiveData<CountModel?>
+    fun getCurrentCount(country: String): LiveData<CountModel>
+
+    @Query("SELECT sum(total_confirmed) as totalCount, sum(confirmed) as currentCount FROM confirmed_cases WHERE country = :country and state = :state")
+    fun getCurrentCount(country: String, state: String): LiveData<CountModel>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(data: List<ConfirmedEntity>)
@@ -31,4 +34,7 @@ interface ConfirmedDao {
 
     @Query("select max(date) from confirmed_cases")
     fun lastUpdatedTime(): LiveData<Long?>
+
+    @Query("select max(date) from confirmed_cases where state = :state")
+    fun lastUpdatedTime(state: String): LiveData<Long?>
 }

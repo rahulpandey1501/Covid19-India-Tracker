@@ -10,6 +10,9 @@ interface DistrictDao {
     @Query("select * from district_cases where country = :country and stateName = :stateName")
     fun getByState(country: String, stateName: String): LiveData<List<DistrictEntity>>
 
+    @Query("select * from district_cases where country = :country and stateName = :stateName order by total_confirmed desc limit :count")
+    fun getByState(country: String, stateName: String, count: Int): LiveData<List<DistrictEntity>>
+
     @Query("select * from district_cases where country = :country")
     fun getAll(country: String): LiveData<List<DistrictEntity>>
 

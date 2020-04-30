@@ -7,6 +7,7 @@ import com.rpandey.covid19tracker_india.database.entity.BookmarkType
 import com.rpandey.covid19tracker_india.database.entity.BookmarkedEntity
 import com.rpandey.covid19tracker_india.database.entity.DistrictEntity
 import com.rpandey.covid19tracker_india.database.entity.TestEntity
+import com.rpandey.covid19tracker_india.database.model.CountModel
 import com.rpandey.covid19tracker_india.database.provider.CovidDatabase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -14,18 +15,49 @@ import kotlinx.coroutines.launch
 
 class CovidIndiaRepository(private val covidDatabase: CovidDatabase) {
 
-    fun getConfirmedCount() = covidDatabase.confirmedDao().getCurrentCount(Country.INDIA.code)
+    fun getConfirmedCount(state: String? = null): LiveData<CountModel> {
+        return if (state != null) {
+            covidDatabase.confirmedDao().getCurrentCount(Country.INDIA.code, state)
+        } else {
+            covidDatabase.confirmedDao().getCurrentCount(Country.INDIA.code)
+        }
+    }
 
-    fun getActiveCount() = covidDatabase.activeDao().getCurrentCount(Country.INDIA.code)
+    fun getActiveCount(state: String? = null): LiveData<Int> {
+        return if (state != null) {
+            covidDatabase.activeDao().getCurrentCount(Country.INDIA.code, state)
+        } else {
+            covidDatabase.activeDao().getCurrentCount(Country.INDIA.code)
+        }
+    }
 
-    fun getRecoveredCount() = covidDatabase.recoveredDao().getCurrentCount(Country.INDIA.code)
+    fun getRecoveredCount(state: String? = null): LiveData<CountModel> {
+        return if (state != null) {
+            covidDatabase.recoveredDao().getCurrentCount(Country.INDIA.code, state)
+        } else {
+            covidDatabase.recoveredDao().getCurrentCount(Country.INDIA.code)
+        }
+    }
 
-    fun getDeceasedCount() = covidDatabase.deceasedDao().getCurrentCount(Country.INDIA.code)
+    fun getDeceasedCount(state: String? = null): LiveData<CountModel> {
+        return if (state != null) {
+            covidDatabase.deceasedDao().getCurrentCount(Country.INDIA.code, state)
+        } else {
+            covidDatabase.deceasedDao().getCurrentCount(Country.INDIA.code)
+        }
+    }
 
-    fun getTestingCount() = covidDatabase.testDao().getTotalCount(TestEntity.OVER_ALL)
+    fun getTestingCount(state: String = TestEntity.OVER_ALL) = covidDatabase.testDao().getTotalCount(state)
 
-    fun searchDistrict(district: String?) =
-        covidDatabase.districtDao().getByDistrictName("%${district}%")
+    fun searchDistrict(district: String?) = covidDatabase.districtDao().getByDistrictName("%${district}%")
+
+    fun getDistricts(stateName: String, count: Int = -1): LiveData<List<DistrictEntity>> {
+        return if (count > 0) {
+            covidDatabase.districtDao().getByState(Country.INDIA.code, stateName, count)
+        } else {
+            covidDatabase.districtDao().getByState(Country.INDIA.code, stateName)
+        }
+    }
 
     fun getStates() = covidDatabase.stateDao().getStates(Country.INDIA.code)
 
@@ -55,8 +87,11 @@ class CovidIndiaRepository(private val covidDatabase: CovidDatabase) {
         return covidDatabase.combinedCasesDao().getOverall()
     }
 
-    fun lastUpdatedTime(): LiveData<Long?> {
-        return covidDatabase.confirmedDao().lastUpdatedTime()
+    fun lastUpdatedTime(state: String? = null): LiveData<Long?> {
+        return if (state != null) {
+            covidDatabase.confirmedDao().lastUpdatedTime(state)
+        } else  {
+            covidDatabase.confirmedDao().lastUpdatedTime()
+        }
     }
-
 }

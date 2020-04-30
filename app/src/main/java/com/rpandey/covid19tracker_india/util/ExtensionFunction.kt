@@ -1,5 +1,6 @@
 package com.rpandey.covid19tracker_india.util
 
+import android.app.Activity
 import androidx.annotation.IdRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
@@ -29,6 +30,22 @@ inline fun <F : Fragment> Fragment.attachChildFragment(fragmentTag: String, @IdR
     val fragment = getChildFragment(fragmentTag) ?: fragmentBlock()
     if (!fragment.isAdded) {
         val transaction = childFragmentManager.beginTransaction().replace(container, fragment, fragmentTag)
+        if (addToBackStack) {
+            transaction.addToBackStack(fragmentTag)
+        }
+        transaction.commitAllowingStateLoss()
+    }
+    return fragment
+}
+
+fun <T : Fragment> AppCompatActivity.getFragment(fragmentTag: String): T? {
+    return supportFragmentManager.findFragmentByTag(fragmentTag) as T?
+}
+
+inline fun <F : Fragment> AppCompatActivity.attachFragment(fragmentTag: String, @IdRes container: Int, addToBackStack: Boolean, fragmentBlock: () -> F): F {
+    val fragment = getFragment(fragmentTag) ?: fragmentBlock()
+    if (!fragment.isAdded) {
+        val transaction = supportFragmentManager.beginTransaction().replace(container, fragment, fragmentTag)
         if (addToBackStack) {
             transaction.addToBackStack(fragmentTag)
         }

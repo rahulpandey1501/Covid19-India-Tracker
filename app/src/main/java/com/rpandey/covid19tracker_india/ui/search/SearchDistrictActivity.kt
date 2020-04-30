@@ -18,22 +18,19 @@ import com.rpandey.covid19tracker_india.database.entity.DistrictEntity
 import com.rpandey.covid19tracker_india.database.provider.CovidDatabase
 import com.rpandey.covid19tracker_india.databinding.ItemDistrictCasesBinding
 import com.rpandey.covid19tracker_india.databinding.LayoutSearchActivityBinding
+import com.rpandey.covid19tracker_india.ui.BaseActivity
 import com.rpandey.covid19tracker_india.util.Util
 import com.rpandey.covid19tracker_india.util.getViewModel
 import com.rpandey.covid19tracker_india.util.observe
 
 
-class SearchDistrictActivity : AppCompatActivity() {
+class SearchDistrictActivity : BaseActivity() {
 
     companion object {
         const val KEY_DISTRICT_ID = "KEY_DISTRICT_ID"
     }
 
     private lateinit var binding: LayoutSearchActivityBinding
-
-    val repository by lazy {
-        CovidIndiaRepository(CovidDatabase.getInstance(applicationContext))
-    }
 
     private val viewModel: SearchDistrictViewModel by lazy {
         getViewModel { SearchDistrictViewModel(repository) }

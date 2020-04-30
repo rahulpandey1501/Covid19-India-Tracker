@@ -18,46 +18,44 @@ class HomeViewModel(private val repository: CovidIndiaRepository) : ViewModel() 
     private fun getTestingCount() = repository.getTestingCount()
 
     fun getCount(): MediatorLiveData<Map<UICaseType, CountModel>> {
-        val mediatorLiveData = MediatorLiveData<Map<UICaseType, CountModel>>()
-
         val allCases = mutableMapOf<UICaseType, CountModel>()
 
-        mediatorLiveData.addSource(getConfirmedCount(), Observer {
-            it?.let {
-                allCases[UICaseType.TYPE_CONFIRMED] = it
-                mediatorLiveData.value = allCases
-            }
-        })
+        return MediatorLiveData<Map<UICaseType, CountModel>>().apply {
+            addSource(getConfirmedCount(), Observer {
+                it?.let {
+                    allCases[UICaseType.TYPE_CONFIRMED] = it
+                    value = allCases
+                }
+            })
 
-        mediatorLiveData.addSource(getActiveCount(), Observer {
-            it?.let {
-                allCases[UICaseType.TYPE_ACTIVE] = CountModel(0, it)
-                mediatorLiveData.value = allCases
-            }
-        })
+            addSource(getActiveCount(), Observer {
+                it?.let {
+                    allCases[UICaseType.TYPE_ACTIVE] = CountModel(0, it)
+                    value = allCases
+                }
+            })
 
-        mediatorLiveData.addSource(getRecoveredCount(), Observer {
-            it?.let {
-                allCases[UICaseType.TYPE_RECOVERED] = it
-                mediatorLiveData.value = allCases
-            }
-        })
+            addSource(getRecoveredCount(), Observer {
+                it?.let {
+                    allCases[UICaseType.TYPE_RECOVERED] = it
+                    value = allCases
+                }
+            })
 
-        mediatorLiveData.addSource(getDeceasedCount(), Observer {
-            it?.let {
-                allCases[UICaseType.TYPE_DEATH] = it
-                mediatorLiveData.value = allCases
-            }
-        })
+            addSource(getDeceasedCount(), Observer {
+                it?.let {
+                    allCases[UICaseType.TYPE_DEATH] = it
+                    value = allCases
+                }
+            })
 
-        mediatorLiveData.addSource(getTestingCount(), Observer {
-            it?.let {
-                allCases[UICaseType.TYPE_TESTING] = it
-                mediatorLiveData.value = allCases
-            }
-        })
-
-        return mediatorLiveData
+            addSource(getTestingCount(), Observer {
+                it?.let {
+                    allCases[UICaseType.TYPE_TESTING] = it
+                    value = allCases
+                }
+            })
+        }
     }
 
     fun lastUpdatedTime(): LiveData<String> {

@@ -7,15 +7,16 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.rpandey.covid19tracker_india.database.dao.CombinedCasesModel
 import com.rpandey.covid19tracker_india.databinding.ItemCombinedViewBinding
+import com.rpandey.covid19tracker_india.ui.statedetails.StateDetailsActivity
 import com.rpandey.covid19tracker_india.util.Util
 
-class StatesAdapter(private var data: List<CombinedCasesModel>): RecyclerView.Adapter<ViewHolder>() {
+class StatesAdapter(private var data: List<CombinedCasesModel>, private val callback: (CombinedCasesModel) -> Unit): RecyclerView.Adapter<ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding =
-            ItemCombinedViewBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return ViewHolder(binding)
-
+        val binding = ItemCombinedViewBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return ViewHolder(binding) {
+            callback(data[it])
+        }
     }
 
     override fun getItemCount(): Int {
@@ -32,7 +33,7 @@ class StatesAdapter(private var data: List<CombinedCasesModel>): RecyclerView.Ad
     }
 }
 
-class ViewHolder(private val binding: ItemCombinedViewBinding) : RecyclerView.ViewHolder(binding.root) {
+class ViewHolder constructor(private val binding: ItemCombinedViewBinding, private val clickCallback: (Int) -> Unit) : RecyclerView.ViewHolder(binding.root) {
 
     fun init(data: CombinedCasesModel) {
         with(binding) {
@@ -48,6 +49,10 @@ class ViewHolder(private val binding: ItemCombinedViewBinding) : RecyclerView.Vi
             setDelta(tvDeathDelta, data.deceasedCases)
 
             tvTitle.text = data.stateName
+
+            itemView.setOnClickListener {
+                clickCallback(adapterPosition)
+            }
         }
     }
 
