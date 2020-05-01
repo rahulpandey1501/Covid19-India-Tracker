@@ -33,7 +33,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="12dp"
-                    android:src="@drawable/ic_outline_nights_stay_24"
+                    android:src="@drawable/ic_ui_mode_icon"
                     android:tint="@color/ui_mode_selection" />
 
                 <ImageView

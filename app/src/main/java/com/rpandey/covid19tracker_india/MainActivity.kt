@@ -4,18 +4,20 @@ import android.os.Bundle
 import android.view.animation.AnimationUtils
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.bottomnavigation.LabelVisibilityMode
-import com.google.firebase.analytics.FirebaseAnalytics
 import com.rpandey.covid19tracker_india.data.Status
+import com.rpandey.covid19tracker_india.data.StatusId
+import com.rpandey.covid19tracker_india.data.model.LaunchData
 import com.rpandey.covid19tracker_india.data.processor.CovidIndiaDataProcessor
 import com.rpandey.covid19tracker_india.database.provider.CovidDatabase
 import com.rpandey.covid19tracker_india.network.APIProvider
 import com.rpandey.covid19tracker_india.network.NetworkBuilder
+import com.rpandey.covid19tracker_india.ui.update.UpdateBottomSheet
 import com.rpandey.covid19tracker_india.util.ThemeHelper
+import com.rpandey.covid19tracker_india.util.showDialog
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -23,11 +25,9 @@ import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
 
-    lateinit var firebaseAnalytics: FirebaseAnalytics
-
     private val covidIndia by lazy {
         CovidIndiaDataProcessor(
-            APIProvider(NetworkBuilder.apiService), CovidDatabase.getInstance(applicationContext)
+            APIProvider(NetworkBuilder.apiService, NetworkBuilder.firebaseHostService), CovidDatabase.getInstance(applicationContext)
         )
     }
 
@@ -35,7 +35,6 @@ class MainActivity : AppCompatActivity() {
         setTheme(R.style.AppTheme)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        firebaseAnalytics = FirebaseAnalytics.getInstance(this)
         val navView: BottomNavigationView = findViewById(R.id.nav_view)
 
         val navController = findNavController(R.id.nav_host_fragment)
@@ -46,60 +45,22 @@ class MainActivity : AppCompatActivity() {
         navView.labelVisibilityMode = LabelVisibilityMode.LABEL_VISIBILITY_UNLABELED
 
         startSync()
-
-        appOpenEvent()
-    }
-
-    private fun appOpenEvent() {
-        val bundle = Bundle()
-        bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "Homepage")
-        firebaseAnalytics.logEvent(FirebaseAnalytics.Event.APP_OPEN, bundle)
     }
 
     private fun setupToolbarIcon() {
-        val currentTheme = ThemeHelper.getTheme(this)
-
-        if (currentTheme == ThemeHelper.LIGHT_MODE) {
-            iv_ui_mode.setImageDrawable(
-                ContextCompat.getDrawable(
-                    this,
-                    R.drawable.ic_outline_nights_stay_24
-                )
-            )
-            iv_ui_mode.setOnClickListener {
-                ThemeHelper.applyTheme(ThemeHelper.DARK_MODE)
-            }
-        } else {
-            iv_ui_mode.setImageDrawable(
-                ContextCompat.getDrawable(
-                    this,
-                    R.drawable.ic_twotone_wb_sunny_24
-                )
-            )
-            iv_ui_mode.setOnClickListener {
-                ThemeHelper.applyTheme(ThemeHelper.LIGHT_MODE)
-            }
+        iv_ui_mode.setOnClickListener {
+            ThemeHelper.toggle(this)
         }
-
         iv_refresh.setOnClickListener {
             startSync()
         }
-
     }
 
-    private fun startSync(callback: (Status<*>) -> Unit = {}) {
+    private fun startSync() {
         showRefreshAnimation()
         CoroutineScope(Dispatchers.IO).launch {
             covidIndia.startSync {
-                callback(it)
-                if (it is Status.Error) {
-                    CoroutineScope(Dispatchers.Main).launch {
-                        Toast.makeText(
-                            this@MainActivity,
-                            "Oops! something went wrong, unable to update", Toast.LENGTH_LONG
-                        ).show()
-                    }
-                }
+                onSyncComplete(it)
             }
         }
     }
@@ -107,5 +68,30 @@ class MainActivity : AppCompatActivity() {
     private fun showRefreshAnimation() {
         val animation = AnimationUtils.loadAnimation(this, R.anim.rotate_image)
         iv_refresh.startAnimation(animation)
+    }
+
+    private fun <T: Any?> onSyncComplete(status: Status<T>) {
+        CoroutineScope(Dispatchers.Main).launch {
+            when(status.statusId) {
+                StatusId.LAUNCH_DATA -> {
+                    if (status is Status.Success) {
+                        processAppLaunchData(status.data as LaunchData)
+                    }
+                }
+                StatusId.OVERALL_DATA -> {
+                    if (status is Status.Error) {
+                        Toast.makeText(this@MainActivity, "Oops! something went wrong, unable to update", Toast.LENGTH_LONG).show()
+                    }
+                }
+            }
+        }
+    }
+
+    private fun processAppLaunchData(data: LaunchData) {
+        if (BuildConfig.VERSION_CODE < data.latestVersion) {
+            showDialog(UpdateBottomSheet.TAG) {
+                UpdateBottomSheet.newInstance(data)
+            }
+        }
     }
 }

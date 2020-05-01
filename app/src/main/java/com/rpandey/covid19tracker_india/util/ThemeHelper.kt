@@ -33,4 +33,8 @@ object ThemeHelper {
     fun applyUserPrefTheme() {
         applyTheme(PreferenceHelper.getInt(KEY_USER_SELECTED, DEFAULT))
     }
+
+    fun toggle(context: Context) {
+        applyTheme(if (getTheme(context) == LIGHT_MODE) DARK_MODE else LIGHT_MODE)
+    }
 }

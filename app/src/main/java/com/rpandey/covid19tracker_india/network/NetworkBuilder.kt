@@ -27,4 +27,6 @@ object NetworkBuilder {
 
     val apiService: CovidIndiaApiService = getRetrofit(CovidIndiaApiService.BASE_URL).create(CovidIndiaApiService::class.java)
 
+    val firebaseHostService = getRetrofit(FirebaseHostApiService.BASE_URL).create(FirebaseHostApiService::class.java)
+
 }

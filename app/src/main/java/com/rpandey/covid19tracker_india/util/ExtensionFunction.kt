@@ -1,6 +1,5 @@
 package com.rpandey.covid19tracker_india.util
 
-import android.app.Activity
 import androidx.annotation.IdRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
@@ -14,10 +13,22 @@ fun <T : DialogFragment> Fragment.getDialog(dialogTag: String): T? {
     return childFragmentManager.findFragmentByTag(dialogTag) as T?
 }
 
+fun <T : DialogFragment> AppCompatActivity.getDialog(dialogTag: String): T? {
+    return supportFragmentManager.findFragmentByTag(dialogTag) as T?
+}
+
 inline fun <D : DialogFragment> Fragment.showDialog(tag: String, dialogBlock: () -> D): D {
     val dialog = getDialog(tag) ?: dialogBlock()
     if (!dialog.isAdded) {
         dialog.show(childFragmentManager, tag)
+    }
+    return dialog
+}
+
+inline fun <D : DialogFragment> AppCompatActivity.showDialog(tag: String, dialogBlock: () -> D): D {
+    val dialog = getDialog(tag) ?: dialogBlock()
+    if (!dialog.isAdded) {
+        dialog.show(supportFragmentManager, tag)
     }
     return dialog
 }
