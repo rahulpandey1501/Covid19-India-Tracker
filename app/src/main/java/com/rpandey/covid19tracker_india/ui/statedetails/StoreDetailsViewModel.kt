@@ -22,7 +22,7 @@ class StoreDetailsViewModel(private val repository: CovidIndiaRepository) : View
 
     private fun getTestingCount(state: String) = repository.getTestingCount(state)
 
-    fun getDistricts(stateName: String) = repository.getDistricts(stateName, 6)
+    fun getDistricts(stateName: String) = repository.getDistricts(stateName)
 
     fun getCount(state: String, stateName: String): MediatorLiveData<Map<UICaseType, CountModel>> {
         val allCases = mutableMapOf<UICaseType, CountModel>()

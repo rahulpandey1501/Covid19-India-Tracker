@@ -6,8 +6,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.GridLayout
 import android.widget.TextView
+import com.rpandey.covid19tracker_india.R
 import com.rpandey.covid19tracker_india.database.dao.CombinedCasesModel
 import com.rpandey.covid19tracker_india.database.entity.DistrictEntity
 import com.rpandey.covid19tracker_india.database.entity.StateEntity
@@ -18,10 +18,7 @@ import com.rpandey.covid19tracker_india.ui.BaseFragment
 import com.rpandey.covid19tracker_india.ui.dashboard.SelectStateBottomSheet
 import com.rpandey.covid19tracker_india.ui.search.SearchDistrictActivity
 import com.rpandey.covid19tracker_india.ui.statedetails.StateDetailsActivity
-import com.rpandey.covid19tracker_india.util.Util
-import com.rpandey.covid19tracker_india.util.getViewModel
-import com.rpandey.covid19tracker_india.util.observe
-import com.rpandey.covid19tracker_india.util.showDialog
+import com.rpandey.covid19tracker_india.util.*
 
 class BookmarkedFragment : BaseFragment(),
     SelectStateBottomSheet.Callback {
@@ -97,19 +94,17 @@ class BookmarkedFragment : BaseFragment(),
 
     private fun inflateBookmarkedDistricts(data: List<DistrictEntity>) {
         districtCancelViews.clear()
-        binding.districtContainer.removeAllViews()
         binding.removeDistrict.visibility = if (data.isEmpty()) View.GONE else View.VISIBLE
+        val gridViewInflater = GridViewInflater(2, binding.districtContainer)
 
         data.forEach { district ->
-            ItemDistrictCasesBinding.inflate(LayoutInflater.from(requireContext()), binding.districtContainer, true).apply {
-                val param = root.layoutParams as GridLayout.LayoutParams
-                param.columnSpec = GridLayout.spec(GridLayout.UNDEFINED, 1f)
-                root.layoutParams = param
-
+            val binding: ItemDistrictCasesBinding = gridViewInflater.addView(R.layout.item_district_cases)
+            binding.apply {
                 tvTitle.text = district.district
                 tvCount.text = Util.formatNumber(district.totalConfirmed)
-                if (district.confirmed > 0)
+                if (district.confirmed > 0) {
                     tvConfirmedDelta.text = String.format("+%s", Util.formatNumber(district.confirmed))
+                }
 
                 ivCancel.setOnClickListener {
                     viewModel.onDistrictRemoved(district.districtId)

@@ -78,10 +78,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
-                    android:text="@string/top_district"
+                    android:text="@string/district"
                     android:textAlignment="center"
                     android:textColor="@color/text_primary"
                     android:textSize="16sp"
+                    android:visibility="gone"
                     app:layout_constraintTop_toBottomOf="@+id/cases_layout"
                     tools:ignore="RtlSymmetry" />
 
@@ -107,21 +108,11 @@
                         tools:ignore="RtlSymmetry" />
                 </androidx.cardview.widget.CardView>
 
-                <View
-                    android:layout_width="40dp"
-                    android:layout_height="2dp"
-                    android:background="@color/text_secondary"
-                    android:paddingTop="4dp"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/district_title" />
-
-                <GridLayout
+                <FrameLayout
                     android:id="@+id/district_container"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
-                    android:columnCount="2"
-                    android:orientation="horizontal"
                     app:layout_constraintTop_toBottomOf="@+id/district_title" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>

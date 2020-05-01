@@ -4,21 +4,15 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
 import android.view.inputmethod.InputMethodManager
-import android.widget.EditText
-import android.widget.GridLayout
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.doAfterTextChanged
 import androidx.databinding.DataBindingUtil
 import com.rpandey.covid19tracker_india.R
-import com.rpandey.covid19tracker_india.data.repository.CovidIndiaRepository
 import com.rpandey.covid19tracker_india.database.entity.DistrictEntity
-import com.rpandey.covid19tracker_india.database.provider.CovidDatabase
-import com.rpandey.covid19tracker_india.databinding.ItemDistrictCasesBinding
+import com.rpandey.covid19tracker_india.databinding.ItemDistrictCasesMinimalBinding
 import com.rpandey.covid19tracker_india.databinding.LayoutSearchActivityBinding
 import com.rpandey.covid19tracker_india.ui.BaseActivity
+import com.rpandey.covid19tracker_india.util.GridViewInflater
 import com.rpandey.covid19tracker_india.util.Util
 import com.rpandey.covid19tracker_india.util.getViewModel
 import com.rpandey.covid19tracker_india.util.observe
@@ -62,16 +56,11 @@ class SearchDistrictActivity : BaseActivity() {
 
     private fun inflateDistricts(districts: List<DistrictEntity>) {
         binding.districtContainer.removeAllViews()
-
+        val gridViewInflater = GridViewInflater(3, binding.districtContainer)
         districts.forEach { district ->
-            val binding = ItemDistrictCasesBinding.inflate(LayoutInflater.from(this), binding.districtContainer, true)
+            val binding: ItemDistrictCasesMinimalBinding = gridViewInflater.addView(R.layout.item_district_cases_minimal)
             binding.tvTitle.text = district.district
             binding.tvCount.text = Util.formatNumber(district.totalConfirmed)
-
-            val param = binding.root.layoutParams as GridLayout.LayoutParams
-            param.columnSpec = GridLayout.spec(GridLayout.UNDEFINED, 1f)
-            binding.root.layoutParams = param
-
             binding.root.setOnClickListener {
                 onDistrictSelected(district)
             }

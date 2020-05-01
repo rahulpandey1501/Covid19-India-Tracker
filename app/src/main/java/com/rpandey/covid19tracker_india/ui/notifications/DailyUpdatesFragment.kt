@@ -8,6 +8,7 @@ import com.rpandey.covid19tracker_india.R
 import com.rpandey.covid19tracker_india.databinding.FragmentNotificationsBinding
 import com.rpandey.covid19tracker_india.databinding.ItemUpdatesBinding
 import com.rpandey.covid19tracker_india.ui.BaseFragment
+import com.rpandey.covid19tracker_india.ui.statedetails.StateDetailsActivity
 import com.rpandey.covid19tracker_india.util.getViewModel
 import com.rpandey.covid19tracker_india.util.observe
 
@@ -41,6 +42,9 @@ class DailyUpdatesFragment : BaseFragment() {
                 val binding = ItemUpdatesBinding.inflate(LayoutInflater.from(requireContext()), binding.container, true)
                 binding.title.text = data.stateName
                 binding.message.text = message
+                binding.root.setOnClickListener {
+                    startActivity(StateDetailsActivity.getIntent(requireActivity(), data.state, data.stateName))
+                }
             }
         }
     }

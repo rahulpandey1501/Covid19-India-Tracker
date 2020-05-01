@@ -67,15 +67,13 @@
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/district_title" />
 
-                <GridLayout
+                <FrameLayout
                     android:id="@+id/district_container"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="12dp"
                     android:layout_marginTop="16dp"
                     android:layout_marginRight="12dp"
-                    android:columnCount="2"
-                    android:orientation="horizontal"
                     app:layout_constraintTop_toBottomOf="@+id/district_title" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>

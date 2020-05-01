@@ -1,22 +1,19 @@
 package com.rpandey.covid19tracker_india.ui.statedetails
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.widget.GridLayout
-import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.FragmentActivity
 import com.rpandey.covid19tracker_india.R
 import com.rpandey.covid19tracker_india.database.entity.DistrictEntity
 import com.rpandey.covid19tracker_india.database.model.CountModel
 import com.rpandey.covid19tracker_india.databinding.ActivityStateDetailsBinding
-import com.rpandey.covid19tracker_india.databinding.ItemDistrictCasesBinding
+import com.rpandey.covid19tracker_india.databinding.ItemDistrictCasesMinimalBinding
 import com.rpandey.covid19tracker_india.ui.BaseActivity
 import com.rpandey.covid19tracker_india.ui.home.ItemCountCaseBindingModel
 import com.rpandey.covid19tracker_india.ui.home.UICaseType
+import com.rpandey.covid19tracker_india.util.GridViewInflater
 import com.rpandey.covid19tracker_india.util.Util
 import com.rpandey.covid19tracker_india.util.getViewModel
 import com.rpandey.covid19tracker_india.util.observe
@@ -67,7 +64,7 @@ class StateDetailsActivity : BaseActivity() {
         }
 
         viewModel.getDistricts(stateName).observe(this) {
-            inflateBookmarkedDistricts(it)
+            inflateDistricts(it)
         }
     }
 
@@ -85,14 +82,11 @@ class StateDetailsActivity : BaseActivity() {
         }
     }
 
-    private fun inflateBookmarkedDistricts(data: List<DistrictEntity>) {
-        binding.districtContainer.removeAllViews()
+    private fun inflateDistricts(data: List<DistrictEntity>) {
+        binding.districtTitle.visibility = if(data.isEmpty()) View.GONE else View.VISIBLE
+        val gridViewInflater = GridViewInflater(3, binding.districtContainer)
         data.forEach { district ->
-            ItemDistrictCasesBinding.inflate(LayoutInflater.from(this), binding.districtContainer, true).apply {
-                val param = root.layoutParams as GridLayout.LayoutParams
-                param.columnSpec = GridLayout.spec(GridLayout.UNDEFINED, 1f)
-                root.layoutParams = param
-
+             gridViewInflater.addView<ItemDistrictCasesMinimalBinding>(R.layout.item_district_cases_minimal).apply {
                 tvTitle.text = district.district
                 tvCount.text = Util.formatNumber(district.totalConfirmed)
                 if (district.confirmed > 0)
