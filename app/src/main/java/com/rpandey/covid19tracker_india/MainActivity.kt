@@ -3,7 +3,6 @@ package com.rpandey.covid19tracker_india
 import android.os.Bundle
 import android.view.animation.AnimationUtils
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -11,10 +10,7 @@ import com.google.android.material.bottomnavigation.LabelVisibilityMode
 import com.rpandey.covid19tracker_india.data.Status
 import com.rpandey.covid19tracker_india.data.StatusId
 import com.rpandey.covid19tracker_india.data.model.LaunchData
-import com.rpandey.covid19tracker_india.data.processor.CovidIndiaDataProcessor
-import com.rpandey.covid19tracker_india.database.provider.CovidDatabase
-import com.rpandey.covid19tracker_india.network.APIProvider
-import com.rpandey.covid19tracker_india.network.NetworkBuilder
+import com.rpandey.covid19tracker_india.ui.BaseActivity
 import com.rpandey.covid19tracker_india.ui.update.UpdateBottomSheet
 import com.rpandey.covid19tracker_india.util.ThemeHelper
 import com.rpandey.covid19tracker_india.util.showDialog
@@ -23,13 +19,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class MainActivity : AppCompatActivity() {
-
-    private val covidIndia by lazy {
-        CovidIndiaDataProcessor(
-            APIProvider(NetworkBuilder.apiService, NetworkBuilder.firebaseHostService), CovidDatabase.getInstance(applicationContext)
-        )
-    }
+class MainActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.AppTheme)
@@ -59,7 +49,7 @@ class MainActivity : AppCompatActivity() {
     private fun startSync() {
         showRefreshAnimation()
         CoroutineScope(Dispatchers.IO).launch {
-            covidIndia.startSync {
+            dataProcessor.startSync {
                 onSyncComplete(it)
             }
         }

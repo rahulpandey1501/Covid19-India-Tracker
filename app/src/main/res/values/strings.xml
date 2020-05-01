@@ -16,7 +16,7 @@
     <string name="search_city">Enter city name</string>
     <string name="Search">Search</string>
     <string name="state_ut">State/UT</string>
-    <string name="monitoring_district">Monitor Cities</string>
+    <string name="monitoring_district">Monitor Districts</string>
     <string name="monitoring_states">Monitor States</string>
     <string name="state_tracker">Tracker</string>
     <string name="title_daily_updates">Today\'s updates</string>
