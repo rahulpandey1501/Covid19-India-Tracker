@@ -47,6 +47,7 @@ class GridViewInflater(private val column: Int, private val container: ViewGroup
             var allocatedWidth = container.width / column
             allocatedWidth = allocatedWidth - marginEnd - marginStart
             param.width = allocatedWidth
+            param.height = LinearLayout.LayoutParams.MATCH_PARENT
             view.layoutParams = param
         }, 5)
     }
