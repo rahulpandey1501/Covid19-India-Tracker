@@ -26,14 +26,14 @@ abstract class CovidDatabase : RoomDatabase() {
 
     companion object {
 
-        const val VERSION = 3
+        const val VERSION = 4
         private const val NAME = "covid_database"
 
         private var database: CovidDatabase? = null
 
         fun getInstance(context: Context): CovidDatabase {
             database = database ?: Room.databaseBuilder(context.applicationContext, CovidDatabase::class.java, NAME)
-                .addMigrations(Migrations1to2(), Migrations2to3())
+                .addMigrations(Migrations1to2(), Migrations2to3(), Migrations3to4())
                 .build()
             return database!!
         }

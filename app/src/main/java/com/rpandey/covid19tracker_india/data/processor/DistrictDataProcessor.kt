@@ -3,20 +3,28 @@ package com.rpandey.covid19tracker_india.data.processor
 import androidx.room.Transaction
 import com.rpandey.covid19tracker_india.data.model.Country
 import com.rpandey.covid19tracker_india.data.model.covidIndia.DistrictResponse
+import com.rpandey.covid19tracker_india.data.model.covidIndia.ZoneData
 import com.rpandey.covid19tracker_india.database.entity.DistrictEntity
 import com.rpandey.covid19tracker_india.database.provider.CovidDatabase
 
 class DistrictDataProcessor(covidDatabase: CovidDatabase) :
-    ResponseProcessor<List<DistrictResponse>>(covidDatabase) {
+    ResponseProcessor<Pair<List<DistrictResponse>, List<ZoneData>>>(covidDatabase) {
 
-    override fun process(data: List<DistrictResponse>) {
+    override fun process(data: Pair<List<DistrictResponse>, List<ZoneData>>) {
+
+        val districtList = data.first
+        val zoneList = data.second
+        val zoneDistrictMapping = zoneList.associateBy { it.district.trim() to it.stateName.trim() }
+
         val districtEntities = mutableListOf<DistrictEntity>()
 
-        data.forEach {
+        districtList.forEach {
             val stateName = it.state?.trim() ?: ""
             it.districtData?.forEach { districtData ->
                 val district = districtData.district.trim()
                 val delta = districtData.delta
+                val zoneData = zoneDistrictMapping[district to stateName]
+                val zone = if (zoneData?.zone.isNullOrEmpty()) null else zoneData?.zone
                 districtEntities.add(
                     DistrictEntity(
                         getDistrictId(stateName, district),
@@ -28,7 +36,8 @@ class DistrictDataProcessor(covidDatabase: CovidDatabase) :
                         delta.recovered,
                         districtData.recovered,
                         delta.deceased,
-                        districtData.deceased
+                        districtData.deceased,
+                        zone?.trim()
                     )
                 )
             }

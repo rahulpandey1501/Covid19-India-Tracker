@@ -1,5 +1,6 @@
 package com.rpandey.covid19tracker_india.data.processor
 
+import androidx.room.Transaction
 import com.rpandey.covid19tracker_india.data.Constants
 import com.rpandey.covid19tracker_india.data.model.Country
 import com.rpandey.covid19tracker_india.data.model.covidIndia.*
@@ -85,6 +86,7 @@ class OverallDataProcessor(covidDatabase: CovidDatabase) :
         persistStateData(activeCases, confirmedCases, recoveredCases, deceasedCases, statesData)
     }
 
+    @Transaction
     private fun persistStateData(
         activeCases: MutableList<ActiveEntity>,
         confirmedCases: MutableList<ConfirmedEntity>,

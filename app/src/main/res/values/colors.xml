@@ -17,4 +17,7 @@
     <color name="navigation_icon_unselected">#aaa</color>
     <color name="toolbar_icon">#1d2025</color>
     <color name="ui_mode_selection">@color/toolbar_icon</color>
+    <color name="zone_red">#ff3e3e</color>
+    <color name="zone_orange">#FF8E0D</color>
+    <color name="zone_green">#1CB142</color>
 </resources>

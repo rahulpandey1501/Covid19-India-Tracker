@@ -4,5 +4,6 @@ enum class StatusId {
     LAUNCH_DATA,
     OVERALL_DATA,
     TESTING_DATA,
-    DISTRICT_DATA
+    DISTRICT_DATA,
+    ZONE_DATA
 }

@@ -19,6 +19,12 @@ interface DistrictDao {
     @Query("select * from district_cases where district like :district")
     fun getByDistrictName(district: String?): LiveData<List<DistrictEntity>>
 
+    @Query("select * from district_cases where districtId = :districtId")
+    fun getByDistrictId(districtId: Int): LiveData<DistrictEntity>
+
+    @Query("select max(CC.date) from confirmed_cases CC inner join states S on CC.state = S.code inner join district_cases DC on DC.stateName = S.name where districtId = :districtId")
+    fun lastUpdatedTime(districtId: Int): LiveData<Long?>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(data: List<DistrictEntity>)
 

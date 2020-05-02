@@ -1,9 +1,6 @@
 package com.rpandey.covid19tracker_india.network
 
-import com.rpandey.covid19tracker_india.data.model.covidIndia.DailyStateResponse
-import com.rpandey.covid19tracker_india.data.model.covidIndia.DistrictResponse
-import com.rpandey.covid19tracker_india.data.model.covidIndia.OverAllDataResponse
-import com.rpandey.covid19tracker_india.data.model.covidIndia.TestResponse
+import com.rpandey.covid19tracker_india.data.model.covidIndia.*
 import retrofit2.http.GET
 
 interface CovidIndiaApiService {
@@ -23,4 +20,7 @@ interface CovidIndiaApiService {
 
     @GET("state_test_data.json")
     suspend fun getTestingData(): TestResponse
+
+    @GET("zones.json")
+    suspend fun getZoneData(): ZoneResponse
 }

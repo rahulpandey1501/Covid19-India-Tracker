@@ -16,11 +16,19 @@
             app:cardCornerRadius="8dp"
             app:cardElevation="0dp">
 
-            <LinearLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:padding="8dp">
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <View
+                    android:id="@+id/zone_indicator"
+                    android:layout_width="3dp"
+                    android:layout_height="0dp"
+                    android:alpha="0.8"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tv_title"
@@ -28,19 +36,26 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/open_sans"
                     android:gravity="center_horizontal"
+                    android:paddingStart="8dp"
+                    android:paddingTop="8dp"
                     android:paddingBottom="8dp"
                     android:textColor="@color/text_primary"
                     android:textSize="14sp"
                     app:fontFamily="@font/open_sans"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="RtlSymmetry"
                     tools:text="Bhopal" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginEnd="4dp"
                     android:baselineAligned="false"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:paddingBottom="8dp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_title">
 
                     <LinearLayout
                         android:layout_width="0dp"
@@ -62,9 +77,9 @@
                             android:id="@+id/tv_confirmed_delta"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_gravity="bottom"
                             android:layout_marginStart="4dp"
                             android:fontFamily="@font/open_sans_semibold"
-                            android:layout_gravity="bottom"
                             android:textColor="@color/number_increase_color"
                             android:textSize="12sp"
                             app:fontFamily="@font/open_sans_semibold"
@@ -110,11 +125,11 @@
                             android:id="@+id/tv_recovered_delta"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_gravity="bottom"
                             android:layout_marginStart="4dp"
                             android:fontFamily="@font/open_sans_semibold"
                             android:textColor="@color/background_recovered"
                             android:textSize="12sp"
-                            android:layout_gravity="bottom"
                             app:fontFamily="@font/open_sans_semibold"
                             tools:text="12,345" />
 
@@ -134,25 +149,25 @@
                             android:gravity="center"
                             android:textColor="@color/text_primary"
                             android:textSize="15sp"
-                            tools:text="12,345" />
+                            tools:text="123" />
 
                         <androidx.appcompat.widget.AppCompatTextView
                             android:id="@+id/tv_death_delta"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_gravity="bottom"
                             android:layout_marginStart="4dp"
                             android:fontFamily="@font/open_sans_semibold"
-                            android:layout_gravity="bottom"
                             android:textColor="@color/number_increase_color"
                             android:textSize="12sp"
                             app:fontFamily="@font/open_sans_semibold"
-                            tools:text="12,345" />
+                            tools:text="12" />
 
                     </LinearLayout>
 
                 </LinearLayout>
 
-            </LinearLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.cardview.widget.CardView>
 

@@ -16,6 +16,7 @@ import com.rpandey.covid19tracker_india.databinding.ItemCombinedViewBinding
 import com.rpandey.covid19tracker_india.databinding.ItemDistrictCasesBinding
 import com.rpandey.covid19tracker_india.ui.BaseFragment
 import com.rpandey.covid19tracker_india.ui.dashboard.SelectStateBottomSheet
+import com.rpandey.covid19tracker_india.ui.districtdetails.DistrictDetailsActivity
 import com.rpandey.covid19tracker_india.ui.search.SearchDistrictActivity
 import com.rpandey.covid19tracker_india.ui.statedetails.StateDetailsActivity
 import com.rpandey.covid19tracker_india.util.*
@@ -106,11 +107,14 @@ class BookmarkedFragment : BaseFragment(),
                 if (district.confirmed > 0) {
                     tvConfirmedDelta.text = String.format("+%s", Util.formatNumber(district.confirmed))
                 }
-
                 ivCancel.setOnClickListener {
                     viewModel.onDistrictRemoved(district.districtId)
                 }
+                zoneIndicator.setBackgroundColor(Util.getZoneColor(requireContext(), district.zone))
                 districtCancelViews.add(ivCancel)
+                root.setOnClickListener {
+                    openDistrictDetailsView(district)
+                }
             }
         }
     }
@@ -155,6 +159,10 @@ class BookmarkedFragment : BaseFragment(),
         } else {
             textView.visibility = View.INVISIBLE
         }
+    }
+
+    private fun openDistrictDetailsView(district: DistrictEntity) {
+        startActivity(DistrictDetailsActivity.getIntent(requireActivity(), district.districtId))
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

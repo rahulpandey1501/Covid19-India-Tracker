@@ -12,6 +12,7 @@ import com.rpandey.covid19tracker_india.databinding.ActivityStateDetailsBinding
 import com.rpandey.covid19tracker_india.ui.BaseActivity
 import com.rpandey.covid19tracker_india.ui.common.HeaderViewHelper
 import com.rpandey.covid19tracker_india.ui.common.SortOn
+import com.rpandey.covid19tracker_india.ui.districtdetails.DistrictDetailsActivity
 import com.rpandey.covid19tracker_india.ui.home.ItemCountCaseBindingModel
 import com.rpandey.covid19tracker_india.ui.home.UICaseType
 import com.rpandey.covid19tracker_india.util.getViewModel
@@ -44,7 +45,9 @@ class StateDetailsActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_state_details)
-        adapter = DistrictListAdapter(mutableListOf())
+        adapter = DistrictListAdapter(mutableListOf()) {
+            openDistrictDetailsView(it)
+        }
         binding.rvDistrictContainer.adapter = adapter
         observeLiveData()
     }
@@ -104,6 +107,10 @@ class StateDetailsActivity : BaseActivity() {
         container_district_title.visibility = district_header.visibility
 
         adapter.update(data as MutableList<DistrictEntity>)
+    }
+
+    private fun openDistrictDetailsView(district: DistrictEntity) {
+        startActivity(DistrictDetailsActivity.getIntent(this, district.districtId))
     }
 
     private fun sortData(sortOn: SortOn, ascending: Boolean = true) {

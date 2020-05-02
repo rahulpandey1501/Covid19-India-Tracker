@@ -63,6 +63,7 @@ class SearchDistrictActivity : BaseActivity() {
             val binding: ItemDistrictCasesMinimalBinding = gridViewInflater.addView(R.layout.item_district_cases_minimal)
             binding.tvTitle.text = district.district
             binding.tvCount.text = Util.formatNumber(district.getActive())
+            binding.zoneIndicator.setBackgroundColor(Util.getZoneColor(this, district.zone))
             binding.root.setOnClickListener {
                 onDistrictSelected(district)
             }

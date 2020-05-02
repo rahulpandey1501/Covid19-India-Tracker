@@ -14,7 +14,8 @@ data class DistrictEntity constructor(
     @ColumnInfo(name = "recovered") val recovered: Int,
     @ColumnInfo(name = "total_recovered") val totalRecovered: Int,
     @ColumnInfo(name = "deceased") val deceased: Int,
-    @ColumnInfo(name = "total_deceased") val totalDeceased: Int
+    @ColumnInfo(name = "total_deceased") val totalDeceased: Int,
+    @ColumnInfo(name = "zone") val zone: String?
 ) {
     fun getActive() = (totalConfirmed - totalRecovered - totalDeceased)
 }

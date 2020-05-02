@@ -59,6 +59,8 @@ class CovidIndiaRepository(private val covidDatabase: CovidDatabase) {
         }
     }
 
+    fun getDistrict(districtId: Int) = covidDatabase.districtDao().getByDistrictId(districtId)
+
     fun getStates() = covidDatabase.stateDao().getStates(Country.INDIA.code)
 
     fun setBookmark(bookmarkId: String, @BookmarkType type: String) {
@@ -93,5 +95,9 @@ class CovidIndiaRepository(private val covidDatabase: CovidDatabase) {
         } else  {
             covidDatabase.confirmedDao().lastUpdatedTime()
         }
+    }
+
+    fun lastUpdatedTime(districtId: Int): LiveData<Long?> {
+        return covidDatabase.districtDao().lastUpdatedTime(districtId)
     }
 }

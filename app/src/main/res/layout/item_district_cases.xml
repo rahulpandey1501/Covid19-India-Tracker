@@ -10,74 +10,90 @@
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:cardBackgroundColor="@color/item_background"
             android:layout_margin="4dp"
+            app:cardBackgroundColor="@color/item_background"
             app:cardCornerRadius="8dp"
             app:cardElevation="0dp">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:paddingLeft="16dp"
-                android:paddingRight="16dp"
-                android:paddingTop="12dp"
-                android:paddingBottom="12dp">
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tv_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="14sp"
-                    app:fontFamily="@font/open_sans"
-                    android:fontFamily="@font/open_sans"
-                    android:textColor="@color/text_primary"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:text="Bhopal" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tv_count"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/text_primary"
-                    android:textSize="20sp"
-                    android:layout_marginTop="4dp"
-                    app:layout_constraintHorizontal_bias="0"
-                    app:layout_constraintRight_toLeftOf="@+id/tv_confirmed_delta"
-                    app:fontFamily="@font/open_sans_semibold"
-                    android:fontFamily="@font/open_sans_semibold"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_title"
-                    tools:text="12,345" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tv_confirmed_delta"
-                    android:layout_width="wrap_content"
-                    android:layout_height="20dp"
-                    android:gravity="center"
-                    android:paddingStart="4dp"
-                    android:textColor="@color/number_increase_color"
-                    android:textSize="14sp"
-                    android:fontFamily="@font/roboto_medium"
-                    app:fontFamily="@font/roboto_medium"
-                    app:layout_constraintRight_toRightOf="parent"
+                <View
+                    android:id="@+id/zone_indicator"
+                    android:layout_width="3dp"
+                    android:layout_height="match_parent"
+                    android:alpha="0.8"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    tools:text="12,345"
-                    tools:ignore="RtlSymmetry" />
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="16dp"
+                    android:paddingTop="12dp"
+                    android:paddingRight="16dp"
+                    android:paddingBottom="12dp">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/open_sans"
+                        android:textColor="@color/text_primary"
+                        android:textSize="14sp"
+                        app:fontFamily="@font/open_sans"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:text="Bhopal" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_count"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:fontFamily="@font/open_sans_semibold"
+                        android:textColor="@color/text_primary"
+                        android:textSize="20sp"
+                        app:fontFamily="@font/open_sans_semibold"
+                        app:layout_constraintHorizontal_bias="0"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toLeftOf="@+id/tv_confirmed_delta"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_title"
+                        tools:text="12,345" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_confirmed_delta"
+                        android:layout_width="wrap_content"
+                        android:layout_height="20dp"
+                        android:fontFamily="@font/roboto_medium"
+                        android:gravity="center"
+                        android:paddingStart="4dp"
+                        android:textColor="@color/number_increase_color"
+                        android:textSize="14sp"
+                        app:fontFamily="@font/roboto_medium"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        tools:ignore="RtlSymmetry"
+                        tools:text="12,345" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </LinearLayout>
 
         </androidx.cardview.widget.CardView>
 
         <ImageView
+            android:id="@+id/iv_cancel"
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_gravity="top|end"
-            android:id="@+id/iv_cancel"
-            android:visibility="gone"
             android:src="@drawable/ic_round_cancel_24"
             android:tint="@color/background_confirmed"
-            android:translationZ="100dp" />
+            android:translationZ="100dp"
+            android:visibility="gone" />
 
     </FrameLayout>
 </layout>

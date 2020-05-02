@@ -9,11 +9,13 @@ import com.rpandey.covid19tracker_india.database.entity.DistrictEntity
 import com.rpandey.covid19tracker_india.databinding.ItemCombinedViewDistrictBinding
 import com.rpandey.covid19tracker_india.util.Util
 
-class DistrictListAdapter(var data: MutableList<DistrictEntity>) : RecyclerView.Adapter<ViewHolder>() {
+class DistrictListAdapter(var data: MutableList<DistrictEntity>, private val clickCallback: (DistrictEntity) -> Unit) : RecyclerView.Adapter<ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = ItemCombinedViewDistrictBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return ViewHolder(binding)
+        return ViewHolder(binding) {
+            clickCallback(data[it])
+        }
     }
 
     override fun getItemCount(): Int {
@@ -30,7 +32,7 @@ class DistrictListAdapter(var data: MutableList<DistrictEntity>) : RecyclerView.
     }
 }
 
-class ViewHolder(val binding: ItemCombinedViewDistrictBinding): RecyclerView.ViewHolder(binding.root) {
+class ViewHolder(val binding: ItemCombinedViewDistrictBinding, val callback: (Int) -> Unit): RecyclerView.ViewHolder(binding.root) {
 
     fun init(district: DistrictEntity) {
         with(binding) {
@@ -46,6 +48,13 @@ class ViewHolder(val binding: ItemCombinedViewDistrictBinding): RecyclerView.Vie
             setDelta(tvDeathDelta, district.deceased)
 
             tvActive.text = Util.formatNumber(district.getActive())
+
+            val context = binding.root.context
+            zoneIndicator.setBackgroundColor(Util.getZoneColor(context, district.zone))
+
+            itemView.setOnClickListener {
+                callback(adapterPosition)
+            }
         }
     }
 

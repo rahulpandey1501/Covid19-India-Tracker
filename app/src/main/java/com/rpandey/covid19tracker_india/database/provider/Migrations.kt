@@ -32,3 +32,9 @@ class Migrations2to3: Migration(2, 3) {
         database.execSQL("CREATE TABLE `test` (`date` INTEGER NOT NULL, `country` TEXT NOT NULL, `stateName` TEXT NOT NULL, `tested` INTEGER NOT NULL, `total_tested` INTEGER NOT NULL, PRIMARY KEY(`stateName`))")
     }
 }
+
+class Migrations3to4: Migration(3, 4) {
+    override fun migrate(database: SupportSQLiteDatabase) {
+        addColumn(database, "district_cases", "zone", "TEXT DEFAULT NULL")
+    }
+}
