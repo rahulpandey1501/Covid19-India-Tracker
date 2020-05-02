@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.FrameLayout
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.gson.Gson
 import com.rpandey.covid19tracker_india.BuildConfig
 import com.rpandey.covid19tracker_india.data.model.LaunchData
@@ -42,6 +43,7 @@ class UpdateBottomSheet : BaseBottomSheetFragment() {
         val launchData = Gson().fromJson(requireArguments().getString(KEY_DATA), LaunchData::class.java)
         initUi(launchData)
         binding.vm = launchData
+        FirebaseAnalytics.getInstance(requireContext()).logEvent("AppUpdateUI", null)
         return binding.root
     }
 
@@ -54,12 +56,14 @@ class UpdateBottomSheet : BaseBottomSheetFragment() {
 
         binding.later.setOnClickListener {
             dismissAllowingStateLoss()
+            FirebaseAnalytics.getInstance(requireContext()).logEvent("UPDATE_LATER_CLICKED", null)
             if (BuildConfig.VERSION_CODE < launchData.forceUpdate.minVersion)
                 requireActivity().finish()
         }
 
         binding.download.setOnClickListener {
             openBrowser(launchData.downloadUrl)
+            FirebaseAnalytics.getInstance(requireContext()).logEvent("UPDATE_DOWNLOAD_CLICKED", null)
         }
     }
 
