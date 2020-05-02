@@ -45,7 +45,7 @@
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
+                        android:layout_weight="5"
                         android:gravity="center"
                         android:orientation="horizontal">
 
@@ -61,10 +61,10 @@
                         <androidx.appcompat.widget.AppCompatTextView
                             android:id="@+id/tv_confirmed_delta"
                             android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
+                            android:layout_height="wrap_content"
                             android:layout_marginStart="4dp"
                             android:fontFamily="@font/open_sans_semibold"
-                            android:gravity="center_vertical"
+                            android:layout_gravity="bottom"
                             android:textColor="@color/number_increase_color"
                             android:textSize="12sp"
                             app:fontFamily="@font/open_sans_semibold"
@@ -75,7 +75,7 @@
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
+                        android:layout_weight="4"
                         android:gravity="center"
                         android:orientation="horizontal">
 
@@ -93,7 +93,7 @@
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
+                        android:layout_weight="5"
                         android:gravity="center"
                         android:orientation="horizontal">
 
@@ -109,12 +109,12 @@
                         <androidx.appcompat.widget.AppCompatTextView
                             android:id="@+id/tv_recovered_delta"
                             android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
+                            android:layout_height="wrap_content"
                             android:layout_marginStart="4dp"
                             android:fontFamily="@font/open_sans_semibold"
-                            android:gravity="center_vertical"
                             android:textColor="@color/background_recovered"
                             android:textSize="12sp"
+                            android:layout_gravity="bottom"
                             app:fontFamily="@font/open_sans_semibold"
                             tools:text="12,345" />
 
@@ -123,7 +123,7 @@
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
+                        android:layout_weight="4"
                         android:gravity="center"
                         android:orientation="horizontal">
 
@@ -139,10 +139,10 @@
                         <androidx.appcompat.widget.AppCompatTextView
                             android:id="@+id/tv_death_delta"
                             android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
+                            android:layout_height="wrap_content"
                             android:layout_marginStart="4dp"
                             android:fontFamily="@font/open_sans_semibold"
-                            android:gravity="center_vertical"
+                            android:layout_gravity="bottom"
                             android:textColor="@color/number_increase_color"
                             android:textSize="12sp"
                             app:fontFamily="@font/open_sans_semibold"
