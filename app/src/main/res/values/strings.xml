@@ -30,4 +30,5 @@
     <string name="remind_me_later">Remind me later</string>
     <string name="affect">Confirm</string>
     <string name="recover">Recover</string>
+    <string name="active_cases">*Active cases</string>
 </resources>

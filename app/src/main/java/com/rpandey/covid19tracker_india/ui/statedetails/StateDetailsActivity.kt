@@ -101,6 +101,8 @@ class StateDetailsActivity : BaseActivity() {
 
     private fun inflateDistricts(data: List<DistrictEntity>) {
         district_header.visibility = if(data.isEmpty()) View.GONE else View.VISIBLE
+        container_district_title.visibility = district_header.visibility
+
         adapter.update(data as MutableList<DistrictEntity>)
     }
 
@@ -113,7 +115,7 @@ class StateDetailsActivity : BaseActivity() {
                 return when(sortOn) {
                     SortOn.NAME -> getCompare(d1.district, d2.district)
                     SortOn.CONFIRMED -> getCompare(d1.totalConfirmed, d2.totalConfirmed)
-                    SortOn.ACTIVE -> getCompare(d1.active, d2.active)
+                    SortOn.ACTIVE -> getCompare(d1.getActive(), d2.getActive())
                     SortOn.RECOVERED -> getCompare(d1.totalRecovered, d2.totalRecovered)
                     SortOn.DECEASED -> getCompare(d1.totalDeceased, d2.totalDeceased)
                 }

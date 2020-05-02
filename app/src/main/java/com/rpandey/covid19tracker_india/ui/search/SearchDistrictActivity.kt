@@ -62,7 +62,7 @@ class SearchDistrictActivity : BaseActivity() {
         districts.forEach { district ->
             val binding: ItemDistrictCasesMinimalBinding = gridViewInflater.addView(R.layout.item_district_cases_minimal)
             binding.tvTitle.text = district.district
-            binding.tvCount.text = Util.formatNumber(district.totalConfirmed)
+            binding.tvCount.text = Util.formatNumber(district.getActive())
             binding.root.setOnClickListener {
                 onDistrictSelected(district)
             }

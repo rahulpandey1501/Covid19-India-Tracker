@@ -41,6 +41,19 @@
                     android:textSize="16sp"
                     tools:ignore="RtlSymmetry" />
 
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/active_cases"
+                    android:textAlignment="center"
+                    android:textSize="10sp"
+                    app:fontFamily="@font/open_sans"
+                    android:fontFamily="@font/open_sans"
+                    android:layout_marginStart="8dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/district_title"
+                    app:layout_constraintLeft_toRightOf="@+id/district_title"
+                    tools:ignore="RtlSymmetry" />
+
                 <include
                     android:id="@+id/remove_district"
                     layout="@layout/view_remove_button"

@@ -102,7 +102,7 @@ class BookmarkedFragment : BaseFragment(),
             val binding: ItemDistrictCasesBinding = gridViewInflater.addView(R.layout.item_district_cases)
             binding.apply {
                 tvTitle.text = district.district
-                tvCount.text = Util.formatNumber(district.totalConfirmed)
+                tvCount.text = Util.formatNumber(district.getActive())
                 if (district.confirmed > 0) {
                     tvConfirmedDelta.text = String.format("+%s", Util.formatNumber(district.confirmed))
                 }

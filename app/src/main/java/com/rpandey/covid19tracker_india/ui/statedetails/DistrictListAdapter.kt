@@ -45,8 +45,7 @@ class ViewHolder(val binding: ItemCombinedViewDistrictBinding): RecyclerView.Vie
             tvDeath.text = Util.formatNumber(district.totalDeceased)
             setDelta(tvDeathDelta, district.deceased)
 
-            district.active = district.totalConfirmed - district.totalRecovered - district.totalDeceased
-            tvActive.text = Util.formatNumber(district.active)
+            tvActive.text = Util.formatNumber(district.getActive())
         }
     }
 
