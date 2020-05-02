@@ -20,6 +20,8 @@ import com.rpandey.covid19tracker_india.util.observe
 
 class SearchDistrictActivity : BaseActivity() {
 
+    override fun getScreenName(): String = "SearchDistrict"
+
     companion object {
         const val KEY_DISTRICT_ID = "KEY_DISTRICT_ID"
     }

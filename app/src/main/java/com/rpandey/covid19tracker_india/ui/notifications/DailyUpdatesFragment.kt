@@ -14,6 +14,8 @@ import com.rpandey.covid19tracker_india.util.observe
 
 class DailyUpdatesFragment : BaseFragment() {
 
+    override fun getScreenName(): String? = "DailyUpdates"
+
     private lateinit var binding: FragmentNotificationsBinding
 
     private val viewModel by lazy {

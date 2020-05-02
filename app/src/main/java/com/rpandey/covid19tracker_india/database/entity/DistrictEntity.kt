@@ -15,4 +15,6 @@ data class DistrictEntity constructor(
     @ColumnInfo(name = "total_recovered") val totalRecovered: Int,
     @ColumnInfo(name = "deceased") val deceased: Int,
     @ColumnInfo(name = "total_deceased") val totalDeceased: Int
-)
+) {
+    @Transient var active: Int = 0 // local construct to find active cases
+}

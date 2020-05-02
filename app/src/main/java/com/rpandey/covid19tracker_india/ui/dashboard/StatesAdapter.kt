@@ -7,10 +7,9 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.rpandey.covid19tracker_india.database.dao.CombinedCasesModel
 import com.rpandey.covid19tracker_india.databinding.ItemCombinedViewBinding
-import com.rpandey.covid19tracker_india.ui.statedetails.StateDetailsActivity
 import com.rpandey.covid19tracker_india.util.Util
 
-class StatesAdapter(private var data: List<CombinedCasesModel>, private val callback: (CombinedCasesModel) -> Unit): RecyclerView.Adapter<ViewHolder>() {
+class StatesAdapter(var data: MutableList<CombinedCasesModel>, private val callback: (CombinedCasesModel) -> Unit): RecyclerView.Adapter<ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = ItemCombinedViewBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -27,7 +26,7 @@ class StatesAdapter(private var data: List<CombinedCasesModel>, private val call
         holder.init(data[position])
     }
 
-    fun update(data: List<CombinedCasesModel>) {
+    fun update(data: MutableList<CombinedCasesModel>) {
         this.data = data
         notifyDataSetChanged()
     }

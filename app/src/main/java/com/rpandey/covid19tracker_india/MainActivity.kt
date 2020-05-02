@@ -21,6 +21,8 @@ import kotlinx.coroutines.launch
 
 class MainActivity : BaseActivity() {
 
+    override fun getScreenName(): String = "Home"
+
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.AppTheme)
         super.onCreate(savedInstanceState)

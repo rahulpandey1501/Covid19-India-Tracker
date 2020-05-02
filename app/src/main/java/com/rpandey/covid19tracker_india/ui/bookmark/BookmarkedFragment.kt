@@ -19,6 +19,7 @@ import com.rpandey.covid19tracker_india.ui.dashboard.SelectStateBottomSheet
 import com.rpandey.covid19tracker_india.ui.search.SearchDistrictActivity
 import com.rpandey.covid19tracker_india.ui.statedetails.StateDetailsActivity
 import com.rpandey.covid19tracker_india.util.*
+import kotlinx.android.synthetic.main.fragment_bookmared.*
 
 class BookmarkedFragment : BaseFragment(),
     SelectStateBottomSheet.Callback {
@@ -117,7 +118,7 @@ class BookmarkedFragment : BaseFragment(),
     private fun inflateBookmarkedCombined(data: List<CombinedCasesModel>) {
         binding.statesContainer.removeAllViews()
         binding.removeState.visibility = if (data.isEmpty()) View.GONE else View.VISIBLE
-        binding.header.visibility = if (data.isEmpty()) View.GONE else View.VISIBLE
+        header.visibility = if (data.isEmpty()) View.GONE else View.VISIBLE
 
         data.forEach { model ->
             ItemCombinedViewBinding.inflate(LayoutInflater.from(requireContext()), binding.statesContainer, true).apply {

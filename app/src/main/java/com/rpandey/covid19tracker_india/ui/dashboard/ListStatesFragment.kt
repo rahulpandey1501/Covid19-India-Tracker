@@ -9,10 +9,15 @@ import com.rpandey.covid19tracker_india.R
 import com.rpandey.covid19tracker_india.database.dao.CombinedCasesModel
 import com.rpandey.covid19tracker_india.databinding.FragmentStatesDataBinding
 import com.rpandey.covid19tracker_india.ui.BaseFragment
+import com.rpandey.covid19tracker_india.ui.common.HeaderViewHelper
+import com.rpandey.covid19tracker_india.ui.common.SortOn
 import com.rpandey.covid19tracker_india.ui.statedetails.StateDetailsActivity
 import com.rpandey.covid19tracker_india.util.getViewModel
+import kotlinx.android.synthetic.main.fragment_states_data.*
 
 class ListStatesFragment : BaseFragment() {
+
+    override fun getScreenName(): String? = "StateListTracker"
 
     private val viewModel: ListStatesViewModel by lazy {
         getViewModel { ListStatesViewModel(repository) }
@@ -27,7 +32,7 @@ class ListStatesFragment : BaseFragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentStatesDataBinding.inflate(inflater, container, false)
-        adapter = StatesAdapter(emptyList()) {
+        adapter = StatesAdapter(mutableListOf()) {
             openStateDetailsActivity(it)
         }
         binding.recyclerView.adapter = adapter
@@ -44,8 +49,38 @@ class ListStatesFragment : BaseFragment() {
 
     override fun observeLiveData() {
         viewModel.getStatesData().observe(viewLifecycleOwner, Observer {
-            binding.header.visibility = if (it.isEmpty()) View.GONE else View.VISIBLE
-            adapter.update(it)
+            header.visibility = if (it.isEmpty()) View.GONE else View.VISIBLE
+            adapter.update(it as MutableList<CombinedCasesModel>)
         })
+
+        setupSortClickListeners()
+    }
+
+    private fun setupSortClickListeners() {
+        HeaderViewHelper(binding.header, SortOn.CONFIRMED to false) { sortOn, ascending ->
+            sortData(sortOn, ascending)
+        }.init()
+    }
+
+    private fun sortData(sortOn: SortOn, ascending: Boolean = true) {
+        adapter.data.sortWith(object: Comparator<CombinedCasesModel> {
+            override fun compare(d1: CombinedCasesModel?, d2: CombinedCasesModel?): Int {
+                if (d1 == null || d2 == null)
+                    return 0
+
+                return when(sortOn) {
+                    SortOn.NAME -> getCompare(d1.stateName, d2.stateName)
+                    SortOn.CONFIRMED -> getCompare(d1.totalConfirmedCases, d2.totalConfirmedCases)
+                    SortOn.ACTIVE -> getCompare(d1.activeCases, d2.activeCases)
+                    SortOn.RECOVERED -> getCompare(d1.totalRecoveredCases, d2.totalRecoveredCases)
+                    SortOn.DECEASED -> getCompare(d1.totalDeceasedCases, d2.totalDeceasedCases)
+                }
+            }
+
+            private fun <T: Comparable<T>> getCompare(data1: T, data2: T): Int {
+                return if (ascending) data1.compareTo(data2) else data2.compareTo(data1)
+            }
+        })
+        adapter.notifyDataSetChanged()
     }
 }
