@@ -14,7 +14,13 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.Launcher">
 
-        <activity android:name=".ui.statedetails.StateDetailsActivity"/>
+        <provider
+            android:name="com.rpandey.covid19tracker_india.contentprovider.AssetsProvider"
+            android:authorities="com.rpandey.covid19tracker_india"
+            android:exported="true"
+            android:grantUriPermissions="true" />
+
+        <activity android:name=".ui.statedetails.StateDetailsActivity" />
 
         <activity android:name=".ui.districtdetails.DistrictDetailsActivity" />
 

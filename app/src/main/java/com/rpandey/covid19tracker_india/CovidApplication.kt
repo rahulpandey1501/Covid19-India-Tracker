@@ -2,6 +2,8 @@ package com.rpandey.covid19tracker_india
 
 import android.app.Application
 import android.content.Context
+import android.os.StrictMode
+import android.os.StrictMode.VmPolicy
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.rpandey.covid19tracker_india.util.ThemeHelper
 
@@ -14,6 +16,7 @@ class CovidApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
+        StrictMode.setVmPolicy(VmPolicy.Builder().build()) // grant URI permission
         INSTANCE = applicationContext
         analytics = FirebaseAnalytics.getInstance(applicationContext)
         ThemeHelper.applyUserPrefTheme()

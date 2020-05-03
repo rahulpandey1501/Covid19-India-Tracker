@@ -1,5 +1,6 @@
 package com.rpandey.covid19tracker_india
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.animation.AnimationUtils
 import android.widget.Toast
@@ -13,6 +14,7 @@ import com.rpandey.covid19tracker_india.data.model.LaunchData
 import com.rpandey.covid19tracker_india.ui.BaseActivity
 import com.rpandey.covid19tracker_india.ui.update.UpdateBottomSheet
 import com.rpandey.covid19tracker_india.util.ThemeHelper
+import com.rpandey.covid19tracker_india.util.Util
 import com.rpandey.covid19tracker_india.util.showDialog
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.CoroutineScope
@@ -46,6 +48,9 @@ class MainActivity : BaseActivity() {
         iv_refresh.setOnClickListener {
             startSync()
         }
+        iv_share.setOnClickListener {
+            onShareClicked()
+        }
     }
 
     private fun startSync() {
@@ -55,6 +60,11 @@ class MainActivity : BaseActivity() {
                 onSyncComplete(it)
             }
         }
+    }
+
+    private fun onShareClicked() {
+        val shareIntent = Util.shareAppIntent()
+        startActivity(Intent.createChooser(shareIntent, "Share using..."))
     }
 
     private fun showRefreshAnimation() {

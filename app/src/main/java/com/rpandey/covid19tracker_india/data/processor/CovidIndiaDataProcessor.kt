@@ -1,5 +1,6 @@
 package com.rpandey.covid19tracker_india.data.processor
 
+import com.rpandey.covid19tracker_india.data.Constants
 import com.rpandey.covid19tracker_india.data.Status
 import com.rpandey.covid19tracker_india.data.StatusId
 import com.rpandey.covid19tracker_india.data.model.covidIndia.ZoneResponse
@@ -7,10 +8,7 @@ import com.rpandey.covid19tracker_india.database.provider.CovidDatabase
 import com.rpandey.covid19tracker_india.network.APIProvider
 import com.rpandey.covid19tracker_india.network.ApiHelper
 import com.rpandey.covid19tracker_india.network.FirebaseHostApiService
-import kotlinx.coroutines.CoroutineExceptionHandler
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+import com.rpandey.covid19tracker_india.util.PreferenceHelper
 
 class CovidIndiaDataProcessor(
     private val apiProvider: APIProvider,
@@ -35,37 +33,37 @@ class CovidIndiaDataProcessor(
 
         callback(overallDataStatus)
 
-        CoroutineScope(Dispatchers.IO + CoroutineExceptionHandler {_,_ ->}).launch {
+        val districtStatus = ApiHelper.handleRequest(StatusId.DISTRICT_DATA) {
+            apiProvider.covidIndia.getDistrictData()
+        }
 
-            val districtStatus = ApiHelper.handleRequest(StatusId.DISTRICT_DATA) {
-                apiProvider.covidIndia.getDistrictData()
-            }
+        val zoneStatus = ApiHelper.handleRequest(StatusId.ZONE_DATA) {
+            apiProvider.covidIndia.getZoneData()
+        }
 
-            val zoneStatus = ApiHelper.handleRequest(StatusId.ZONE_DATA) {
-                apiProvider.covidIndia.getZoneData()
-            }
+        if (districtStatus is Status.Success) {
+            val districtData = districtStatus.data
+            var zoneData: ZoneResponse? = null
+            if (zoneStatus is Status.Success)
+                zoneData = zoneStatus.data
 
-            if (districtStatus is Status.Success) {
-                val districtData = districtStatus.data
-                var zoneData: ZoneResponse? = null
-                if (zoneStatus is Status.Success)
-                    zoneData = zoneStatus.data
+            districtDataProcessor.process(districtData to (zoneData?.zones ?: emptyList()))
+        }
 
-                districtDataProcessor.process(districtData to (zoneData?.zones ?: emptyList()))
-            }
+        val testingStatus = ApiHelper.handleRequest(StatusId.TESTING_DATA) {
+            apiProvider.covidIndia.getTestingData()
+        }
 
-            val testingStatus = ApiHelper.handleRequest(StatusId.TESTING_DATA) {
-                apiProvider.covidIndia.getTestingData()
-            }
-
-            if (testingStatus is Status.Success) {
-                testDataProcessor.process(testingStatus.data)
-            }
+        if (testingStatus is Status.Success) {
+            testDataProcessor.process(testingStatus.data)
         }
     }
 
     private suspend fun syncAppLaunchData(service: FirebaseHostApiService, callback: (Status<*>) -> Unit) {
         val status = ApiHelper.handleRequest(StatusId.LAUNCH_DATA) { service.launchPayload() }
+        if (status is Status.Success) {
+            status.data.shareUrl?.let { PreferenceHelper.putString(Constants.KEY_SHARE_URL, it) }
+        }
         callback(status)
     }
 }

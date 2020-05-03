@@ -9,6 +9,8 @@ class LaunchData(
     val latestVersion: Int,
     @SerializedName("downloadUrl")
     val downloadUrl: String,
+    @SerializedName("shareUrl")
+    val shareUrl: String?,
     @SerializedName("marketUpload")
     val marketUpload: MarketUpload,
     @SerializedName("forceUpdate")
