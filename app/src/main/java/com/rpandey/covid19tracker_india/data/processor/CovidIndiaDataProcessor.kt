@@ -19,7 +19,7 @@ class CovidIndiaDataProcessor(
     private val overallDataProcessor by lazy { OverallDataProcessor(covidDatabase) }
     private val testDataProcessor by lazy { TestDataProcessor(covidDatabase) }
 
-    suspend fun startSync(callback: (Status<*>) -> Unit) {
+    suspend fun startSync(callback: suspend (Status<*>) -> Unit) {
 
         syncAppLaunchData(apiProvider.firebaseHostApiService, callback)
 
@@ -59,7 +59,7 @@ class CovidIndiaDataProcessor(
         }
     }
 
-    private suspend fun syncAppLaunchData(service: FirebaseHostApiService, callback: (Status<*>) -> Unit) {
+    private suspend fun syncAppLaunchData(service: FirebaseHostApiService, callback: suspend (Status<*>) -> Unit) {
         val status = ApiHelper.handleRequest(StatusId.LAUNCH_DATA) { service.launchPayload() }
         if (status is Status.Success) {
             status.data.shareUrl?.let { PreferenceHelper.putString(Constants.KEY_SHARE_URL, it) }

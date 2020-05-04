@@ -1,5 +1,7 @@
 package com.rpandey.covid19tracker_india.util
 
+import android.content.Context
+import android.widget.Toast
 import androidx.annotation.IdRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
@@ -7,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
+import com.rpandey.covid19tracker_india.CovidApplication
 
 
 fun <T : DialogFragment> Fragment.getDialog(dialogTag: String): T? {
@@ -95,4 +98,8 @@ inline fun <T> LiveData<T>.observe(activity: AppCompatActivity, crossinline call
     observe(activity, Observer {
         callback(it)
     })
+}
+
+fun Context.showToast(message: String) {
+    Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
 }

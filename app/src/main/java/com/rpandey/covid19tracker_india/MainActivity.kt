@@ -16,10 +16,12 @@ import com.rpandey.covid19tracker_india.ui.update.UpdateBottomSheet
 import com.rpandey.covid19tracker_india.util.ThemeHelper
 import com.rpandey.covid19tracker_india.util.Util
 import com.rpandey.covid19tracker_india.util.showDialog
+import com.rpandey.covid19tracker_india.util.showToast
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class MainActivity : BaseActivity() {
 
@@ -46,18 +48,23 @@ class MainActivity : BaseActivity() {
             ThemeHelper.toggle(this)
         }
         iv_refresh.setOnClickListener {
-            startSync()
+            startSync {
+                showToast("Data successfully updated!")
+            }
         }
         iv_share.setOnClickListener {
             onShareClicked()
         }
     }
 
-    private fun startSync() {
+    private fun startSync(callback: () -> Unit = {}) {
         showRefreshAnimation()
         CoroutineScope(Dispatchers.IO).launch {
             dataProcessor.startSync {
                 onSyncComplete(it)
+                withContext(Dispatchers.Main) {
+                    callback()
+                }
             }
         }
     }
@@ -82,7 +89,7 @@ class MainActivity : BaseActivity() {
                 }
                 StatusId.OVERALL_DATA -> {
                     if (status is Status.Error) {
-                        Toast.makeText(this@MainActivity, "Oops! something went wrong, unable to update", Toast.LENGTH_LONG).show()
+                        showToast("Oops! something went wrong, unable to update")
                     }
                 }
             }
