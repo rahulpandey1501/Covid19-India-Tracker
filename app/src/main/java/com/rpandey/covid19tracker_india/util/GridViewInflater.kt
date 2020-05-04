@@ -9,10 +9,13 @@ import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 
-class GridViewInflater(private val column: Int, private val container: ViewGroup) {
+class GridViewInflater(private val column: Int, private val container: ViewGroup, private val callback: GridViewInflater.() -> Unit) {
 
     init {
-        container.removeAllViews()
+        container.postDelayed({
+            container.removeAllViews()
+            callback()
+        }, 5)
     }
 
     private val parentLL by lazy {
@@ -40,16 +43,14 @@ class GridViewInflater(private val column: Int, private val container: ViewGroup
     }
 
     private fun setItemParam(view: View) {
-        container.postDelayed({
-            val param = view.layoutParams as LinearLayout.LayoutParams
-            val marginStart = param.marginStart
-            val marginEnd = param.marginEnd
-            var allocatedWidth = container.width / column
-            allocatedWidth = allocatedWidth - marginEnd - marginStart
-            param.width = allocatedWidth
-            param.height = LinearLayout.LayoutParams.MATCH_PARENT
-            view.layoutParams = param
-        }, 5)
+        val param = view.layoutParams as LinearLayout.LayoutParams
+        val marginStart = param.marginStart
+        val marginEnd = param.marginEnd
+        var allocatedWidth = container.width / column
+        allocatedWidth = allocatedWidth - marginEnd - marginStart
+        param.width = allocatedWidth
+        param.height = LinearLayout.LayoutParams.MATCH_PARENT
+        view.layoutParams = param
     }
 
     private fun getRowLL(context: Context): LinearLayout {

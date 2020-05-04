@@ -58,14 +58,15 @@ class SearchDistrictActivity : BaseActivity() {
 
     private fun inflateDistricts(districts: List<DistrictEntity>) {
         binding.districtContainer.removeAllViews()
-        val gridViewInflater = GridViewInflater(3, binding.districtContainer)
-        districts.forEach { district ->
-            val binding: ItemDistrictCasesMinimalBinding = gridViewInflater.addView(R.layout.item_district_cases_minimal)
-            binding.tvTitle.text = district.district
-            binding.tvCount.text = Util.formatNumber(district.getActive())
-            binding.zoneIndicator.setBackgroundColor(Util.getZoneColor(this, district.zone))
-            binding.root.setOnClickListener {
-                onDistrictSelected(district)
+        GridViewInflater(3, binding.districtContainer) {
+            districts.forEach { district ->
+                val binding: ItemDistrictCasesMinimalBinding = addView(R.layout.item_district_cases_minimal)
+                binding.tvTitle.text = district.district
+                binding.tvCount.text = Util.formatNumber(district.getActive())
+                binding.zoneIndicator.setBackgroundColor(Util.getZoneColor(this@SearchDistrictActivity, district.zone))
+                binding.root.setOnClickListener {
+                    onDistrictSelected(district)
+                }
             }
         }
     }

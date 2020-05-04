@@ -97,23 +97,25 @@ class BookmarkedFragment : BaseFragment(),
     private fun inflateBookmarkedDistricts(data: List<DistrictEntity>) {
         districtCancelViews.clear()
         binding.removeDistrict.visibility = if (data.isEmpty()) View.GONE else View.VISIBLE
-        val gridViewInflater = GridViewInflater(2, binding.districtContainer)
-
-        data.forEach { district ->
-            val binding: ItemDistrictCasesBinding = gridViewInflater.addView(R.layout.item_district_cases)
-            binding.apply {
-                tvTitle.text = district.district
-                tvCount.text = Util.formatNumber(district.getActive())
-                if (district.confirmed > 0) {
-                    tvConfirmedDelta.text = String.format("+%s", Util.formatNumber(district.confirmed))
-                }
-                ivCancel.setOnClickListener {
-                    viewModel.onDistrictRemoved(district.districtId)
-                }
-                zoneIndicator.setBackgroundColor(Util.getZoneColor(requireContext(), district.zone))
-                districtCancelViews.add(ivCancel)
-                root.setOnClickListener {
-                    openDistrictDetailsView(district)
+        GridViewInflater(2, binding.districtContainer) {
+            data.forEach { district ->
+                val binding: ItemDistrictCasesBinding = addView(R.layout.item_district_cases)
+                binding.apply {
+                    tvTitle.text = district.district
+                    tvCount.text = Util.formatNumber(district.getActive())
+                    if (district.confirmed > 0) {
+                        tvConfirmedDelta.text = String.format("+%s", Util.formatNumber(district.confirmed))
+                    }
+                    ivCancel.setOnClickListener {
+                        viewModel.onDistrictRemoved(district.districtId)
+                    }
+                    zoneIndicator.setBackgroundColor(
+                        Util.getZoneColor(requireContext(), district.zone)
+                    )
+                    districtCancelViews.add(ivCancel)
+                    root.setOnClickListener {
+                        openDistrictDetailsView(district)
+                    }
                 }
             }
         }
