@@ -11,6 +11,9 @@ interface CombinedCasesDao {
     @Query("select CC.state state, S.name stateName, CC.date date, CC.confirmed confirmedCases, CC.total_confirmed totalConfirmedCases, AC.active activeCases, RC.recovered recoveredCases, RC.total_recovered totalRecoveredCases, DC.deceased deceasedCases, DC.total_deceased totalDeceasedCases from confirmed_cases as CC inner join active_cases as AC on CC.state == AC.state inner join recovered_cases as RC on CC.state == RC.state inner join deceased_cases as DC on CC.state == DC.state inner join states as S on S.code == CC.state")
     fun getOverall(): LiveData<List<CombinedCasesModel>>
 
+    @Query("select CC.state state, S.name stateName, CC.date date, CC.confirmed confirmedCases, CC.total_confirmed totalConfirmedCases, AC.active activeCases, RC.recovered recoveredCases, RC.total_recovered totalRecoveredCases, DC.deceased deceasedCases, DC.total_deceased totalDeceasedCases from confirmed_cases as CC inner join active_cases as AC on CC.state == AC.state inner join recovered_cases as RC on CC.state == RC.state inner join deceased_cases as DC on CC.state == DC.state inner join states as S on S.code == CC.state order by CC.confirmed desc")
+    fun getOverallNewCases(): LiveData<List<CombinedCasesModel>>
+
     @Query("select CC.state state, S.name stateName, CC.date date, CC.confirmed confirmedCases, CC.total_confirmed totalConfirmedCases, AC.active activeCases, RC.recovered recoveredCases, RC.total_recovered totalRecoveredCases, DC.deceased deceasedCases, DC.total_deceased totalDeceasedCases from confirmed_cases as CC inner join active_cases as AC on CC.state == AC.state inner join recovered_cases as RC on CC.state == RC.state inner join deceased_cases as DC on CC.state == DC.state inner join states as S on S.code == CC.state where CC.state in (:states) order by CC.total_confirmed desc")
     fun getOverall(states: List<String>): LiveData<List<CombinedCasesModel>>
 

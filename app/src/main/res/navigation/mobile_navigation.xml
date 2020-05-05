@@ -13,7 +13,7 @@
 
     <fragment
         android:id="@+id/navigation_dashboard"
-        android:name="com.rpandey.covid19tracker_india.ui.dashboard.ListStatesFragment"
+        android:name="com.rpandey.covid19tracker_india.ui.dashboard.StateListFragment"
         android:label="@string/state_tracker"
         tools:layout="@layout/fragment_bookmared" />
 

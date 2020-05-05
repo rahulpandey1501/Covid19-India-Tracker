@@ -89,6 +89,10 @@ class CovidIndiaRepository(private val covidDatabase: CovidDatabase) {
         return covidDatabase.combinedCasesDao().getOverall()
     }
 
+    fun getCombinedNewCases(): LiveData<List<CombinedCasesModel>> {
+        return covidDatabase.combinedCasesDao().getOverallNewCases()
+    }
+
     fun lastUpdatedTime(state: String? = null): LiveData<Long?> {
         return if (state != null) {
             covidDatabase.confirmedDao().lastUpdatedTime(state)

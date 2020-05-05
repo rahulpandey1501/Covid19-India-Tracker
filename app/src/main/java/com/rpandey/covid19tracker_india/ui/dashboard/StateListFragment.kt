@@ -15,12 +15,12 @@ import com.rpandey.covid19tracker_india.ui.statedetails.StateDetailsActivity
 import com.rpandey.covid19tracker_india.util.getViewModel
 import kotlinx.android.synthetic.main.fragment_states_data.*
 
-class ListStatesFragment : BaseFragment() {
+class StateListFragment : BaseFragment() {
 
     override fun getScreenName(): String? = "StateListTracker"
 
-    private val viewModel: ListStatesViewModel by lazy {
-        getViewModel { ListStatesViewModel(repository) }
+    private val viewModel: StateListViewModel by lazy {
+        getViewModel { StateListViewModel(repository) }
     }
 
     private lateinit var adapter: StatesAdapter
