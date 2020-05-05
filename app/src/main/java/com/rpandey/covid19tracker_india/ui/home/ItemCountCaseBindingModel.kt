@@ -33,6 +33,9 @@ class ItemCountCaseBindingModel(private val context: Context) {
             UICaseType.TYPE_ACTIVE -> {
                 title.set(context.getString(R.string.active))
                 backgroundColor.set(getColor(R.color.background_active))
+                confirmCaseModel?.let {
+                    percentageCount.set(getPercentage(confirmCaseModel.totalCount, countModel.totalCount))
+                }
 
             }
             UICaseType.TYPE_RECOVERED -> {
