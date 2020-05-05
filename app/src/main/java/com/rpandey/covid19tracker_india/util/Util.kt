@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Point
 import android.net.Uri
+import android.util.Log
 import android.view.WindowManager
 import androidx.core.content.ContextCompat
 import com.rpandey.covid19tracker_india.CovidApplication
@@ -78,5 +79,11 @@ object Util {
 
     fun getShareUrl(): String {
         return PreferenceHelper.getString(Constants.KEY_SHARE_URL) ?: Constants.APP_SHARE_URL
+    }
+
+    fun runWithExecutionTime(identifier: String, block: () -> Unit) {
+        val before = System.currentTimeMillis()
+        block()
+        Log.d("Covid19", "$identifier execution time: ${System.currentTimeMillis() - before}ms")
     }
 }

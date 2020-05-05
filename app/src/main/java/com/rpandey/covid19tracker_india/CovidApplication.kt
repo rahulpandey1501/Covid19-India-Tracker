@@ -16,8 +16,8 @@ class CovidApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        StrictMode.setVmPolicy(VmPolicy.Builder().build()) // grant URI permission
         INSTANCE = applicationContext
+        StrictMode.setVmPolicy(VmPolicy.Builder().build()) // grant URI permission
         analytics = FirebaseAnalytics.getInstance(applicationContext)
         ThemeHelper.applyUserPrefTheme()
     }
