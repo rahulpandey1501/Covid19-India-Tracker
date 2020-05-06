@@ -16,7 +16,9 @@ class LaunchData(
     @SerializedName("forceUpdate")
     val forceUpdate: ForceUpdate,
     @SerializedName("message")
-    val message: Message
+    val message: Message,
+    @SerializedName("config")
+    val config: Config?
 )
 
 @Keep
@@ -34,4 +36,10 @@ class Message(
 class MarketUpload(
     @SerializedName("marketName") val marketName: String,
     @SerializedName("downloadUrl") val downloadUrl: String
+)
+
+@Keep
+class Config(
+    @SerializedName("districtInfoUrlPlaceholder") val districtInfoUrlPlaceholder: String?,
+    @SerializedName("stateInfoUrlPlaceholder") val stateInfoUrlPlaceholder: String?
 )

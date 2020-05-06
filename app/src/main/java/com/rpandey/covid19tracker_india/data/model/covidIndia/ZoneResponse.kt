@@ -12,5 +12,6 @@ class ZoneResponse(
 class ZoneData(
     @SerializedName("district") val district: String,
     @SerializedName("state") val stateName: String,
+    @SerializedName("statecode") val stateCode: String,
     @SerializedName("zone") val zone: String
 )

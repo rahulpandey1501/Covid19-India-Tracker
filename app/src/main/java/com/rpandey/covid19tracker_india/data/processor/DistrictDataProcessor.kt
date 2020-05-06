@@ -14,16 +14,18 @@ class DistrictDataProcessor(covidDatabase: CovidDatabase) :
 
         val districtList = data.first
         val zoneList = data.second
-        val zoneDistrictMapping = zoneList.associateBy { it.district.trim() to it.stateName.trim() }
+        val zoneDistrictMapping = zoneList.associateBy { it.district.trim() to it.stateCode.trim() }
 
         val districtEntities = mutableListOf<DistrictEntity>()
 
         districtList.forEach {
-            val stateName = it.state?.trim() ?: ""
+            val stateCode = it.stateCode?.trim() ?: ""
+            val stateName = it.stateName?.trim() ?: ""
+
             it.districtData?.forEach { districtData ->
                 val district = districtData.district.trim()
                 val delta = districtData.delta
-                val zoneData = zoneDistrictMapping[district to stateName]
+                val zoneData = zoneDistrictMapping[district to stateCode]
                 val zone = if (zoneData?.zone.isNullOrEmpty()) null else zoneData?.zone
                 districtEntities.add(
                     DistrictEntity(

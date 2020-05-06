@@ -32,8 +32,8 @@
 
                     <ImageView
                         android:id="@+id/iv_close"
-                        android:layout_width="32dp"
-                        android:layout_height="32dp"
+                        android:layout_width="28dp"
+                        android:layout_height="28dp"
                         android:src="@drawable/ic_round_close_24"
                         android:tint="@color/toolbar_icon" />
 
@@ -105,7 +105,7 @@
 
             <include
                 android:id="@+id/district_header"
-                layout="@layout/view_header_combined"
+                layout="@layout/view_header_combined_district"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp" />

@@ -5,13 +5,17 @@ import android.os.Bundle
 import android.view.View
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.FragmentActivity
+import com.google.gson.Gson
 import com.rpandey.covid19tracker_india.R
+import com.rpandey.covid19tracker_india.data.Constants
+import com.rpandey.covid19tracker_india.data.model.Config
 import com.rpandey.covid19tracker_india.database.entity.DistrictEntity
 import com.rpandey.covid19tracker_india.database.model.CountModel
 import com.rpandey.covid19tracker_india.databinding.ActivityDistrictDetailsBinding
 import com.rpandey.covid19tracker_india.ui.BaseActivity
 import com.rpandey.covid19tracker_india.ui.home.ItemCountCaseBindingModel
 import com.rpandey.covid19tracker_india.ui.home.UICaseType
+import com.rpandey.covid19tracker_india.util.PreferenceHelper
 import com.rpandey.covid19tracker_india.util.Util
 import com.rpandey.covid19tracker_india.util.getViewModel
 import com.rpandey.covid19tracker_india.util.observe
@@ -48,10 +52,9 @@ class DistrictDetailsActivity : BaseActivity() {
 
         val districtId = intent.getIntExtra(KEY_DISTRICT_ID, 0)
 
-        with(binding) {
-            ivClose.setOnClickListener { finish() }
-            testing_layout.visibility = View.GONE
-        }
+        iv_close.setOnClickListener { finish() }
+        testing_layout.visibility = View.GONE
+        more_info.setOnClickListener { districtMoreInfo() }
 
         viewModel.getDistrict(districtId).observe(this) {
             binding.title.text = it.district
@@ -63,7 +66,6 @@ class DistrictDetailsActivity : BaseActivity() {
             val title = String.format("%s %s", "Last updated: ", it)
             binding.lastUpdate.text = title
         }
-
     }
 
     private fun setZoneUI(zone: String?) {
@@ -103,5 +105,12 @@ class DistrictDetailsActivity : BaseActivity() {
                 UICaseType.TYPE_TESTING -> testingVm = itemModel
             }
         }
+    }
+
+    private fun districtMoreInfo() {
+        val config = PreferenceHelper.getString(Constants.KEY_SHARE_URL)
+        val configModel = config?.let { Gson().fromJson(it, Config::class.java) }
+        val urlPlaceholder = configModel?.districtInfoUrlPlaceholder ?: Constants.DEFAULT_DISTRICT_INFO_PLACEHOLDER
+        Util.openWebUrl(this, String.format(urlPlaceholder, binding.title.text))
     }
 }

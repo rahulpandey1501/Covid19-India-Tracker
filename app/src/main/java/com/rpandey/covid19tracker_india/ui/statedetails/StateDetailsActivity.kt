@@ -5,16 +5,22 @@ import android.os.Bundle
 import android.view.View
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.FragmentActivity
+import com.google.gson.Gson
 import com.rpandey.covid19tracker_india.R
+import com.rpandey.covid19tracker_india.data.Constants
+import com.rpandey.covid19tracker_india.data.model.Config
 import com.rpandey.covid19tracker_india.database.entity.DistrictEntity
 import com.rpandey.covid19tracker_india.database.model.CountModel
 import com.rpandey.covid19tracker_india.databinding.ActivityStateDetailsBinding
 import com.rpandey.covid19tracker_india.ui.BaseActivity
 import com.rpandey.covid19tracker_india.ui.common.HeaderViewHelper
 import com.rpandey.covid19tracker_india.ui.common.SortOn
+import com.rpandey.covid19tracker_india.ui.common.ViewSortModel
 import com.rpandey.covid19tracker_india.ui.districtdetails.DistrictDetailsActivity
 import com.rpandey.covid19tracker_india.ui.home.ItemCountCaseBindingModel
 import com.rpandey.covid19tracker_india.ui.home.UICaseType
+import com.rpandey.covid19tracker_india.util.PreferenceHelper
+import com.rpandey.covid19tracker_india.util.Util
 import com.rpandey.covid19tracker_india.util.getViewModel
 import com.rpandey.covid19tracker_india.util.observe
 import kotlinx.android.synthetic.main.activity_state_details.*
@@ -81,11 +87,18 @@ class StateDetailsActivity : BaseActivity() {
     }
 
     private fun setupSortClickListeners() {
-        val headerViewHelper = HeaderViewHelper(binding.districtHeader, SortOn.NAME to true) { sortOn, ascending ->
-            sortData(sortOn, ascending)
+        with(binding.districtHeader) {
+            val headerArrowViews = mutableListOf(
+                ViewSortModel(headerConfirmed, confirmSortArrow, SortOn.CONFIRMED),
+                ViewSortModel(headerActive, activeSortArrow, SortOn.ACTIVE),
+                ViewSortModel(headerRecovered, recoverSortArrow, SortOn.RECOVERED),
+                ViewSortModel(headerDeaths, deathSortArrow, SortOn.DECEASED),
+                ViewSortModel(binding.containerDistrictTitle, binding.districtSortArrow, SortOn.NAME)
+            )
+            HeaderViewHelper(headerArrowViews, SortOn.NAME to true) { sortOn, ascending ->
+                sortData(sortOn, ascending)
+            }.init()
         }
-        headerViewHelper.addMoreViews(binding.containerDistrictTitle, binding.districtSortArrow, SortOn.NAME)
-        headerViewHelper.init()
     }
 
     private fun setUiCaseModel(caseType: UICaseType, allCases: Map<UICaseType, CountModel>) {
@@ -133,5 +146,12 @@ class StateDetailsActivity : BaseActivity() {
             }
         })
         adapter.notifyDataSetChanged()
+    }
+
+    private fun stateMoreInfo() {
+        val config = PreferenceHelper.getString(Constants.KEY_SHARE_URL)
+        val configModel = config?.let { Gson().fromJson(it, Config::class.java) }
+        val urlPlaceholder = configModel?.stateInfoUrlPlaceholder ?: Constants.DEFAULT_STATE_INFO_PLACEHOLDER
+        Util.openWebUrl(this, String.format(urlPlaceholder, binding.title.text))
     }
 }

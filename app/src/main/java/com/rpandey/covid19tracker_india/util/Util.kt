@@ -6,11 +6,13 @@ import android.graphics.Point
 import android.net.Uri
 import android.util.Log
 import android.view.WindowManager
+import androidx.browser.customtabs.CustomTabsIntent
 import androidx.core.content.ContextCompat
 import com.rpandey.covid19tracker_india.CovidApplication
 import com.rpandey.covid19tracker_india.R
 import com.rpandey.covid19tracker_india.data.Constants
 import com.rpandey.covid19tracker_india.data.model.covidIndia.Zone
+import com.rpandey.covid19tracker_india.util.customchrome.CustomTabsHelper
 import java.text.DecimalFormat
 import java.text.DecimalFormatSymbols
 import java.text.SimpleDateFormat
@@ -78,12 +80,25 @@ object Util {
     }
 
     fun getShareUrl(): String {
-        return PreferenceHelper.getString(Constants.KEY_SHARE_URL) ?: Constants.APP_SHARE_URL
+        return PreferenceHelper.getString(Constants.KEY_SHARE_URL) ?: Constants.DEFAULT_APP_SHARE_URL
     }
 
     fun runWithExecutionTime(identifier: String, block: () -> Unit) {
         val before = System.currentTimeMillis()
         block()
         Log.d("Covid19", "$identifier execution time: ${System.currentTimeMillis() - before}ms")
+    }
+
+    fun openWebUrl(context: Context, url: String) {
+        val customTabsIntent = CustomTabsIntent.Builder()
+        .setToolbarColor(ContextCompat.getColor(context, R.color.colorPrimary))
+        .setShowTitle(true)
+        .build()
+        CustomTabsHelper.addKeepAliveExtra(context, customTabsIntent.intent)
+        val packageName = CustomTabsHelper.getPackageNameToUse(context)
+        if (packageName != null) {
+            customTabsIntent.intent.setPackage(packageName)
+            customTabsIntent.launchUrl(context, Uri.parse(url))
+        }
     }
 }

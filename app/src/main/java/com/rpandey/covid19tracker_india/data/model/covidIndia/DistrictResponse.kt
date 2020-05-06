@@ -7,7 +7,10 @@ import com.google.gson.annotations.SerializedName
 class DistrictResponse {
 
     @SerializedName("state")
-    val state: String? = null
+    val stateName: String? = null
+
+    @SerializedName("statecode")
+    val stateCode: String? = null
 
     @SerializedName("districtData")
     val districtData: List<DistrictData>? = null

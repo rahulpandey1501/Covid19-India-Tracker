@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rounded_corner_bottomsheet"
+        android:orientation="horizontal"
+        android:paddingTop="14dp"
+        android:id="@+id/root_view"
+        android:paddingBottom="14dp">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="5.5"
+            android:gravity="center"
+            android:id="@+id/header_confirmed"
+            android:orientation="horizontal">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:fontFamily="sans-serif-medium"
+                android:gravity="center"
+                android:text="@string/affect"
+                android:textColor="@color/text_secondary"
+                android:textSize="14sp"
+                app:fontFamily="sans-serif-medium" />
+
+            <ImageView
+                android:id="@+id/confirm_sort_arrow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="-8dp"
+                android:src="@drawable/ic_sharp_arrow_drop_down_24"
+                android:visibility="gone" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="0.5dp"
+            android:layout_height="match_parent"
+            android:background="@color/text_secondary" />
+
+        <LinearLayout
+            android:id="@+id/header_active"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="4"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:fontFamily="sans-serif-medium"
+                android:gravity="center"
+                android:text="@string/active"
+                android:textColor="@color/text_secondary"
+                android:textSize="14sp"
+                app:fontFamily="sans-serif-medium" />
+
+            <ImageView
+                android:id="@+id/active_sort_arrow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="-8dp"
+                android:src="@drawable/ic_sharp_arrow_drop_down_24"
+                android:visibility="gone" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="0.5dp"
+            android:layout_height="match_parent"
+            android:background="@color/text_secondary" />
+
+        <LinearLayout
+            android:id="@+id/header_recovered"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="5"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:fontFamily="sans-serif-medium"
+                android:gravity="center"
+                android:text="@string/recover"
+                android:textColor="@color/text_secondary"
+                android:textSize="14sp"
+                app:fontFamily="sans-serif-medium" />
+
+            <ImageView
+                android:id="@+id/recover_sort_arrow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="-8dp"
+                android:src="@drawable/ic_sharp_arrow_drop_down_24"
+                android:visibility="gone" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="0.5dp"
+            android:layout_height="match_parent"
+            android:background="@color/text_secondary" />
+
+        <LinearLayout
+            android:id="@+id/header_deaths"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="4"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:fontFamily="sans-serif-medium"
+                android:gravity="center"
+                android:text="@string/deaths"
+                android:textColor="@color/text_secondary"
+                android:textSize="14sp"
+                app:fontFamily="sans-serif-medium" />
+
+            <ImageView
+                android:id="@+id/death_sort_arrow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="-8dp"
+                android:src="@drawable/ic_sharp_arrow_drop_down_24"
+                android:visibility="gone" />
+        </LinearLayout>
+    </LinearLayout>
+</layout>

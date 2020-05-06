@@ -11,6 +11,7 @@ import com.rpandey.covid19tracker_india.databinding.FragmentStatesDataBinding
 import com.rpandey.covid19tracker_india.ui.BaseFragment
 import com.rpandey.covid19tracker_india.ui.common.HeaderViewHelper
 import com.rpandey.covid19tracker_india.ui.common.SortOn
+import com.rpandey.covid19tracker_india.ui.common.ViewSortModel
 import com.rpandey.covid19tracker_india.ui.statedetails.StateDetailsActivity
 import com.rpandey.covid19tracker_india.util.getViewModel
 import kotlinx.android.synthetic.main.fragment_states_data.*
@@ -57,9 +58,17 @@ class StateListFragment : BaseFragment() {
     }
 
     private fun setupSortClickListeners() {
-        HeaderViewHelper(binding.header, SortOn.CONFIRMED to false) { sortOn, ascending ->
-            sortData(sortOn, ascending)
-        }.init()
+        with(binding.header) {
+            val headerArrowViews = mutableListOf(
+                ViewSortModel(headerConfirmed, confirmSortArrow, SortOn.CONFIRMED),
+                ViewSortModel(headerActive, activeSortArrow, SortOn.ACTIVE),
+                ViewSortModel(headerRecovered, recoverSortArrow, SortOn.RECOVERED),
+                ViewSortModel(headerDeaths, deathSortArrow, SortOn.DECEASED)
+            )
+            HeaderViewHelper(headerArrowViews,  SortOn.CONFIRMED to false) { sortOn, ascending ->
+                sortData(sortOn, ascending)
+            }.init()
+        }
     }
 
     private fun sortData(sortOn: SortOn, ascending: Boolean = true) {

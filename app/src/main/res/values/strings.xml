@@ -10,16 +10,15 @@
     <string name="Saved">Saved</string>
     <string name="add_city">Add City</string>
     <string name="add_state">Add State</string>
-    <string name="select_state">Select state</string>
+    <string name="select_state">Select State/UT</string>
     <string name="districts">Districts</string>
     <string name="district">District</string>
     <string name="states">States</string>
     <string name="search_city">Enter city name</string>
     <string name="Search">Search</string>
-    <string name="state_ut">State/UT</string>
     <string name="monitoring_district">Monitor Districts</string>
-    <string name="monitoring_states">Monitor States/UT</string>
-    <string name="state_tracker">States/UT</string>
+    <string name="monitoring_states">Monitor State/UTs</string>
+    <string name="state_tracker">State/UTs</string>
     <string name="title_daily_updates">Today\'s updates</string>
     <string name="no_new_updates">No new updates</string>
     <string name="total_testing">Total testing </string>
@@ -31,4 +30,5 @@
     <string name="affect">Confirm</string>
     <string name="recover">Recover</string>
     <string name="active_cases">*Active cases</string>
+    <string name="more_updates">More Updates</string>
 </resources>

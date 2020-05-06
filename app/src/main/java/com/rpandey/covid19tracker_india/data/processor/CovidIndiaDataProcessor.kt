@@ -1,5 +1,6 @@
 package com.rpandey.covid19tracker_india.data.processor
 
+import com.google.gson.Gson
 import com.rpandey.covid19tracker_india.data.Constants
 import com.rpandey.covid19tracker_india.data.Status
 import com.rpandey.covid19tracker_india.data.StatusId
@@ -62,6 +63,7 @@ class CovidIndiaDataProcessor(
     private suspend fun syncAppLaunchData(service: FirebaseHostApiService, callback: suspend (Status<*>) -> Unit) {
         val status = ApiHelper.handleRequest(StatusId.LAUNCH_DATA) { service.launchPayload() }
         if (status is Status.Success) {
+            status.data.config?.let { PreferenceHelper.putString(Constants.KEY_CONFIG, Gson().toJson(it)) }
             status.data.shareUrl?.let { PreferenceHelper.putString(Constants.KEY_SHARE_URL, it) }
         }
         callback(status)

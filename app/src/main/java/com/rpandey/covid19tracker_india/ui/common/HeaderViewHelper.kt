@@ -2,19 +2,11 @@ package com.rpandey.covid19tracker_india.ui.common
 
 import android.view.View
 import android.widget.ImageView
-import com.rpandey.covid19tracker_india.databinding.ViewHeaderCombinedBinding
 
 class HeaderViewHelper(
-    binding: ViewHeaderCombinedBinding,
+    private val headerArrowViews: List<ViewSortModel>,
     private val defaultSortOn: Pair<SortOn, Boolean>? = SortOn.CONFIRMED to false,
     private val performSort: (SortOn, Boolean) -> Unit) {
-
-    private val headerArrowViews = mutableListOf (
-        ViewSortModel(binding.headerConfirmed, binding.confirmSortArrow, SortOn.CONFIRMED),
-        ViewSortModel(binding.headerActive, binding.activeSortArrow, SortOn.ACTIVE),
-        ViewSortModel(binding.headerRecovered, binding.recoverSortArrow, SortOn.RECOVERED),
-        ViewSortModel(binding.headerDeaths, binding.deathSortArrow, SortOn.DECEASED)
-    )
 
     fun init() {
         defaultSortOn?.let { defaultSort ->
@@ -28,10 +20,6 @@ class HeaderViewHelper(
                 setArrowUi(header.arrowImage, header.sortOn)
             }
         }
-    }
-
-    fun addMoreViews(container: View, arrowImage: ImageView, sortOn: SortOn) {
-        headerArrowViews.add(ViewSortModel(container, arrowImage, sortOn))
     }
 
     private fun setArrowUi(currentArrowImage: ImageView, sortOn: SortOn) {
