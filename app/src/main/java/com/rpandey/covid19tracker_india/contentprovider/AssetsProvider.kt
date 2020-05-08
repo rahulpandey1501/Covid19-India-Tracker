@@ -5,6 +5,7 @@ import android.content.ContentValues
 import android.content.res.AssetFileDescriptor
 import android.database.Cursor
 import android.net.Uri
+import android.os.CancellationSignal
 import java.io.FileNotFoundException
 
 
@@ -25,8 +26,19 @@ class AssetsProvider : ContentProvider() {
         return null
     }
 
+    override fun query(
+        uri: Uri,
+        projection: Array<out String>?,
+        selection: String?,
+        selectionArgs: Array<out String>?,
+        sortOrder: String?,
+        cancellationSignal: CancellationSignal?
+    ): Cursor? {
+        return super.query(uri, projection, selection, selectionArgs, sortOrder, cancellationSignal)
+    }
+
     override fun query(uri: Uri, projection: Array<out String>?, selection: String?, selectionArgs: Array<out String>?, sortOrder: String?): Cursor? {
-        return super.query(uri, projection, selection, selectionArgs, sortOrder, null)
+        return null
     }
 
     override fun onCreate(): Boolean {

@@ -3,6 +3,8 @@ package com.rpandey.covid19tracker_india.ui.districtdetails
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.webkit.WebChromeClient
+import android.webkit.WebViewClient
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.FragmentActivity
 import com.google.gson.Gson
@@ -54,12 +56,13 @@ class DistrictDetailsActivity : BaseActivity() {
 
         iv_close.setOnClickListener { finish() }
         testing_layout.visibility = View.GONE
-        more_info.setOnClickListener { districtMoreInfo() }
+//        more_info.setOnClickListener { districtMoreInfo() }
 
         viewModel.getDistrict(districtId).observe(this) {
             binding.title.text = it.district
             generateUiCaseMode(it)
             setZoneUI(it.zone)
+            loadDistrictMoreInfo()
         }
 
         viewModel.lastUpdatedTime(districtId).observe(this) {
@@ -105,6 +108,26 @@ class DistrictDetailsActivity : BaseActivity() {
                 UICaseType.TYPE_TESTING -> testingVm = itemModel
             }
         }
+    }
+
+    private fun loadDistrictMoreInfo() {
+        val config = PreferenceHelper.getString(Constants.KEY_CONFIG)
+        val configModel = config?.let { Gson().fromJson(it, Config::class.java) }
+        val urlPlaceholder = configModel?.districtInfoUrlPlaceholder ?: Constants.DEFAULT_DISTRICT_INFO_PLACEHOLDER
+        val url = String.format(urlPlaceholder, binding.title.text)
+
+        webview.webViewClient = WebViewClient()
+        webview.webChromeClient = WebChromeClient()
+        webview.loadUrl(url)
+    }
+
+    override fun onBackPressed() {
+        if (webview.canGoBack()) {
+            webview.goBack()
+            return
+        }
+
+        super.onBackPressed()
     }
 
     private fun districtMoreInfo() {
