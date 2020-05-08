@@ -65,6 +65,7 @@ class StateDetailsActivity : BaseActivity() {
 
         with(binding) {
             title.text = stateName
+            title.setOnClickListener { stateMoreInfo(state) }
             ivClose.setOnClickListener { finish() }
         }
 
@@ -148,10 +149,10 @@ class StateDetailsActivity : BaseActivity() {
         adapter.notifyDataSetChanged()
     }
 
-    private fun stateMoreInfo() {
+    private fun stateMoreInfo(stateCode: String) {
         val config = PreferenceHelper.getString(Constants.KEY_SHARE_URL)
         val configModel = config?.let { Gson().fromJson(it, Config::class.java) }
         val urlPlaceholder = configModel?.stateInfoUrlPlaceholder ?: Constants.DEFAULT_STATE_INFO_PLACEHOLDER
-        Util.openWebUrl(this, String.format(urlPlaceholder, binding.title.text))
+        Util.openWebUrl(this, String.format(urlPlaceholder, stateCode))
     }
 }

@@ -46,18 +46,17 @@
 
             <ImageView
                 android:id="@+id/iv_zone"
-                android:layout_width="28dp"
-                android:layout_height="28dp"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
                 android:layout_gravity="center_horizontal"
-                android:src="@drawable/ic_round_radio_button_checked_24" />
+                tools:tint="@color/text_primary"
+                android:src="@drawable/ic_baseline_traffic_24" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tv_zone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/open_sans_semibold"
                 android:textSize="14sp"
-                app:fontFamily="@font/open_sans_semibold"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/title"
                 tools:text="Red Zone" />

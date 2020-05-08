@@ -42,9 +42,13 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="20dp"
+                        android:drawableEnd="@drawable/ic_outline_bar_chart_24"
+                        android:drawablePadding="8dp"
                         android:fontFamily="@font/open_sans_semibold"
                         android:textColor="@color/text_primary"
                         android:textSize="28sp"
+                        android:includeFontPadding="false"
+                        app:drawableTint="@color/text_secondary"
                         app:fontFamily="@font/open_sans_semibold"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
@@ -80,9 +84,9 @@
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
             <LinearLayout
+                android:id="@+id/container_district_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/container_district_title"
                 android:orientation="horizontal">
 
                 <androidx.appcompat.widget.AppCompatTextView
@@ -95,9 +99,9 @@
                     app:fontFamily="@font/open_sans_semibold" />
 
                 <ImageView
+                    android:id="@+id/district_sort_arrow"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/district_sort_arrow"
                     android:layout_marginTop="2dp"
                     android:src="@drawable/ic_sharp_arrow_drop_down_24" />
 
