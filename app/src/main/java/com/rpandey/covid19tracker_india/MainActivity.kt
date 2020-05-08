@@ -70,6 +70,7 @@ class MainActivity : BaseActivity() {
     }
 
     private fun onShareClicked() {
+        logEvent("SHARE_CLICKED")
         val shareIntent = Util.shareAppIntent()
         startActivity(Intent.createChooser(shareIntent, "Share using..."))
     }

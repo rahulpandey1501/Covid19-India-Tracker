@@ -8,6 +8,7 @@ import androidx.coordinatorlayout.widget.CoordinatorLayout
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.rpandey.covid19tracker_india.util.Util
 
 abstract class BaseBottomSheetFragment : BottomSheetDialogFragment() {
@@ -39,6 +40,10 @@ abstract class BaseBottomSheetFragment : BottomSheetDialogFragment() {
         param?.height = height
         param?.gravity = Gravity.BOTTOM
         coordinator?.layoutParams = param
+    }
+
+    fun logEvent(event: String) {
+        FirebaseAnalytics.getInstance(requireContext().applicationContext).logEvent(event, null)
     }
 
 }

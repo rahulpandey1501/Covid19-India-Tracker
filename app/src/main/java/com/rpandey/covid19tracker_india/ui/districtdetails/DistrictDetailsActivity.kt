@@ -108,6 +108,7 @@ class DistrictDetailsActivity : BaseActivity() {
     }
 
     private fun districtMoreInfo() {
+        logEvent("DISTRICT_INFO_CLICKED")
         val config = PreferenceHelper.getString(Constants.KEY_SHARE_URL)
         val configModel = config?.let { Gson().fromJson(it, Config::class.java) }
         val urlPlaceholder = configModel?.districtInfoUrlPlaceholder ?: Constants.DEFAULT_DISTRICT_INFO_PLACEHOLDER

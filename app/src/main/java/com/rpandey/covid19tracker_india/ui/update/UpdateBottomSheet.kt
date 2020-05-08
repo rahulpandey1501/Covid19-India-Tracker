@@ -43,7 +43,7 @@ class UpdateBottomSheet : BaseBottomSheetFragment() {
         val launchData = Gson().fromJson(requireArguments().getString(KEY_DATA), LaunchData::class.java)
         initUi(launchData)
         binding.vm = launchData
-        FirebaseAnalytics.getInstance(requireContext()).logEvent("AppUpdateUI", null)
+        logEvent("AppUpdateUI")
         return binding.root
     }
 
@@ -56,14 +56,14 @@ class UpdateBottomSheet : BaseBottomSheetFragment() {
 
         binding.later.setOnClickListener {
             dismissAllowingStateLoss()
-            FirebaseAnalytics.getInstance(requireContext()).logEvent("UPDATE_LATER_CLICKED", null)
+            logEvent("UPDATE_LATER_CLICKED")
             if (BuildConfig.VERSION_CODE < launchData.forceUpdate.minVersion)
                 requireActivity().finish()
         }
 
         binding.download.setOnClickListener {
             openBrowser(launchData.downloadUrl)
-            FirebaseAnalytics.getInstance(requireContext()).logEvent("UPDATE_DOWNLOAD_CLICKED", null)
+            logEvent("UPDATE_DOWNLOAD_CLICKED")
         }
     }
 

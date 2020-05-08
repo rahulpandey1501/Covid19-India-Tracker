@@ -20,6 +20,10 @@ abstract class BaseActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        FirebaseAnalytics.getInstance(this).logEvent(getScreenName(), null)
+        logEvent(getScreenName())
+    }
+
+    fun logEvent(event: String?) {
+        event?.let { FirebaseAnalytics.getInstance(this).logEvent(event, null) }
     }
 }

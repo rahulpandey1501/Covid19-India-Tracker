@@ -150,6 +150,7 @@ class StateDetailsActivity : BaseActivity() {
     }
 
     private fun stateMoreInfo(stateCode: String) {
+        logEvent("STATE_INFO_CLICKED")
         val config = PreferenceHelper.getString(Constants.KEY_SHARE_URL)
         val configModel = config?.let { Gson().fromJson(it, Config::class.java) }
         val urlPlaceholder = configModel?.stateInfoUrlPlaceholder ?: Constants.DEFAULT_STATE_INFO_PLACEHOLDER

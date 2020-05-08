@@ -5,7 +5,6 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.google.firebase.analytics.FirebaseAnalytics
-import com.rpandey.covid19tracker_india.CovidApplication
 import com.rpandey.covid19tracker_india.data.repository.CovidIndiaRepository
 import com.rpandey.covid19tracker_india.database.provider.CovidDatabase
 
@@ -17,12 +16,11 @@ abstract class BaseFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        getScreenName()?.let { FirebaseAnalytics.getInstance(requireContext().applicationContext).logEvent(it, null) }
+        getScreenName()?.let { logEvent(it) }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        CovidApplication.analytics.logEvent(this::class.java.simpleName, null)
         observeLiveData()
         if (setToolbarTitle().isNotEmpty()) {
             (activity as AppCompatActivity?)?.title = setToolbarTitle()
@@ -34,4 +32,8 @@ abstract class BaseFragment : Fragment() {
     open fun setToolbarTitle(): String = ""
 
     abstract fun observeLiveData()
+
+    fun logEvent(event: String) {
+        FirebaseAnalytics.getInstance(requireContext().applicationContext).logEvent(event, null)
+    }
 }
