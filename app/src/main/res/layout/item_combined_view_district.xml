@@ -23,7 +23,7 @@
 
                 <View
                     android:id="@+id/zone_indicator"
-                    android:layout_width="3dp"
+                    android:layout_width="4dp"
                     android:layout_height="0dp"
                     android:alpha="0.8"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -79,10 +79,8 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="bottom"
                             android:layout_marginStart="4dp"
-                            android:fontFamily="@font/open_sans_semibold"
                             android:textColor="@color/number_increase_color"
-                            android:textSize="12sp"
-                            app:fontFamily="@font/open_sans_semibold"
+                            android:textSize="11sp"
                             tools:text="12,345" />
 
                     </LinearLayout>
@@ -127,10 +125,8 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="bottom"
                             android:layout_marginStart="4dp"
-                            android:fontFamily="@font/open_sans_semibold"
                             android:textColor="@color/background_recovered"
-                            android:textSize="12sp"
-                            app:fontFamily="@font/open_sans_semibold"
+                            android:textSize="11sp"
                             tools:text="12,345" />
 
                     </LinearLayout>
@@ -157,10 +153,8 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="bottom"
                             android:layout_marginStart="4dp"
-                            android:fontFamily="@font/open_sans_semibold"
                             android:textColor="@color/number_increase_color"
-                            android:textSize="12sp"
-                            app:fontFamily="@font/open_sans_semibold"
+                            android:textSize="11sp"
                             tools:text="12" />
 
                     </LinearLayout>
