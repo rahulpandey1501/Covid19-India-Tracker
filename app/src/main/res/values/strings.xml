@@ -33,5 +33,5 @@
     <string name="more_updates">More Updates</string>
     <string name="search_city_toolbar">Search district</string>
     <string name="exit">Exit</string>
-    <string name="search_city_state">Search districts or states</string>
+    <string name="search_city_state">Search District / State / UT</string>
 </resources>
