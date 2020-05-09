@@ -15,7 +15,7 @@
     <color name="background_active">#007bfe</color>
     <color name="navigation_icon_selected">@color/toolbar_icon</color>
     <color name="navigation_icon_unselected">#aaa</color>
-    <color name="toolbar_icon">#26292E</color>
+    <color name="toolbar_icon">#2D3035</color>
     <color name="ui_mode_selection">@color/toolbar_icon</color>
     <color name="zone_red">#ff3e3e</color>
     <color name="zone_orange">#FF8E0D</color>

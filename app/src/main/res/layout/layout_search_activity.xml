@@ -8,7 +8,7 @@
         android:background="@color/page_background">
 
         <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/et_district"
+            android:id="@+id/et_search"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="24dp"
@@ -26,11 +26,11 @@
             android:padding="16dp"
             app:layout_constrainedHeight="true"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/et_district"
+            app:layout_constraintTop_toBottomOf="@+id/et_search"
             app:layout_constraintVertical_bias="0">
 
             <FrameLayout
-                android:id="@+id/district_container"
+                android:id="@+id/search_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:animateLayoutChanges="true"

@@ -17,7 +17,7 @@ interface DistrictDao {
     fun getAll(country: String): LiveData<List<DistrictEntity>>
 
     @Query("select * from district_cases where district like :district")
-    fun getByDistrictName(district: String?): LiveData<List<DistrictEntity>>
+    fun getByDistrictName(district: String?): List<DistrictEntity>
 
     @Query("select * from district_cases where districtId = :districtId")
     fun getByDistrictId(districtId: Int): LiveData<DistrictEntity>

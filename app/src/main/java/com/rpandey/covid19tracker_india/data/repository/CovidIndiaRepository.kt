@@ -104,4 +104,8 @@ class CovidIndiaRepository(private val covidDatabase: CovidDatabase) {
     fun lastUpdatedTime(districtId: Int): LiveData<Long?> {
         return covidDatabase.districtDao().lastUpdatedTime(districtId)
     }
+
+    fun searchState(keyword: String): List<CombinedCasesModel> {
+        return covidDatabase.combinedCasesDao().searchOverall("%${keyword}%")
+    }
 }

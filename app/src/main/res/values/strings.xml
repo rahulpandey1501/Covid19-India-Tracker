@@ -8,13 +8,13 @@
     <string name="active">Active</string>
     <string name="recovered">Recovered</string>
     <string name="Saved">Saved</string>
-    <string name="add_city">Add City</string>
+    <string name="add_city">Add District</string>
     <string name="add_state">Add State</string>
     <string name="select_state">Select State/UT</string>
     <string name="districts">Districts</string>
     <string name="district">District</string>
     <string name="states">States</string>
-    <string name="search_city">Enter city name</string>
+    <string name="search_city">Search district</string>
     <string name="Search">Search</string>
     <string name="monitoring_district">Monitor Districts</string>
     <string name="monitoring_states">Monitor State/UTs</string>
@@ -31,4 +31,7 @@
     <string name="recover">Recover</string>
     <string name="active_cases">*Active cases</string>
     <string name="more_updates">More Updates</string>
+    <string name="search_city_toolbar">Search district</string>
+    <string name="exit">Exit</string>
+    <string name="search_city_state">Search districts or states</string>
 </resources>

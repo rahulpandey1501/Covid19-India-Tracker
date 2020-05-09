@@ -2,8 +2,9 @@ package com.rpandey.covid19tracker_india
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.view.animation.AnimationUtils
-import android.widget.Toast
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -12,6 +13,7 @@ import com.rpandey.covid19tracker_india.data.Status
 import com.rpandey.covid19tracker_india.data.StatusId
 import com.rpandey.covid19tracker_india.data.model.LaunchData
 import com.rpandey.covid19tracker_india.ui.BaseActivity
+import com.rpandey.covid19tracker_india.ui.search.SearchActivity
 import com.rpandey.covid19tracker_india.ui.update.UpdateBottomSheet
 import com.rpandey.covid19tracker_india.util.ThemeHelper
 import com.rpandey.covid19tracker_india.util.Util
@@ -43,13 +45,32 @@ class MainActivity : BaseActivity() {
         startSync()
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.toolbar_menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.search_district -> {
+                startActivity(Intent(this, SearchActivity::class.java).apply {
+                    putExtra(SearchActivity.KEY_VIEW_TYPE, SearchActivity.OVERALL_SEARCH_VIEW)
+                })
+            }
+            R.id.exit -> {
+                finish()
+            }
+        }
+        return true
+    }
+
     private fun setupToolbarIcon() {
         iv_ui_mode.setOnClickListener {
             ThemeHelper.toggle(this)
         }
         iv_refresh.setOnClickListener {
             startSync {
-                showToast("Data successfully updated!")
+                if (it == StatusId.OVERALL_DATA) showToast("Data successfully updated!")
             }
         }
         iv_share.setOnClickListener {
@@ -57,13 +78,13 @@ class MainActivity : BaseActivity() {
         }
     }
 
-    private fun startSync(callback: () -> Unit = {}) {
+    private fun startSync(callback: (StatusId) -> Unit = {}) {
         showRefreshAnimation()
         CoroutineScope(Dispatchers.IO).launch {
             dataProcessor.startSync {
                 onSyncComplete(it)
                 withContext(Dispatchers.Main) {
-                    callback()
+                    callback(it.statusId)
                 }
             }
         }

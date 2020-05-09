@@ -16,10 +16,12 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:layout_marginStart="8dp"
-            android:layout_marginEnd="16dp"
+            android:layout_marginEnd="8dp"
             android:elevation="0dp"
             app:titleTextAppearance="@style/TextAppearance.Toolbar.Title"
-            app:subtitleTextAppearance="@style/TextAppearance.Toolbar.Subtitle">
+            app:subtitleTextAppearance="@style/TextAppearance.Toolbar.Subtitle"
+            app:popupTheme="@style/ToolbarTheme.Popup"
+            app:theme="@style/ToolbarTheme">
 
             <LinearLayout
                 android:layout_width="wrap_content"

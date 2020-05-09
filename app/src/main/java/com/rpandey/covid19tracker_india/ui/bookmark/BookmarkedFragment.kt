@@ -17,7 +17,7 @@ import com.rpandey.covid19tracker_india.databinding.ItemDistrictCasesBinding
 import com.rpandey.covid19tracker_india.ui.BaseFragment
 import com.rpandey.covid19tracker_india.ui.dashboard.SelectStateBottomSheet
 import com.rpandey.covid19tracker_india.ui.districtdetails.DistrictDetailsActivity
-import com.rpandey.covid19tracker_india.ui.search.SearchDistrictActivity
+import com.rpandey.covid19tracker_india.ui.search.SearchActivity
 import com.rpandey.covid19tracker_india.ui.statedetails.StateDetailsActivity
 import com.rpandey.covid19tracker_india.util.*
 import kotlinx.android.synthetic.main.fragment_bookmared.*
@@ -90,7 +90,9 @@ class BookmarkedFragment : BaseFragment(),
 
     private fun openDistrictSearchFragment() {
         startActivityForResult(
-            Intent(activity, SearchDistrictActivity::class.java), searchRequestCode
+            Intent(activity, SearchActivity::class.java).apply {
+                putExtra(SearchActivity.KEY_VIEW_TYPE, SearchActivity.DISTRICT_SEARCH_VIEW)
+            }, searchRequestCode
         )
     }
 
@@ -170,7 +172,7 @@ class BookmarkedFragment : BaseFragment(),
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == searchRequestCode && resultCode == Activity.RESULT_OK) {
-            data?.getIntExtra(SearchDistrictActivity.KEY_DISTRICT_ID, -1)?.let {
+            data?.getIntExtra(SearchActivity.KEY_DISTRICT_ID, -1)?.let {
                 viewModel.onDistrictSelected(it)
             }
         }

@@ -1,5 +1,7 @@
 package com.rpandey.covid19tracker_india.ui.districtdetails
 
+import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -54,15 +56,25 @@ class DistrictDetailsActivity : BaseActivity() {
 
         val districtId = intent.getIntExtra(KEY_DISTRICT_ID, 0)
 
-        iv_close.setOnClickListener { finish() }
         testing_layout.visibility = View.GONE
-//        more_info.setOnClickListener { districtMoreInfo() }
+        iv_close.setOnClickListener { finish() }
+
+        more_info.setOnClickListener {
+            loadDistrictMoreInfo()
+            it.animate()
+                .alpha(0f)
+                .setDuration(1000)
+                .setListener(object : AnimatorListenerAdapter() {
+                    override fun onAnimationEnd(animation: Animator) {
+                        it.visibility = View.GONE
+                    }
+                })
+        }
 
         viewModel.getDistrict(districtId).observe(this) {
             binding.title.text = it.district
             generateUiCaseMode(it)
             setZoneUI(it.zone)
-            loadDistrictMoreInfo()
         }
 
         viewModel.lastUpdatedTime(districtId).observe(this) {
@@ -116,6 +128,7 @@ class DistrictDetailsActivity : BaseActivity() {
         val urlPlaceholder = configModel?.districtInfoUrlPlaceholder ?: Constants.DEFAULT_DISTRICT_INFO_PLACEHOLDER
         val url = String.format(urlPlaceholder, binding.title.text)
 
+        webview.visibility = View.VISIBLE
         webview.webViewClient = WebViewClient()
         webview.webChromeClient = WebChromeClient()
         webview.loadUrl(url)

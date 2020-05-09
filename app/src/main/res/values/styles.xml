@@ -26,11 +26,20 @@
     <style name="TextAppearance.Toolbar.Title" parent="TextAppearance.AppCompat.Widget.ActionBar.Title">
         <item name="android:textColor">@color/text_primary</item>
         <item name="fontFamily">@font/open_sans_semibold</item>
+        <item name="android:textColorSecondary">@color/toolbar_icon</item>
     </style>
 
     <style name="TextAppearance.Toolbar.Subtitle" parent="TextAppearance.AppCompat.Caption">
         <item name="android:textColor">@color/text_secondary</item>
         <item name="fontFamily">@font/open_sans</item>
+    </style>
+
+    <style name="ToolbarTheme" parent="Widget.AppCompat.ActionBar">
+        <item name="android:textColorSecondary">@color/toolbar_icon</item>
+    </style>
+    
+    <style name="ToolbarTheme.Popup" parent="Widget.AppCompat.PopupMenu.Overflow">
+        <item name="fontFamily">sans-serif</item>
     </style>
 
 </resources>
