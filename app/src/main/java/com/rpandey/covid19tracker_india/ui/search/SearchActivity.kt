@@ -81,6 +81,8 @@ class SearchActivity : BaseActivity() {
     private fun observeLiveData() {
         val viewType = intent.getStringExtra(KEY_VIEW_TYPE)
 
+        binding.ivClose.setOnClickListener { finish() }
+
         binding.etSearch.doAfterTextChanged {
             if (viewType == DISTRICT_SEARCH_VIEW) {
                 viewModel.getDistrict(it?.toString()?.trim())

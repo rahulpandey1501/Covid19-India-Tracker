@@ -14,6 +14,7 @@ import com.rpandey.covid19tracker_india.data.StatusId
 import com.rpandey.covid19tracker_india.data.model.LaunchData
 import com.rpandey.covid19tracker_india.ui.BaseActivity
 import com.rpandey.covid19tracker_india.ui.search.SearchActivity
+import com.rpandey.covid19tracker_india.ui.settings.SettingsActivity
 import com.rpandey.covid19tracker_india.ui.update.UpdateBottomSheet
 import com.rpandey.covid19tracker_india.util.ThemeHelper
 import com.rpandey.covid19tracker_india.util.Util
@@ -40,13 +41,13 @@ class MainActivity : BaseActivity() {
         setupToolbarIcon()
 
         navView.setupWithNavController(navController)
-        navView.labelVisibilityMode = LabelVisibilityMode.LABEL_VISIBILITY_UNLABELED
+//        navView.labelVisibilityMode = LabelVisibilityMode.LABEL_VISIBILITY_UNLABELED
 
         startSync()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.toolbar_menu, menu)
+//        menuInflater.inflate(R.menu.toolbar_menu, menu)
         return true
     }
 
@@ -56,6 +57,9 @@ class MainActivity : BaseActivity() {
                 startActivity(Intent(this, SearchActivity::class.java).apply {
                     putExtra(SearchActivity.KEY_VIEW_TYPE, SearchActivity.OVERALL_SEARCH_VIEW)
                 })
+            }
+            R.id.settings -> {
+                startActivity(Intent(this, SettingsActivity::class.java))
             }
             R.id.exit -> {
                 finish()
@@ -75,6 +79,11 @@ class MainActivity : BaseActivity() {
         }
         iv_share.setOnClickListener {
             onShareClicked()
+        }
+        iv_search.setOnClickListener {
+            startActivity(Intent(this, SearchActivity::class.java).apply {
+                putExtra(SearchActivity.KEY_VIEW_TYPE, SearchActivity.OVERALL_SEARCH_VIEW)
+            })
         }
     }
 

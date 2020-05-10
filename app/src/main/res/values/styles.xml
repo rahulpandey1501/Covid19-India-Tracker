@@ -29,6 +29,12 @@
         <item name="android:textColorSecondary">@color/toolbar_icon</item>
     </style>
 
+    <style name="TextAppearance.NavBottom.Active" parent="TextAppearance.AppCompat.Caption">
+        <item name="android:textColor">@color/text_secondary</item>
+        <item name="android:textSize">14sp</item>
+        <item name="fontFamily">@font/open_sans</item>
+    </style>
+
     <style name="TextAppearance.Toolbar.Subtitle" parent="TextAppearance.AppCompat.Caption">
         <item name="android:textColor">@color/text_secondary</item>
         <item name="fontFamily">@font/open_sans</item>

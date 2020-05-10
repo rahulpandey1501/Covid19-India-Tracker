@@ -16,7 +16,6 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
             android:elevation="0dp"
             app:titleTextAppearance="@style/TextAppearance.Toolbar.Title"
             app:subtitleTextAppearance="@style/TextAppearance.Toolbar.Subtitle"
@@ -25,15 +24,23 @@
 
             <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_gravity="end"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
                 <ImageView
+                    android:id="@+id/iv_refresh"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginEnd="12dp"
+                    android:src="@drawable/ic_baseline_refresh_24"
+                    android:tint="@color/toolbar_icon" />
+
+                <ImageView
                     android:id="@+id/iv_share"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_marginEnd="16dp"
                     android:src="@drawable/ic_baseline_share_24"
                     android:tint="@color/toolbar_icon" />
@@ -41,17 +48,18 @@
                 <ImageView
                     android:id="@+id/iv_ui_mode"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="12dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginEnd="10dp"
                     android:src="@drawable/ic_ui_mode_icon"
                     android:tint="@color/ui_mode_selection" />
 
                 <ImageView
-                    android:id="@+id/iv_refresh"
+                    android:id="@+id/iv_search"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_baseline_autorenew_24"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/ic_baseline_search_24"
                     android:tint="@color/toolbar_icon" />
+
             </LinearLayout>
 
         </androidx.appcompat.widget.Toolbar>
@@ -80,6 +88,8 @@
         android:background="@color/item_background"
         app:itemIconTint="@color/bottom_nav_color"
         app:itemTextColor="@color/bottom_nav_color"
+        app:itemTextAppearanceActive="@style/TextAppearance.Toolbar.Subtitle"
+        app:itemTextAppearanceInactive="@style/TextAppearance.Toolbar.Subtitle"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"

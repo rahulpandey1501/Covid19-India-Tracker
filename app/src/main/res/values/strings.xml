@@ -34,4 +34,13 @@
     <string name="search_city_toolbar">Search district</string>
     <string name="exit">Exit</string>
     <string name="search_city_state">Search District / State / UT</string>
+    <string name="title_activity_settings">SettingsActivity</string>
+    <string name="settings">Settings</string>
+    <string name="monitor_district_notification">Monitor district</string>
+    <string name="today_notification">"Today's update "</string>
+    <string name="overall_cases_notification">Overall Cases</string>
+    <string name="share">Share</string>
+    <string name="dark_mode">Dark mode</string>
+    <string name="sync">Refresh</string>
+    <string name="Updates">Updates</string>
 </resources>
