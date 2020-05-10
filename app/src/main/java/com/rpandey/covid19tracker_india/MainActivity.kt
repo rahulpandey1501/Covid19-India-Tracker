@@ -7,8 +7,9 @@ import android.view.MenuItem
 import android.view.animation.AnimationUtils
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
+import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.android.material.bottomnavigation.LabelVisibilityMode
+import com.google.firebase.iid.FirebaseInstanceId
 import com.rpandey.covid19tracker_india.data.Status
 import com.rpandey.covid19tracker_india.data.StatusId
 import com.rpandey.covid19tracker_india.data.model.LaunchData
@@ -44,6 +45,20 @@ class MainActivity : BaseActivity() {
 //        navView.labelVisibilityMode = LabelVisibilityMode.LABEL_VISIBILITY_UNLABELED
 
         startSync()
+
+        initFCM()
+    }
+
+    private fun initFCM() {
+        FirebaseInstanceId.getInstance().instanceId
+            .addOnCompleteListener(OnCompleteListener { task ->
+                if (!task.isSuccessful) {
+                    return@OnCompleteListener
+                }
+
+                // Get new Instance ID token
+                val token = task.result?.token
+            })
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
