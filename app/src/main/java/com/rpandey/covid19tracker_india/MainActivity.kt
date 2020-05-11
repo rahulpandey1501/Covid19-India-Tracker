@@ -15,12 +15,8 @@ import com.rpandey.covid19tracker_india.data.StatusId
 import com.rpandey.covid19tracker_india.data.model.LaunchData
 import com.rpandey.covid19tracker_india.ui.BaseActivity
 import com.rpandey.covid19tracker_india.ui.search.SearchActivity
-import com.rpandey.covid19tracker_india.ui.settings.SettingsActivity
 import com.rpandey.covid19tracker_india.ui.update.UpdateBottomSheet
-import com.rpandey.covid19tracker_india.util.ThemeHelper
-import com.rpandey.covid19tracker_india.util.Util
-import com.rpandey.covid19tracker_india.util.showDialog
-import com.rpandey.covid19tracker_india.util.showToast
+import com.rpandey.covid19tracker_india.util.*
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -36,17 +32,34 @@ class MainActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         val navView: BottomNavigationView = findViewById(R.id.nav_view)
-
         val navController = findNavController(R.id.nav_host_fragment)
+        navView.setupWithNavController(navController)
+
         setSupportActionBar(toolbar)
         setupToolbarIcon()
-
-        navView.setupWithNavController(navController)
-//        navView.labelVisibilityMode = LabelVisibilityMode.LABEL_VISIBILITY_UNLABELED
-
-        startSync()
-
+        setupPullToRefresh()
         initFCM()
+    }
+
+    private fun setupPullToRefresh() {
+        onSynStart()
+        pull_refresh.setOnRefreshListener {
+            onSynStart()
+        }
+    }
+
+    private fun onSynStart() {
+        if (!pull_refresh.isRefreshing)
+            pull_refresh.isRefreshing = true
+
+        startSync {
+            if (it.statusId == StatusId.OVERALL_DATA) {
+                if (it is Status.Success) {
+                    showToast("Data successfully updated!")
+                }
+                pull_refresh.isRefreshing = false
+            }
+        }
     }
 
     private fun initFCM() {
@@ -55,7 +68,6 @@ class MainActivity : BaseActivity() {
                 if (!task.isSuccessful) {
                     return@OnCompleteListener
                 }
-
                 // Get new Instance ID token
                 val token = task.result?.token
             })
@@ -72,9 +84,6 @@ class MainActivity : BaseActivity() {
                 startActivity(Intent(this, SearchActivity::class.java).apply {
                     putExtra(SearchActivity.KEY_VIEW_TYPE, SearchActivity.OVERALL_SEARCH_VIEW)
                 })
-            }
-            R.id.settings -> {
-                startActivity(Intent(this, SettingsActivity::class.java))
             }
             R.id.exit -> {
                 finish()
@@ -102,18 +111,6 @@ class MainActivity : BaseActivity() {
         }
     }
 
-    private fun startSync(callback: (StatusId) -> Unit = {}) {
-        showRefreshAnimation()
-        CoroutineScope(Dispatchers.IO).launch {
-            dataProcessor.startSync {
-                onSyncComplete(it)
-                withContext(Dispatchers.Main) {
-                    callback(it.statusId)
-                }
-            }
-        }
-    }
-
     private fun onShareClicked() {
         logEvent("SHARE_CLICKED")
         val shareIntent = Util.shareAppIntent()
@@ -123,6 +120,18 @@ class MainActivity : BaseActivity() {
     private fun showRefreshAnimation() {
         val animation = AnimationUtils.loadAnimation(this, R.anim.rotate_image)
         iv_refresh.startAnimation(animation)
+    }
+
+    private fun startSync(callback: (Status<*>) -> Unit = {}) {
+        showRefreshAnimation()
+        CoroutineScope(Dispatchers.IO).launch {
+            dataProcessor.startSync {
+                onSyncComplete(it)
+                withContext(Dispatchers.Main) {
+                    callback(it)
+                }
+            }
+        }
     }
 
     private fun <T: Any?> onSyncComplete(status: Status<T>) {

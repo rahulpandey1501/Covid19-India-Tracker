@@ -44,6 +44,8 @@
                         android:fontFamily="@font/open_sans"
                         android:textColor="@color/text_primary"
                         android:textSize="14sp"
+                        android:maxLines="1"
+                        android:ellipsize="end"
                         app:fontFamily="@font/open_sans"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
