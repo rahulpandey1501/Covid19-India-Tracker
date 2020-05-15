@@ -19,11 +19,11 @@ class CovidIndiaDataProcessor(
     private val districtDataProcessor by lazy { DistrictDataProcessor(covidDatabase) }
     private val overallDataProcessor by lazy { OverallDataProcessor(covidDatabase) }
     private val testDataProcessor by lazy { TestDataProcessor(covidDatabase) }
+    private val resourceDataProcessor by lazy { ResourceDataProcessor(covidDatabase) }
 
     suspend fun startSync(callback: suspend (Status<*>) -> Unit) {
 
-        syncAppLaunchData(apiProvider.firebaseHostApiService, callback)
-
+        // Fetching overall primary data information
         val overallDataStatus = ApiHelper.handleRequest(StatusId.OVERALL_DATA) {
             apiProvider.covidIndia.getOverAllData()
         }
@@ -34,10 +34,14 @@ class CovidIndiaDataProcessor(
 
         callback(overallDataStatus)
 
+        // Fetching overall primary data information
         val districtStatus = ApiHelper.handleRequest(StatusId.DISTRICT_DATA) {
             apiProvider.covidIndia.getDistrictData()
         }
 
+        callback(districtStatus)
+
+        // Fetching zonal information
         val zoneStatus = ApiHelper.handleRequest(StatusId.ZONE_DATA) {
             apiProvider.covidIndia.getZoneData()
         }
@@ -51,6 +55,9 @@ class CovidIndiaDataProcessor(
             districtDataProcessor.process(districtData to (zoneData?.zones ?: emptyList()))
         }
 
+        callback(zoneStatus)
+
+        // Fetching testing data information
         val testingStatus = ApiHelper.handleRequest(StatusId.TESTING_DATA) {
             apiProvider.covidIndia.getTestingData()
         }
@@ -58,6 +65,22 @@ class CovidIndiaDataProcessor(
         if (testingStatus is Status.Success) {
             testDataProcessor.process(testingStatus.data)
         }
+
+        callback(testingStatus)
+
+        // Fetching app launch data
+        syncAppLaunchData(apiProvider.firebaseHostApiService, callback)
+
+        // Fetching resources data information
+        val resourceStatus = ApiHelper.handleRequest(StatusId.RESOURCE_DATA) {
+            apiProvider.covidIndia.getResources()
+        }
+
+        if (resourceStatus is Status.Success) {
+            resourceDataProcessor.process(resourceStatus.data)
+        }
+
+        callback(resourceStatus)
     }
 
     private suspend fun syncAppLaunchData(service: FirebaseHostApiService, callback: suspend (Status<*>) -> Unit) {

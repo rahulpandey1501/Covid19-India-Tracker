@@ -38,3 +38,9 @@ class Migrations3to4: Migration(3, 4) {
         addColumn(database, "district_cases", "zone", "TEXT DEFAULT NULL")
     }
 }
+
+class Migrations4to5: Migration(4, 5) {
+    override fun migrate(database: SupportSQLiteDatabase) {
+        database.execSQL("CREATE TABLE `resources` (`id` TEXT NOT NULL, `category` TEXT NOT NULL, `district` TEXT NOT NULL, `stateName` TEXT NOT NULL, `contact` TEXT NOT NULL, `phoneNumber` TEXT NOT NULL, `description` TEXT NOT NULL, `organisation` TEXT NOT NULL, PRIMARY KEY(`id`))")
+    }
+}

@@ -21,40 +21,38 @@ class HomeViewModel(private val repository: CovidIndiaRepository) : ViewModel() 
         val allCases = mutableMapOf<UICaseType, CountModel>()
 
         return MediatorLiveData<Map<UICaseType, CountModel>>().apply {
-            addSource(getConfirmedCount(), Observer {
+            addSource(getConfirmedCount()) {
                 it?.let {
                     allCases[UICaseType.TYPE_CONFIRMED] = it
                     value = allCases
                 }
-            })
+            }
 
-            addSource(getActiveCount(), Observer {
-                it?.let {
-                    allCases[UICaseType.TYPE_ACTIVE] = CountModel(0, it)
-                    value = allCases
-                }
-            })
+            addSource(getActiveCount()) {
+                allCases[UICaseType.TYPE_ACTIVE] = CountModel(0, it ?: 0)
+                value = allCases
+            }
 
-            addSource(getRecoveredCount(), Observer {
+            addSource(getRecoveredCount()) {
                 it?.let {
                     allCases[UICaseType.TYPE_RECOVERED] = it
                     value = allCases
                 }
-            })
+            }
 
-            addSource(getDeceasedCount(), Observer {
+            addSource(getDeceasedCount()) {
                 it?.let {
                     allCases[UICaseType.TYPE_DEATH] = it
                     value = allCases
                 }
-            })
+            }
 
-            addSource(getTestingCount(), Observer {
+            addSource(getTestingCount()) {
                 it?.let {
                     allCases[UICaseType.TYPE_TESTING] = it
                     value = allCases
                 }
-            })
+            }
         }
     }
 

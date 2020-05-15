@@ -83,7 +83,7 @@ object Util {
         return PreferenceHelper.getString(Constants.KEY_SHARE_URL) ?: Constants.DEFAULT_APP_SHARE_URL
     }
 
-    fun runWithExecutionTime(identifier: String, block: () -> Unit) {
+    suspend fun runWithExecutionTime(identifier: String, block: suspend () -> Unit) {
         val before = System.currentTimeMillis()
         block()
         Log.d("Covid19", "$identifier execution time: ${System.currentTimeMillis() - before}ms")

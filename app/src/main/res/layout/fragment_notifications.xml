@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
@@ -41,6 +41,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
                 android:text="@string/no_new_updates"
+                android:fontFamily="@font/open_sans_semibold"
+                app:fontFamily="@font/open_sans_semibold"
                 android:textColor="@color/text_primary"
                 android:textSize="20sp" />
 

@@ -18,11 +18,11 @@ class ItemCountCaseBindingModel(private val context: Context) {
 
     fun init(caseType: UICaseType, caseMapping: Map<UICaseType, CountModel>) {
         val countModel = caseMapping[caseType] ?: error("$caseType not found")
-        val confirmCaseModel = caseMapping[UICaseType.TYPE_CONFIRMED]
         totalCount.set(Util.formatNumber(countModel.totalCount))
         if (countModel.currentCount > 0)
             currentCount.set(Util.formatNumber(countModel.currentCount))
 
+        val confirmCaseModel = caseMapping[UICaseType.TYPE_CONFIRMED]
         when(caseType) {
 
             UICaseType.TYPE_CONFIRMED -> {
@@ -66,6 +66,8 @@ class ItemCountCaseBindingModel(private val context: Context) {
     }
 
     private fun getPercentage(confirmedCount: Int, matchingCount: Int): String {
+        if (confirmedCount == 0) return ""
+
         val percentage = (matchingCount.toFloat() / confirmedCount.toFloat()) * 100
         return "${"%.2f".format(percentage)}%"
     }

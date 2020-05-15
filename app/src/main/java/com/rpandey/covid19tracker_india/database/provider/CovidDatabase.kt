@@ -17,7 +17,8 @@ import com.rpandey.covid19tracker_india.database.provider.CovidDatabase.Companio
         StateEntity::class,
         DistrictEntity::class,
         BookmarkedEntity::class,
-        TestEntity::class
+        TestEntity::class,
+        ResourcesEntity::class
     ],
     exportSchema = false,
     version = VERSION
@@ -26,15 +27,19 @@ abstract class CovidDatabase : RoomDatabase() {
 
     companion object {
 
-        const val VERSION = 4
+        const val VERSION = 5
         private const val NAME = "covid_database"
 
         private var database: CovidDatabase? = null
 
         fun getInstance(context: Context): CovidDatabase {
             database = database ?: Room.databaseBuilder(context.applicationContext, CovidDatabase::class.java, NAME)
-                .addMigrations(Migrations1to2(), Migrations2to3(), Migrations3to4())
-                .build()
+                .addMigrations(
+                    Migrations1to2(),
+                    Migrations2to3(),
+                    Migrations3to4(),
+                    Migrations4to5()
+                ).build()
             return database!!
         }
     }
@@ -48,4 +53,5 @@ abstract class CovidDatabase : RoomDatabase() {
     abstract fun bookmarkDao(): BookmarkDao
     abstract fun combinedCasesDao(): CombinedCasesDao
     abstract fun testDao(): TestDao
+    abstract fun resourceDao(): ResourcesDao
 }

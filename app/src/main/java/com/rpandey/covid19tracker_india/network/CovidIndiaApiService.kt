@@ -23,4 +23,7 @@ interface CovidIndiaApiService {
 
     @GET("zones.json")
     suspend fun getZoneData(): ZoneResponse
+
+    @GET("resources/resources.json")
+    suspend fun getResources(): ResourceResponse
 }
