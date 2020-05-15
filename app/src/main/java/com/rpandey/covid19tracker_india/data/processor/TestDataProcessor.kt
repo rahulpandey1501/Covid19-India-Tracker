@@ -33,23 +33,25 @@ class TestDataProcessor(database: CovidDatabase) : ResponseProcessor<TestRespons
 
         // get last two updated data of every states
         stateDataMapping.forEach { (stateName, data) ->
-            data.sortByDescending { it.timestamp }
-            val currentUpdateData = data.first()
-            val lastUpdateData = data.getOrNull(1)
+            try {
+                data.sortByDescending { it.timestamp }
+                val currentUpdateData = data.first()
+                val lastUpdateData = data.getOrNull(1)
 
-            val currentTotalCount = currentUpdateData.totalTest!!.toInt()
-            val lastTotalCount = lastUpdateData?.totalTest?.toInt() ?: 0
-            val deltaCount = if (lastTotalCount == 0) 0 else currentTotalCount - lastTotalCount
+                val currentTotalCount = currentUpdateData.totalTest!!.toInt()
+                val lastTotalCount = lastUpdateData?.totalTest?.toInt() ?: 0
+                val deltaCount = if (lastTotalCount == 0) 0 else currentTotalCount - lastTotalCount
 
-            testingEntities.add(
-                TestEntity(
-                    currentUpdateData.timestamp,
-                    Country.INDIA.code,
-                    stateName,
-                    deltaCount,
-                    currentTotalCount
+                testingEntities.add(
+                    TestEntity(
+                        currentUpdateData.timestamp,
+                        Country.INDIA.code,
+                        stateName,
+                        deltaCount,
+                        currentTotalCount
+                    )
                 )
-            )
+            } catch (e: Exception) {}
         }
 
         if (testingEntities.isNotEmpty()) {

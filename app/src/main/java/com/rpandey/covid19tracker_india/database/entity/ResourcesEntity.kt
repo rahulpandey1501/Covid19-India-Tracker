@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "resources")
 data class ResourcesEntity(
-    @PrimaryKey @ColumnInfo(name = "id") val id: String,
+    @PrimaryKey @ColumnInfo(name = "id") val id: Int,
     @ColumnInfo(name = "category") val category: String,
     @ColumnInfo(name = "district") val district: String,
     @ColumnInfo(name = "stateName") val stateName: String,

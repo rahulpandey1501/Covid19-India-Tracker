@@ -6,6 +6,7 @@ import com.rpandey.covid19tracker_india.data.model.Country
 import com.rpandey.covid19tracker_india.data.model.covidIndia.*
 import com.rpandey.covid19tracker_india.database.entity.*
 import com.rpandey.covid19tracker_india.database.provider.CovidDatabase
+import java.lang.Exception
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -32,55 +33,57 @@ class OverallDataProcessor(covidDatabase: CovidDatabase) :
             if (stateData.stateCode == Constants.STATE_TOTAL_CASE)
                 return@loop
 
-            val parsedTimestamp = dateFormat.parse(stateData.lastUpdatedTime.trim())
-            val timestamp = parsedTimestamp?.time ?: 0
+            try {
+                val parsedTimestamp = dateFormat.parse(stateData.lastUpdatedTime.trim())
+                val timestamp = parsedTimestamp?.time ?: 0
 
-            confirmedCases.add(
-                ConfirmedEntity(
-                    timestamp,
-                    Country.INDIA.code,
-                    stateData.stateCode.trim(),
-                    stateData.deltaConfirmed,
-                    stateData.confirmed
+                confirmedCases.add(
+                    ConfirmedEntity(
+                        timestamp,
+                        Country.INDIA.code,
+                        stateData.stateCode.trim(),
+                        stateData.deltaConfirmed,
+                        stateData.confirmed
+                    )
                 )
-            )
 
-            recoveredCases.add(
-                RecoverEntity(
-                    timestamp,
-                    Country.INDIA.code,
-                    stateData.stateCode.trim(),
-                    stateData.deltaRecovered,
-                    stateData.recovered
+                recoveredCases.add(
+                    RecoverEntity(
+                        timestamp,
+                        Country.INDIA.code,
+                        stateData.stateCode.trim(),
+                        stateData.deltaRecovered,
+                        stateData.recovered
+                    )
                 )
-            )
 
-            deceasedCases.add(
-                DeceasedEntity(
-                    timestamp,
-                    Country.INDIA.code,
-                    stateData.stateCode.trim(),
-                    stateData.deltaDeaths,
-                    stateData.deaths
+                deceasedCases.add(
+                    DeceasedEntity(
+                        timestamp,
+                        Country.INDIA.code,
+                        stateData.stateCode.trim(),
+                        stateData.deltaDeaths,
+                        stateData.deaths
+                    )
                 )
-            )
 
-            activeCases.add(
-                ActiveEntity(
-                    timestamp,
-                    Country.INDIA.code,
-                    stateData.stateCode.trim(),
-                    stateData.active
+                activeCases.add(
+                    ActiveEntity(
+                        timestamp,
+                        Country.INDIA.code,
+                        stateData.stateCode.trim(),
+                        stateData.active
+                    )
                 )
-            )
 
-            statesData.add(
-                StateEntity(
-                    Country.INDIA.code,
-                    stateData.stateCode.trim(),
-                    stateData.stateName.trim()
+                statesData.add(
+                    StateEntity(
+                        Country.INDIA.code,
+                        stateData.stateCode.trim(),
+                        stateData.stateName.trim()
+                    )
                 )
-            )
+            } catch (e: Exception) {}
         }
 
         persistStateData(activeCases, confirmedCases, recoveredCases, deceasedCases, statesData)

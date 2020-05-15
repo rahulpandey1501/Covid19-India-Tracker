@@ -5,7 +5,8 @@ import com.rpandey.covid19tracker_india.data.model.covidIndia.ResourceResponse
 import com.rpandey.covid19tracker_india.database.entity.ResourcesEntity
 import com.rpandey.covid19tracker_india.database.provider.CovidDatabase
 
-class ResourceDataProcessor(covidDatabase: CovidDatabase) : ResponseProcessor<ResourceResponse>(covidDatabase) {
+class ResourceDataProcessor(covidDatabase: CovidDatabase) :
+    ResponseProcessor<ResourceResponse>(covidDatabase) {
 
     override fun process(data: ResourceResponse) {
         val resources = data.resources
@@ -14,18 +15,20 @@ class ResourceDataProcessor(covidDatabase: CovidDatabase) : ResponseProcessor<Re
 
         val resourceEntities = mutableListOf<ResourcesEntity>()
         for (resource in resources) {
-            resourceEntities.add(
-                ResourcesEntity(
-                    resource.recordid,
-                    resource.category,
-                    resource.district,
-                    resource.state,
-                    resource.contact,
-                    getContact(resource),
-                    resource.description,
-                    resource.organisation
+            try {
+                resourceEntities.add(
+                    ResourcesEntity(
+                        resource.recordid.toInt(),
+                        resource.category,
+                        resource.district,
+                        resource.state,
+                        resource.contact,
+                        getContact(resource),
+                        resource.description,
+                        resource.organisation
+                    )
                 )
-            )
+            } catch (e: Exception) {}
         }
 
         if (resourceEntities.isNotEmpty())

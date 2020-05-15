@@ -23,25 +23,27 @@ class DistrictDataProcessor(covidDatabase: CovidDatabase) :
             val stateName = it.stateName?.trim() ?: ""
 
             it.districtData?.forEach { districtData ->
-                val district = districtData.district.trim()
-                val delta = districtData.delta
-                val zoneData = zoneDistrictMapping[district to stateCode]
-                val zone = if (zoneData?.zone.isNullOrEmpty()) null else zoneData?.zone
-                districtEntities.add(
-                    DistrictEntity(
-                        getDistrictId(stateName, district),
-                        Country.INDIA.code,
-                        stateName,
-                        district,
-                        delta.confirmed,
-                        districtData.confirmed,
-                        delta.recovered,
-                        districtData.recovered,
-                        delta.deceased,
-                        districtData.deceased,
-                        zone?.trim()
+                try {
+                    val district = districtData.district.trim()
+                    val delta = districtData.delta
+                    val zoneData = zoneDistrictMapping[district to stateCode]
+                    val zone = if (zoneData?.zone.isNullOrEmpty()) null else zoneData?.zone
+                    districtEntities.add(
+                        DistrictEntity(
+                            getDistrictId(stateName, district),
+                            Country.INDIA.code,
+                            stateName,
+                            district,
+                            delta.confirmed,
+                            districtData.confirmed,
+                            delta.recovered,
+                            districtData.recovered,
+                            delta.deceased,
+                            districtData.deceased,
+                            zone?.trim()
+                        )
                     )
-                )
+                } catch (e: Exception) {}
             }
         }
 
