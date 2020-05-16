@@ -14,6 +14,7 @@ import com.rpandey.covid19tracker_india.data.Status
 import com.rpandey.covid19tracker_india.data.StatusId
 import com.rpandey.covid19tracker_india.data.model.LaunchData
 import com.rpandey.covid19tracker_india.ui.BaseActivity
+import com.rpandey.covid19tracker_india.ui.aboutus.AboutUsActivity
 import com.rpandey.covid19tracker_india.ui.search.SearchActivity
 import com.rpandey.covid19tracker_india.ui.update.UpdateBottomSheet
 import com.rpandey.covid19tracker_india.util.*
@@ -73,20 +74,25 @@ class MainActivity : BaseActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
+
             R.id.search -> {
                 startActivity(Intent(this, SearchActivity::class.java).apply {
                     putExtra(SearchActivity.KEY_VIEW_TYPE, SearchActivity.OVERALL_SEARCH_VIEW)
                 })
             }
+
             R.id.share -> {
                 onShareClicked()
             }
+
             R.id.ui_mode -> {
                 ThemeHelper.toggle(this)
             }
-            R.id.about_us -> {
 
+            R.id.about_us -> {
+                startActivity(Intent(this, AboutUsActivity::class.java))
             }
+
             R.id.exit -> {
                 finish()
             }

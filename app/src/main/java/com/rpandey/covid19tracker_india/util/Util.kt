@@ -17,6 +17,7 @@ import com.rpandey.covid19tracker_india.util.customchrome.CustomTabsHelper
 import java.text.DecimalFormat
 import java.text.DecimalFormatSymbols
 import java.util.*
+import kotlin.math.*
 
 
 object Util {
@@ -35,25 +36,31 @@ object Util {
 
     fun timestampToDate(timestamp: Long): String? {
         return try {
-            DateUtils.getRelativeTimeSpanString(timestamp, Calendar.getInstance().timeInMillis, DateUtils.MINUTE_IN_MILLIS).toString()
+            DateUtils.getRelativeTimeSpanString(
+                timestamp,
+                Calendar.getInstance().timeInMillis,
+                DateUtils.MINUTE_IN_MILLIS
+            ).toString()
         } catch (e: Exception) {
             "NA"
         }
     }
 
     fun getZoneColor(context: Context, zone: String?): Int {
-        return ContextCompat.getColor(context, when(zone) {
-            Zone.Green.name -> {
-                R.color.zone_green
+        return ContextCompat.getColor(
+            context, when (zone) {
+                Zone.Green.name -> {
+                    R.color.zone_green
+                }
+                Zone.Orange.name -> {
+                    R.color.zone_orange
+                }
+                Zone.Red.name -> {
+                    R.color.zone_red
+                }
+                else -> android.R.color.transparent
             }
-            Zone.Orange.name -> {
-                R.color.zone_orange
-            }
-            Zone.Red.name -> {
-                R.color.zone_red
-            }
-            else -> android.R.color.transparent
-        })
+        )
     }
 
     fun shareAppIntent(): Intent {
@@ -71,14 +78,15 @@ object Util {
     }
 
     fun getShareMessage(): String {
-        return  "Get the latest updates on Covid19 \uD83D\uDE37cases across India on your mobile.\n" +
+        return "Get the latest updates on Covid19 \uD83D\uDE37cases across India on your mobile.\n" +
                 "Made for India ❤️\n\n" +
                 "Download link:- \n" +
                 "${getShareUrl()}\n"
     }
 
     fun getShareUrl(): String {
-        return PreferenceHelper.getString(Constants.KEY_SHARE_URL) ?: Constants.DEFAULT_APP_SHARE_URL
+        return PreferenceHelper.getString(Constants.KEY_SHARE_URL)
+            ?: Constants.DEFAULT_APP_SHARE_URL
     }
 
     inline fun runWithExecutionTime(identifier: String, block: () -> Unit) {
@@ -89,14 +97,26 @@ object Util {
 
     fun openWebUrl(context: Context, url: String) {
         val customTabsIntent = CustomTabsIntent.Builder()
-        .setToolbarColor(ContextCompat.getColor(context, R.color.colorPrimary))
-        .setShowTitle(true)
-        .build()
+            .setToolbarColor(ContextCompat.getColor(context, R.color.colorPrimary))
+            .setShowTitle(true)
+            .build()
         CustomTabsHelper.addKeepAliveExtra(context, customTabsIntent.intent)
         val packageName = CustomTabsHelper.getPackageNameToUse(context)
         if (packageName != null) {
             customTabsIntent.intent.setPackage(packageName)
             customTabsIntent.launchUrl(context, Uri.parse(url))
         }
+    }
+
+    /**
+     * @returns Distance in KiloMeters
+     */
+    fun distance(lat1: Double, lon1: Double, lat2: Double, lon2: Double): Double {
+        val p = 0.017453292519943295  // Math.PI / 180
+        val a = 0.5 - cos((lat2 - lat1) * p) / 2 +
+                cos(lat1 * p) * cos(lat2 * p) *
+                (1 - cos((lon2 - lon1) * p)) / 2
+
+        return 12742 * asin(sqrt(a)); // 2 * R; R = 6371 km
     }
 }
