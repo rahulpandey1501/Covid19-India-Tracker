@@ -10,22 +10,21 @@ import com.rpandey.covid19tracker_india.R
 import com.rpandey.covid19tracker_india.data.Constants
 import com.rpandey.covid19tracker_india.data.model.Config
 import com.rpandey.covid19tracker_india.database.entity.DistrictEntity
+import com.rpandey.covid19tracker_india.database.entity.StateEntity
 import com.rpandey.covid19tracker_india.database.model.CountModel
 import com.rpandey.covid19tracker_india.databinding.ActivityStateDetailsBinding
 import com.rpandey.covid19tracker_india.ui.BaseActivity
 import com.rpandey.covid19tracker_india.ui.common.HeaderViewHelper
 import com.rpandey.covid19tracker_india.ui.common.SortOn
 import com.rpandey.covid19tracker_india.ui.common.ViewSortModel
+import com.rpandey.covid19tracker_india.ui.dashboard.SelectStateBottomSheet
 import com.rpandey.covid19tracker_india.ui.districtdetails.DistrictDetailsActivity
 import com.rpandey.covid19tracker_india.ui.home.ItemCountCaseBindingModel
 import com.rpandey.covid19tracker_india.ui.home.UICaseType
-import com.rpandey.covid19tracker_india.util.PreferenceHelper
-import com.rpandey.covid19tracker_india.util.Util
-import com.rpandey.covid19tracker_india.util.getViewModel
-import com.rpandey.covid19tracker_india.util.observe
+import com.rpandey.covid19tracker_india.util.*
 import kotlinx.android.synthetic.main.activity_state_details.*
 
-class StateDetailsActivity : BaseActivity() {
+class StateDetailsActivity : BaseActivity(), SelectStateBottomSheet.Callback {
 
     override fun getScreenName(): String = "StateDetails"
 
@@ -44,8 +43,8 @@ class StateDetailsActivity : BaseActivity() {
     private lateinit var adapter: DistrictListAdapter
     lateinit var binding: ActivityStateDetailsBinding
 
-    private val viewModel: StoreDetailsViewModel by lazy {
-        getViewModel { StoreDetailsViewModel(repository) }
+    private val viewModel: StateDetailsViewModel by lazy {
+        getViewModel { StateDetailsViewModel(repository) }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -55,26 +54,29 @@ class StateDetailsActivity : BaseActivity() {
             openDistrictDetailsView(it)
         }
         binding.rvDistrictContainer.adapter = adapter
-        observeLiveData()
-    }
-
-    private fun observeLiveData() {
-
         val state = intent.getStringExtra(KEY_STATE)!!
         val stateName = intent.getStringExtra(KEY_STATE_NAME)!!
+        observeLiveData(state, stateName)
+    }
+
+    override fun onSateSelected(stateEntity: StateEntity) {
+        observeLiveData(stateEntity.code, stateEntity.name)
+    }
+
+    private fun observeLiveData(stateCode: String, stateName: String) {
 
         with(binding) {
             title.text = stateName
-            title.setOnClickListener { stateMoreInfo(state) }
+            title.setOnClickListener { stateChangeClicked() }
             ivClose.setOnClickListener { finish() }
         }
 
-        viewModel.lastUpdatedTime(state).observe(this) {
-            val title = String.format("%s %s", "Last updated: ", it)
+        viewModel.lastUpdatedTime(stateCode).observe(this) {
+            val title = String.format(getString(R.string.last_updated), it)
             binding.lastUpdate.text = title
         }
 
-        viewModel.getCount(state, stateName).observe(this) {
+        viewModel.getCount(stateCode, stateName).observe(this) {
             it.keys.forEach { uiCase ->
                 setUiCaseModel(uiCase, it)
             }
@@ -147,6 +149,13 @@ class StateDetailsActivity : BaseActivity() {
             }
         })
         adapter.notifyDataSetChanged()
+    }
+
+    private fun stateChangeClicked() {
+        logEvent("STATE_CHANGE_CLICKED")
+        showDialog(SelectStateBottomSheet.TAG) {
+            SelectStateBottomSheet()
+        }
     }
 
     private fun stateMoreInfo(stateCode: String) {

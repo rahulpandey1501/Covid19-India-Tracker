@@ -41,7 +41,7 @@ class HomeFragment : BaseFragment() {
 
     override fun observeLiveData() {
         viewModel.lastUpdatedTime().observe(viewLifecycleOwner, Observer {
-            val title = String.format("%s %s", "Last updated: ", it)
+            val title = String.format(getString(R.string.last_updated), it)
             (activity as AppCompatActivity?)?.supportActionBar?.subtitle = title
         })
 

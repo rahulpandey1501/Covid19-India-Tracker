@@ -1,6 +1,8 @@
 package com.rpandey.covid19tracker_india.data.processor
 
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.gson.Gson
+import com.rpandey.covid19tracker_india.CovidApplication
 import com.rpandey.covid19tracker_india.data.Constants
 import com.rpandey.covid19tracker_india.data.Status
 import com.rpandey.covid19tracker_india.data.StatusId
@@ -10,6 +12,9 @@ import com.rpandey.covid19tracker_india.network.APIProvider
 import com.rpandey.covid19tracker_india.network.ApiHelper
 import com.rpandey.covid19tracker_india.network.FirebaseHostApiService
 import com.rpandey.covid19tracker_india.util.PreferenceHelper
+import kotlinx.coroutines.CoroutineExceptionHandler
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.supervisorScope
 
 class CovidIndiaDataProcessor(
     private val apiProvider: APIProvider,
@@ -21,7 +26,7 @@ class CovidIndiaDataProcessor(
     private val testDataProcessor by lazy { TestDataProcessor(covidDatabase) }
     private val resourceDataProcessor by lazy { ResourceDataProcessor(covidDatabase) }
 
-    suspend fun startSync(callback: suspend (Status<*>) -> Unit) {
+    suspend fun startSync(callback: suspend (Status<*>) -> Unit) = supervisorScope {
 
         // Fetching overall primary data information
         val overallDataStatus = ApiHelper.handleRequest(StatusId.OVERALL_DATA) {
@@ -58,29 +63,35 @@ class CovidIndiaDataProcessor(
         callback(zoneStatus)
 
         // Fetching testing data information
-        val testingStatus = ApiHelper.handleRequest(StatusId.TESTING_DATA) {
-            apiProvider.covidIndia.getTestingData()
-        }
+        launch {
+            val testingStatus = ApiHelper.handleRequest(StatusId.TESTING_DATA) {
+                apiProvider.covidIndia.getTestingData()
+            }
 
-        if (testingStatus is Status.Success) {
-            testDataProcessor.process(testingStatus.data)
-        }
+            if (testingStatus is Status.Success) {
+                testDataProcessor.process(testingStatus.data)
+            }
 
-        callback(testingStatus)
+            callback(testingStatus)
+        }
 
         // Fetching app launch data
-        syncAppLaunchData(apiProvider.firebaseHostApiService, callback)
+        launch {
+            syncAppLaunchData(apiProvider.firebaseHostApiService, callback)
+        }
 
         // Fetching resources data information
-        val resourceStatus = ApiHelper.handleRequest(StatusId.RESOURCE_DATA) {
-            apiProvider.covidIndia.getResources()
-        }
+        launch {
+            val resourceStatus = ApiHelper.handleRequest(StatusId.RESOURCE_DATA) {
+                apiProvider.covidIndia.getResources()
+            }
 
-        if (resourceStatus is Status.Success) {
-            resourceDataProcessor.process(resourceStatus.data)
-        }
+            if (resourceStatus is Status.Success) {
+                resourceDataProcessor.process(resourceStatus.data)
+            }
 
-        callback(resourceStatus)
+            callback(resourceStatus)
+        }
     }
 
     private suspend fun syncAppLaunchData(service: FirebaseHostApiService, callback: suspend (Status<*>) -> Unit) {
@@ -90,5 +101,9 @@ class CovidIndiaDataProcessor(
             status.data.shareUrl?.let { PreferenceHelper.putString(Constants.KEY_SHARE_URL, it) }
         }
         callback(status)
+    }
+
+    private val handler = CoroutineExceptionHandler { context, throwable ->
+        FirebaseAnalytics.getInstance(CovidApplication.INSTANCE).logEvent("Network Exception: ${throwable.message}", null)
     }
 }

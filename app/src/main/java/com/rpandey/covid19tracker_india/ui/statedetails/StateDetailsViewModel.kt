@@ -10,7 +10,7 @@ import com.rpandey.covid19tracker_india.database.model.CountModel
 import com.rpandey.covid19tracker_india.ui.home.UICaseType
 import com.rpandey.covid19tracker_india.util.Util
 
-class StoreDetailsViewModel(private val repository: CovidIndiaRepository) : ViewModel() {
+class StateDetailsViewModel(private val repository: CovidIndiaRepository) : ViewModel() {
 
     private fun getConfirmedCount(state: String) = repository.getConfirmedCount(state)
 

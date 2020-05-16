@@ -42,7 +42,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="20dp"
-                        android:drawableEnd="@drawable/ic_outline_bar_chart_24"
+                        android:drawableEnd="@drawable/ic_outline_edit_24"
                         android:drawablePadding="8dp"
                         android:fontFamily="@font/open_sans_semibold"
                         android:textColor="@color/text_primary"

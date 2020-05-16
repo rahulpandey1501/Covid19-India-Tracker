@@ -52,14 +52,7 @@ class MainActivity : BaseActivity() {
         if (!pull_refresh.isRefreshing)
             pull_refresh.isRefreshing = true
 
-        startSync {
-            if (it.statusId == StatusId.OVERALL_DATA) {
-                if (it is Status.Success) {
-                    showToast("Data successfully updated!")
-                }
-                pull_refresh.isRefreshing = false
-            }
-        }
+        startSync()
     }
 
     private fun initFCM() {
@@ -97,9 +90,7 @@ class MainActivity : BaseActivity() {
             ThemeHelper.toggle(this)
         }
         iv_refresh.setOnClickListener {
-            startSync {
-                if (it == StatusId.OVERALL_DATA) showToast("Data successfully updated!")
-            }
+            startSync()
         }
         iv_share.setOnClickListener {
             onShareClicked()
@@ -123,29 +114,31 @@ class MainActivity : BaseActivity() {
     }
 
     private fun startSync(callback: (Status<*>) -> Unit = {}) {
-        showRefreshAnimation()
+//        showRefreshAnimation()
         CoroutineScope(Dispatchers.IO).launch {
             dataProcessor.startSync {
-                onSyncComplete(it)
                 withContext(Dispatchers.Main) {
+                    onStatusResult(it)
                     callback(it)
                 }
             }
         }
     }
 
-    private fun <T: Any?> onSyncComplete(status: Status<T>) {
-        CoroutineScope(Dispatchers.Main).launch {
-            when(status.statusId) {
-                StatusId.LAUNCH_DATA -> {
-                    if (status is Status.Success) {
-                        processAppLaunchData(status.data as LaunchData)
-                    }
+    private fun <T: Any?> onStatusResult(status: Status<T>) {
+        when(status.statusId) {
+
+            StatusId.LAUNCH_DATA -> {
+                if (status is Status.Success) {
+                    processAppLaunchData(status.data as LaunchData)
+                    showToast("Data successfully updated!")
                 }
-                StatusId.OVERALL_DATA -> {
-                    if (status is Status.Error) {
-                        showToast("Oops! something went wrong, unable to update")
-                    }
+                pull_refresh.isRefreshing = false
+            }
+
+            StatusId.OVERALL_DATA -> {
+                if (status is Status.Error) {
+                    showToast("Oops! something went wrong, unable to update")
                 }
             }
         }

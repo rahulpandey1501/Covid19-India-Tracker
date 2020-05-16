@@ -5,12 +5,17 @@
     android:opacity="opaque">
 
     <!-- The background color, preferably the same as your normal theme -->
-    <item android:drawable="@color/page_background"/>
+    <item android:drawable="@color/item_background"/>
     <!-- Your product logo - 144dp color version of your app icon -->
-    <item>
+    <item android:top="-80dp">
         <bitmap
             android:src="@drawable/splash_icon"
             android:gravity="center"/>
+    </item>
+    <item android:top="240dp">
+        <bitmap
+            android:gravity="center"
+            android:src="@drawable/spash_text"/>
     </item>
 
 </layer-list>

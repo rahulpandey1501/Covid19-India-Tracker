@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Point
 import android.net.Uri
+import android.text.format.DateUtils
 import android.util.Log
 import android.view.WindowManager
 import androidx.browser.customtabs.CustomTabsIntent
@@ -15,7 +16,6 @@ import com.rpandey.covid19tracker_india.data.model.covidIndia.Zone
 import com.rpandey.covid19tracker_india.util.customchrome.CustomTabsHelper
 import java.text.DecimalFormat
 import java.text.DecimalFormatSymbols
-import java.text.SimpleDateFormat
 import java.util.*
 
 
@@ -35,11 +35,9 @@ object Util {
 
     fun timestampToDate(timestamp: Long): String? {
         return try {
-            val sdf = SimpleDateFormat("dd MMM, HH:mm", Locale.getDefault())
-            val netDate = Date(timestamp)
-            sdf.format(netDate)
+            DateUtils.getRelativeTimeSpanString(timestamp, Calendar.getInstance().timeInMillis, DateUtils.MINUTE_IN_MILLIS).toString()
         } catch (e: Exception) {
-            ""
+            "NA"
         }
     }
 
@@ -83,7 +81,7 @@ object Util {
         return PreferenceHelper.getString(Constants.KEY_SHARE_URL) ?: Constants.DEFAULT_APP_SHARE_URL
     }
 
-    suspend fun runWithExecutionTime(identifier: String, block: suspend () -> Unit) {
+    inline fun runWithExecutionTime(identifier: String, block: () -> Unit) {
         val before = System.currentTimeMillis()
         block()
         Log.d("Covid19", "$identifier execution time: ${System.currentTimeMillis() - before}ms")
