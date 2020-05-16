@@ -23,10 +23,10 @@
 
                 <ImageView
                     android:id="@+id/iv_close"
-                    android:layout_width="28dp"
-                    android:layout_height="28dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:background="?attr/selectableItemBackground"
-                    android:src="@drawable/ic_round_close_24"
+                    android:src="?attr/homeAsUpIndicator"
                     android:tint="@color/toolbar_icon"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />

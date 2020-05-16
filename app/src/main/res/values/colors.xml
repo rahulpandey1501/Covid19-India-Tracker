@@ -10,7 +10,7 @@
     <color name="background_confirmed">#ff3e3e</color>
     <color name="number_increase_color">#ff3e3e</color>
     <color name="background_recovered">#1CB142</color>
-    <color name="background_deceased">#6c757b</color>
+    <color name="background_deceased">#6d767e</color>
     <color name="background_testing">#3174f3</color>
     <color name="background_active">#007bfe</color>
     <color name="navigation_icon_selected">@color/toolbar_icon</color>
