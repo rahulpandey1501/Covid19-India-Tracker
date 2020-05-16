@@ -44,4 +44,5 @@
     <string name="sync">Refresh</string>
     <string name="Updates">Updates</string>
     <string name="last_updated">Updated: %s</string>
+    <string name="about_us">About</string>
 </resources>

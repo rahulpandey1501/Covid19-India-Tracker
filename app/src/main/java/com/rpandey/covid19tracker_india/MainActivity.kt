@@ -67,16 +67,25 @@ class MainActivity : BaseActivity() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-//        menuInflater.inflate(R.menu.toolbar_menu, menu)
+        menuInflater.inflate(R.menu.toolbar_menu, menu)
         return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.search_district -> {
+            R.id.search -> {
                 startActivity(Intent(this, SearchActivity::class.java).apply {
                     putExtra(SearchActivity.KEY_VIEW_TYPE, SearchActivity.OVERALL_SEARCH_VIEW)
                 })
+            }
+            R.id.share -> {
+                onShareClicked()
+            }
+            R.id.ui_mode -> {
+                ThemeHelper.toggle(this)
+            }
+            R.id.about_us -> {
+
             }
             R.id.exit -> {
                 finish()
