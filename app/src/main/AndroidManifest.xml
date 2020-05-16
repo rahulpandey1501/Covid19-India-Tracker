@@ -36,7 +36,8 @@
         </activity>
         <activity android:name=".ui.aboutus.AboutUsActivity" />
         <activity android:name=".ui.statedetails.StateDetailsActivity" />
-        <activity android:name=".ui.districtdetails.DistrictDetailsActivity" />
+        <activity android:name=".ui.districtdetails.DistrictDetailsActivity"
+            android:configChanges="uiMode"/>
         <activity
             android:name=".ui.search.SearchActivity"
             android:label="@string/Search"
