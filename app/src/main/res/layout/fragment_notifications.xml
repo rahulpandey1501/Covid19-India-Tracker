@@ -41,10 +41,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
                 android:text="@string/no_new_updates"
-                android:fontFamily="@font/open_sans_semibold"
-                app:fontFamily="@font/open_sans_semibold"
+                android:fontFamily="@font/open_sans"
+                app:fontFamily="@font/open_sans"
                 android:textColor="@color/text_primary"
-                android:textSize="20sp" />
+                android:textSize="22sp" />
 
         </LinearLayout>
 
