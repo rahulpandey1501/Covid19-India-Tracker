@@ -20,9 +20,20 @@ class EssentialsFragment : BaseFragment(), ItemSelectorBottomSheet.Callback {
     override fun getScreenName() = "EssentialsFragment"
 
     companion object {
+        const val TAG = "EssentialsFragment"
         const val KEY_STATE = "KEY_STATE"
         const val KEY_DISTRICT = "KEY_DISTRICT"
-        const val KEY_CATEGORY = "KEY_CATEGORY"
+        const val KEY_STRICT_VIEW = "KEY_STRICT_VIEW"
+
+        fun newInstance(state: String, district: String, onlyCategoryView: Boolean): EssentialsFragment {
+            return EssentialsFragment().apply {
+                arguments = Bundle().apply {
+                    putString(KEY_STATE, state)
+                    putString(KEY_DISTRICT, district)
+                    putBoolean(KEY_STRICT_VIEW, onlyCategoryView)
+                }
+            }
+        }
     }
 
     private val stateSelectionTag = "stateSelectionTag"
@@ -49,6 +60,9 @@ class EssentialsFragment : BaseFragment(), ItemSelectorBottomSheet.Callback {
         binding = FragmentEssentialsBinding.inflate(inflater, container, false)
         adapter = EssentialsListAdapter(emptyList())
         binding.recyclerView.adapter = adapter
+        if (arguments?.getBoolean(KEY_STRICT_VIEW) == true) {
+            binding.stateDistrictView.visibility = View.GONE
+        }
         return binding.root
     }
 

@@ -17,12 +17,10 @@ import com.rpandey.covid19tracker_india.database.entity.DistrictEntity
 import com.rpandey.covid19tracker_india.database.model.CountModel
 import com.rpandey.covid19tracker_india.databinding.ActivityDistrictDetailsBinding
 import com.rpandey.covid19tracker_india.ui.BaseActivity
+import com.rpandey.covid19tracker_india.ui.essentials.EssentialsFragment
 import com.rpandey.covid19tracker_india.ui.home.ItemCountCaseBindingModel
 import com.rpandey.covid19tracker_india.ui.home.UICaseType
-import com.rpandey.covid19tracker_india.util.PreferenceHelper
-import com.rpandey.covid19tracker_india.util.Util
-import com.rpandey.covid19tracker_india.util.getViewModel
-import com.rpandey.covid19tracker_india.util.observe
+import com.rpandey.covid19tracker_india.util.*
 import kotlinx.android.synthetic.main.activity_district_details.*
 import kotlinx.android.synthetic.main.layout_cases_count.*
 
@@ -40,6 +38,7 @@ class DistrictDetailsActivity : BaseActivity() {
         }
     }
 
+    private var districtEntity: DistrictEntity? = null
     lateinit var binding: ActivityDistrictDetailsBinding
 
     private val viewModel: DistrictDetailsViewModel by lazy {
@@ -61,20 +60,29 @@ class DistrictDetailsActivity : BaseActivity() {
 
         more_info.setOnClickListener {
             loadDistrictMoreInfo()
-            it.animate()
+            extra_info_container.animate()
                 .alpha(0f)
                 .setDuration(1000)
                 .setListener(object : AnimatorListenerAdapter() {
                     override fun onAnimationEnd(animation: Animator) {
-                        it.visibility = View.GONE
+                        extra_info_container.visibility = View.GONE
                     }
                 })
         }
 
+        essential_info.setOnClickListener {
+            districtEntity?.let {
+                extra_info_container.visibility = View.GONE
+                loadEssentials(it.stateName, it.district)
+            }
+        }
+
         viewModel.getDistrict(districtId).observe(this) {
+            this.districtEntity = it
             binding.title.text = it.district
             generateUiCaseMode(it)
             setZoneUI(it.zone)
+            checkForEssentialData(it.stateName, it.district)
         }
 
         viewModel.lastUpdatedTime(districtId).observe(this) {
@@ -119,6 +127,20 @@ class DistrictDetailsActivity : BaseActivity() {
                 UICaseType.TYPE_DEATH -> deathVm = itemModel
                 UICaseType.TYPE_TESTING -> testingVm = itemModel
             }
+        }
+    }
+
+    private fun checkForEssentialData(stateName: String, district: String) {
+        viewModel.hasResources(stateName, district).observe(this) {
+            if (it.isNotEmpty()) {
+                essential_info.visibility = View.VISIBLE
+            }
+        }
+    }
+
+    private fun loadEssentials(stateName: String, district: String) {
+        attachFragment(EssentialsFragment.TAG, R.id.essential_container, false) {
+            EssentialsFragment.newInstance(stateName, district, false)
         }
     }
 

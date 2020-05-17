@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.Gravity
 import android.widget.FrameLayout
 import androidx.coordinatorlayout.widget.CoordinatorLayout
+import androidx.core.view.updateLayoutParams
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -36,10 +37,10 @@ abstract class BaseBottomSheetFragment : BottomSheetDialogFragment() {
 
     fun setMaxHeight(bottomSheetDialog: BottomSheetDialog, height: Int) {
         val coordinator = bottomSheetDialog.findViewById<CoordinatorLayout>(com.google.android.material.R.id.coordinator)
-        val param = coordinator?.layoutParams as FrameLayout.LayoutParams?
-        param?.height = height
-        param?.gravity = Gravity.BOTTOM
-        coordinator?.layoutParams = param
+        coordinator?.updateLayoutParams<FrameLayout.LayoutParams> {
+            this.height = height
+            gravity = Gravity.BOTTOM
+        }
     }
 
     fun logEvent(event: String) {

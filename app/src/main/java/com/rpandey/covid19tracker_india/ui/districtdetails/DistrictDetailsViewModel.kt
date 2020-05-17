@@ -15,4 +15,8 @@ class DistrictDetailsViewModel(private val repository: CovidIndiaRepository) : V
             if (it != null) Util.timestampToDate(it) else "NA"
         }
     }
+
+    fun hasResources(stateName: String, district: String): LiveData<List<String>> {
+        return repository.getResourceCategories(stateName, district)
+    }
 }
