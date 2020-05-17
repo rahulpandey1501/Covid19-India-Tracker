@@ -22,4 +22,10 @@
         android:name="com.rpandey.covid19tracker_india.ui.notifications.DailyUpdatesFragment"
         android:label="@string/title_notifications"
         tools:layout="@layout/fragment_notifications" />
+
+    <fragment
+        android:id="@+id/navigation_essentials"
+        android:name="com.rpandey.covid19tracker_india.ui.essentials.EssentialsFragment"
+        android:label="@string/title_essentials"
+        tools:layout="@layout/fragment_essentials" />
 </navigation>

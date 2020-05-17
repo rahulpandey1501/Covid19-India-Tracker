@@ -26,7 +26,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingTop="16dp"
-                android:paddingBottom="8dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
@@ -34,9 +33,9 @@
                     android:id="@+id/district_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingStart="16dp"
                     android:text="@string/monitoring_district"
                     android:textAlignment="center"
+                    android:paddingStart="16dp"
                     android:textColor="@color/text_primary"
                     android:textSize="16sp"
                     tools:ignore="RtlSymmetry" />
@@ -44,12 +43,12 @@
                 <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:fontFamily="@font/open_sans"
                     android:text="@string/active_cases"
                     android:textAlignment="center"
                     android:textSize="10sp"
                     app:fontFamily="@font/open_sans"
-                    android:fontFamily="@font/open_sans"
-                    android:layout_marginStart="8dp"
                     app:layout_constraintBottom_toBottomOf="@+id/district_title"
                     app:layout_constraintLeft_toRightOf="@+id/district_title"
                     tools:ignore="RtlSymmetry" />
@@ -73,10 +72,11 @@
 
                 <View
                     android:layout_width="40dp"
-                    android:layout_height="2dp"
-                    android:layout_marginStart="16dp"
+                    android:layout_height="1dp"
                     android:background="@color/text_secondary"
                     android:paddingTop="4dp"
+                    android:alpha="0.6"
+                    android:layout_marginStart="16dp"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/district_title" />
 
@@ -84,8 +84,8 @@
                     android:id="@+id/district_container"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="12dp"
                     android:layout_marginTop="16dp"
+                    android:layout_marginLeft="12dp"
                     android:layout_marginRight="12dp"
                     app:layout_constraintTop_toBottomOf="@+id/district_title" />
 
@@ -96,6 +96,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="16dp"
+                android:layout_marginTop="8dp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/add_district_layout">
 
@@ -126,28 +127,30 @@
 
                 <View
                     android:layout_width="40dp"
-                    android:layout_height="2dp"
+                    android:layout_height="1dp"
                     android:background="@color/text_secondary"
                     android:paddingTop="4dp"
+                    android:alpha="0.6"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/states_title" />
 
                 <include
                     android:id="@+id/header"
-                    android:layout_height="wrap_content"
-                    android:layout_width="match_parent"
-                    android:layout_marginTop="8dp"
-                    android:visibility="gone"
                     layout="@layout/view_header_combined"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:visibility="gone"
                     app:layout_constraintTop_toBottomOf="@+id/states_title" />
 
                 <LinearLayout
                     android:id="@+id/states_container"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
                     android:orientation="vertical"
-                    android:layout_marginTop="2dp"
                     app:layout_constraintTop_toBottomOf="@+id/header" />
+
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>

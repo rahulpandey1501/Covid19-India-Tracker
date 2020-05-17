@@ -20,7 +20,7 @@ class ResourceDataProcessor(covidDatabase: CovidDatabase) :
                     ResourcesEntity(
                         resource.recordid.toInt(),
                         resource.category,
-                        resource.district,
+                        getDistrict(resource),
                         resource.state,
                         resource.contact,
                         getContact(resource),
@@ -38,6 +38,16 @@ class ResourceDataProcessor(covidDatabase: CovidDatabase) :
     private fun getContact(resourceData: ResourceData): String {
         val rawContact = resourceData.phoneNumber?.trim() ?: ""
         return rawContact.replace("\n", "")
+    }
+
+    private fun getDistrict(resourceData: ResourceData): String {
+        if (resourceData.district.equals("Bangalore", true) || resourceData.district.equals("Bengaluru", true))
+            return "Bengaluru Urban"
+
+        if (resourceData.district.equals("Kanpur", true))
+            return "Kanpur Nagar"
+
+        return resourceData.district
     }
 
     private fun persistData(resourceEntities: List<ResourcesEntity>) {

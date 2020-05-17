@@ -11,4 +11,5 @@
     <color name="navigation_icon_unselected">#6c757b</color>
     <color name="ui_mode_selection">#ffc200</color>
     <color name="toolbar_icon">#FFF</color>
+    <color name="bottomsheet_background">@color/page_background</color>
 </resources>

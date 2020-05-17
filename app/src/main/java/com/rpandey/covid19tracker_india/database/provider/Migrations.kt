@@ -42,5 +42,7 @@ class Migrations3to4: Migration(3, 4) {
 class Migrations4to5: Migration(4, 5) {
     override fun migrate(database: SupportSQLiteDatabase) {
         database.execSQL("CREATE TABLE `resources` (`id` INTEGER NOT NULL, `category` TEXT NOT NULL, `district` TEXT NOT NULL, `stateName` TEXT NOT NULL, `contact` TEXT NOT NULL, `phoneNumber` TEXT NOT NULL, `description` TEXT NOT NULL, `organisation` TEXT NOT NULL, PRIMARY KEY(`id`))")
+        database.execSQL("CREATE INDEX `index_resources` ON `resources` (`stateName`, `district`, `category`)")
+        database.execSQL("CREATE INDEX `index_district_cases` ON `district_cases` (`districtId`, `district`)")
     }
 }

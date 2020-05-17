@@ -16,4 +16,9 @@
         android:icon="@drawable/ic_notifications_black_24dp"
         android:title="@string/Updates" />
 
+    <item
+        android:id="@+id/navigation_essentials"
+        android:icon="@drawable/ic_baseline_format_list_bulleted_24"
+        android:title="@string/title_essentials" />
+
 </menu>

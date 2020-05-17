@@ -2,8 +2,13 @@ package com.rpandey.covid19tracker_india.database.entity
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
+import androidx.room.Index
 
-@Entity(tableName = "district_cases", primaryKeys = ["country", "stateName", "district"])
+@Entity(
+    tableName = "district_cases",
+    primaryKeys = ["country", "stateName", "district"],
+    indices = [Index(name = "index_district_cases", value = ["districtId", "district"])]
+)
 data class DistrictEntity constructor(
     @ColumnInfo(name = "districtId") val districtId: Int,
     @ColumnInfo(name = "country") val country: String,

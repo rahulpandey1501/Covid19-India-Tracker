@@ -20,4 +20,6 @@
     <color name="zone_red">#ff3e3e</color>
     <color name="zone_orange">#FF8E0D</color>
     <color name="zone_green">#1CB142</color>
+    <color name="phone_number">#1CB142</color>
+    <color name="bottomsheet_background">@color/item_background</color>
 </resources>

@@ -108,4 +108,12 @@ class CovidIndiaRepository(private val covidDatabase: CovidDatabase) {
     fun searchState(keyword: String): List<CombinedCasesModel> {
         return covidDatabase.combinedCasesDao().searchOverall("%${keyword}%")
     }
+
+    fun getResourceStates() = covidDatabase.resourceDao().getStates()
+
+    fun getResourceDistrict(stateName: String) = covidDatabase.resourceDao().getDistricts(stateName)
+
+    fun getResourceCategories(stateName: String, district: String) = covidDatabase.resourceDao().getCategories(stateName, district)
+
+    fun getResources(stateName: String, district: String, category: String) = covidDatabase.resourceDao().getResources(stateName, district, category)
 }

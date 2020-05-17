@@ -11,6 +11,7 @@
     <string name="add_city">Add District</string>
     <string name="add_state">Add State</string>
     <string name="select_state">Select State/UT</string>
+    <string name="select_state_essential">Select state/UT</string>
     <string name="districts">Districts</string>
     <string name="district">District</string>
     <string name="states">States</string>
@@ -46,4 +47,10 @@
     <string name="last_updated">Updated: %s</string>
     <string name="about_us">About</string>
     <string name="data_source_info">data source\nhttps://api.covid19india.org/</string>
+    <string name="title_essentials">Essentials</string>
+    <string name="select_essential">Select essential</string>
+    <string name="select_district">Select district</string>
+    <string name="state">State/UT</string>
+    <string name="select_service">Select service</string>
+    <string name="service">Service</string>
 </resources>

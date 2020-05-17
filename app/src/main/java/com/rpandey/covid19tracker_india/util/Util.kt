@@ -17,7 +17,9 @@ import com.rpandey.covid19tracker_india.util.customchrome.CustomTabsHelper
 import java.text.DecimalFormat
 import java.text.DecimalFormatSymbols
 import java.util.*
-import kotlin.math.*
+import kotlin.math.asin
+import kotlin.math.cos
+import kotlin.math.sqrt
 
 
 object Util {
@@ -118,5 +120,11 @@ object Util {
                 (1 - cos((lon2 - lon1) * p)) / 2
 
         return 12742 * asin(sqrt(a)); // 2 * R; R = 6371 km
+    }
+
+    fun openCallIntent(context: Context, number: String) {
+        val intent = Intent(Intent.ACTION_DIAL)
+        intent.data = Uri.parse("tel:${number}")
+        context.startActivity(intent)
     }
 }
