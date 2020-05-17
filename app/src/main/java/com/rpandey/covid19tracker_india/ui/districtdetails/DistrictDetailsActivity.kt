@@ -139,12 +139,14 @@ class DistrictDetailsActivity : BaseActivity() {
     }
 
     private fun loadEssentials(stateName: String, district: String) {
+        logEvent("DISTRICT_ESSENTIALS_CLICKED")
         attachFragment(EssentialsFragment.TAG, R.id.essential_container, false) {
             EssentialsFragment.newInstance(stateName, district, false)
         }
     }
 
     private fun loadDistrictMoreInfo() {
+        logEvent("DISTRICT_INFO_CLICKED")
         val config = PreferenceHelper.getString(Constants.KEY_CONFIG)
         val configModel = config?.let { Gson().fromJson(it, Config::class.java) }
         val urlPlaceholder = configModel?.districtInfoUrlPlaceholder ?: Constants.DEFAULT_DISTRICT_INFO_PLACEHOLDER
