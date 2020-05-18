@@ -40,8 +40,10 @@
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:text="@string/state"
+                        app:fontFamily="@font/open_sans"
+                        android:textStyle="bold"
                         android:textColor="@color/text_primary"
-                        android:textSize="12sp" />
+                        android:textSize="14sp" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/select_state"
@@ -49,11 +51,10 @@
                         android:layout_height="wrap_content"
                         android:drawableEnd="@drawable/ic_sharp_arrow_drop_down_24"
                         android:ellipsize="end"
-                        android:fontFamily="@font/open_sans"
                         android:gravity="center_vertical"
                         android:maxLines="1"
                         android:text="@string/select_state_essential"
-                        app:fontFamily="@font/open_sans" />
+                        app:fontFamily="@font/roboto" />
 
                 </LinearLayout>
 
@@ -82,18 +83,19 @@
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:text="@string/district"
+                        app:fontFamily="@font/open_sans"
+                        android:textStyle="bold"
                         android:textColor="@color/text_primary"
-                        android:textSize="12sp" />
+                        android:textSize="14sp" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/select_district"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:drawableEnd="@drawable/ic_sharp_arrow_drop_down_24"
-                        android:fontFamily="@font/open_sans"
                         android:gravity="center_vertical"
                         android:text="@string/select_district"
-                        app:fontFamily="@font/open_sans" />
+                        app:fontFamily="@font/roboto" />
 
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
@@ -130,7 +132,8 @@
                 android:text="@string/select_service"
                 android:textColor="@color/text_primary"
                 android:textSize="16sp"
-                app:fontFamily="@font/roboto" />
+                app:fontFamily="@font/open_sans"
+                android:textStyle="bold" />
 
         </LinearLayout>
 

@@ -22,12 +22,11 @@
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:fontFamily="sans-serif-medium"
                 android:gravity="center"
                 android:text="@string/affect"
                 android:textColor="@color/text_secondary"
                 android:textSize="14sp"
-                app:fontFamily="sans-serif-medium" />
+                app:fontFamily="@font/roboto" />
 
             <ImageView
                 android:id="@+id/confirm_sort_arrow"
@@ -55,12 +54,11 @@
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:fontFamily="sans-serif-medium"
                 android:gravity="center"
                 android:text="@string/active"
                 android:textColor="@color/text_secondary"
                 android:textSize="14sp"
-                app:fontFamily="sans-serif-medium" />
+                app:fontFamily="@font/roboto" />
 
             <ImageView
                 android:id="@+id/active_sort_arrow"
@@ -88,12 +86,11 @@
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:fontFamily="sans-serif-medium"
                 android:gravity="center"
                 android:text="@string/recover"
                 android:textColor="@color/text_secondary"
                 android:textSize="14sp"
-                app:fontFamily="sans-serif-medium" />
+                app:fontFamily="@font/roboto" />
 
             <ImageView
                 android:id="@+id/recover_sort_arrow"
@@ -121,12 +118,11 @@
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:fontFamily="sans-serif-medium"
                 android:gravity="center"
                 android:text="@string/deaths"
                 android:textColor="@color/text_secondary"
                 android:textSize="14sp"
-                app:fontFamily="sans-serif-medium" />
+                app:fontFamily="@font/roboto" />
 
             <ImageView
                 android:id="@+id/death_sort_arrow"

@@ -5,7 +5,7 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="fontFamily">@font/roboto_medium</item>
+        <item name="fontFamily">@font/open_sans</item>
         <item name="android:colorBackground">@color/page_background</item>
         <item name="bottomSheetDialogTheme">@style/BottomSheetDialogTheme</item>
         <item name="android:navigationBarColor">@color/item_background</item>
@@ -25,7 +25,8 @@
 
     <style name="TextAppearance.Toolbar.Title" parent="TextAppearance.AppCompat.Widget.ActionBar.Title">
         <item name="android:textColor">@color/text_primary</item>
-        <item name="fontFamily">@font/open_sans_semibold</item>
+        <item name="fontFamily">@font/open_sans</item>
+        <item name="android:textStyle">bold</item>
         <item name="android:textColorSecondary">@color/toolbar_icon</item>
     </style>
 

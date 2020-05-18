@@ -4,7 +4,7 @@
     <color name="colorPrimaryDark">@color/page_background</color>
     <color name="colorAccent">#323437</color>
     <color name="text_secondary">#42484b</color>
-    <color name="text_primary">#1d2025</color>
+    <color name="text_primary">#20242B</color>
     <color name="page_background">#F4F4F4</color>
     <color name="item_background">#FFF</color>
     <color name="background_confirmed">#ff3e3e</color>

@@ -63,12 +63,12 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="8dp"
-                android:fontFamily="@font/open_sans_semibold"
                 android:includeFontPadding="false"
                 android:text="@{testingVm.totalCount}"
                 android:textColor="@color/text_primary"
                 android:textSize="18sp"
-                app:fontFamily="@font/open_sans_semibold"
+                app:fontFamily="@font/open_sans"
+                android:textStyle="bold"
                 tools:text="1234" />
 
             <androidx.appcompat.widget.AppCompatTextView
