@@ -17,6 +17,7 @@
             android:textColor="@color/text_primary"
             android:textSize="20sp"
             android:visibility="gone"
+            android:textStyle="bold"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 

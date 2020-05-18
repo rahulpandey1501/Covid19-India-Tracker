@@ -6,7 +6,6 @@ import com.rpandey.covid19tracker_india.data.model.Country
 import com.rpandey.covid19tracker_india.data.model.covidIndia.*
 import com.rpandey.covid19tracker_india.database.entity.*
 import com.rpandey.covid19tracker_india.database.provider.CovidDatabase
-import java.lang.Exception
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -108,20 +107,27 @@ class OverallDataProcessor(covidDatabase: CovidDatabase) :
         // convert to TestData processor format
         val testDataProcessor = TestDataProcessor(covidDatabase)
         val testDataList = mutableListOf<TestData>()
-        data.forEach {
-            // convert to dd/mm/yyyy format
-            val originalFormat = dateFormat
-            val targetFormat = testDataProcessor.dateFormat
-            val date = originalFormat.parse(it.date)
-            if (date != null) {
-                val formattedDate = targetFormat.format(date)
-                testDataList.add(TestData(
-                    TestEntity.OVER_ALL,
-                    it.totalTested,
-                    formattedDate,
-                    -1L
-                ))
-            }
+        data.forEach loop@{
+            if (it.date.isEmpty() || it.totalTested.isEmpty())
+                return@loop
+
+            try {
+                // convert to dd/mm/yyyy format
+                val originalFormat = dateFormat
+                val targetFormat = testDataProcessor.dateFormat
+                val date = originalFormat.parse(it.date)
+                if (date != null) {
+                    val formattedDate = targetFormat.format(date)
+                    testDataList.add(
+                        TestData(
+                            TestEntity.OVER_ALL,
+                            it.totalTested,
+                            formattedDate,
+                            -1L
+                        )
+                    )
+                }
+            } catch (e: Exception) {}
         }
 
         testDataProcessor.process(TestResponse(testDataList))
