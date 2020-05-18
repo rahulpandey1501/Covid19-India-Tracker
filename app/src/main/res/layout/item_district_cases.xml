@@ -33,10 +33,7 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingLeft="12dp"
-                    android:paddingTop="10dp"
-                    android:paddingRight="12dp"
-                    android:paddingBottom="10dp">
+                    android:padding="12dp">
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tv_title"
