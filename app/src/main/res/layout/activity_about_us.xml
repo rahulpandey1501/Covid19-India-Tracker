@@ -23,7 +23,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:fontFamily="@font/open_sans_semibold"
         android:text="@string/about_us"
         android:textColor="@color/text_primary"
         android:textSize="28sp"

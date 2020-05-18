@@ -21,7 +21,7 @@ object NetworkBuilder {
         if (BuildConfig.DEBUG) {
             val logging = HttpLoggingInterceptor()
             logging.level = HttpLoggingInterceptor.Level.BODY
-            httpClient.addInterceptor(logging)
+//            httpClient.addInterceptor(logging)
         }
 
         return Retrofit.Builder()
