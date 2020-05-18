@@ -76,9 +76,11 @@ class CovidIndiaDataProcessor(
         }
 
         // Fetching app launch data
-        launch {
-            syncAppLaunchData(apiProvider.firebaseHostApiService, callback)
-        }
+        /* commenting specially for huawei distribution
+            launch {
+                syncAppLaunchData(apiProvider.firebaseHostApiService, callback)
+            }
+        */
 
         // Fetching resources data information
         launch {

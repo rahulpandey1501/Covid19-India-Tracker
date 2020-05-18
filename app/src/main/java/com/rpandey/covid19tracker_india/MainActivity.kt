@@ -126,18 +126,22 @@ class MainActivity : BaseActivity() {
 
     private fun <T: Any?> onStatusResult(status: Status<T>) {
         when(status.statusId) {
-            StatusId.LAUNCH_DATA -> {
+            /* StatusId.LAUNCH_DATA -> { // commenting specially for huawei distribution
                 if (status is Status.Success) {
                     processAppLaunchData(status.data as LaunchData)
                     showToast("Data successfully updated!")
                 }
                 pull_refresh.isRefreshing = false
-            }
+            } */
 
             StatusId.OVERALL_DATA -> {
                 if (status is Status.Error) {
                     showToast("Oops! something went wrong, unable to update")
                 }
+                if (status is Status.Success) {
+                    showToast("Data successfully updated!")
+                }
+                pull_refresh.isRefreshing = false
             }
         }
     }
