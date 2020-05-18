@@ -36,7 +36,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/open_sans"
                     android:gravity="center_horizontal"
-                    android:paddingStart="8dp"
+                    android:paddingStart="12dp"
                     android:paddingTop="8dp"
                     android:paddingBottom="8dp"
                     android:textColor="@color/text_primary"

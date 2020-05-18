@@ -29,6 +29,7 @@
                     android:fontFamily="@font/open_sans"
                     android:gravity="center_horizontal"
                     android:paddingBottom="10dp"
+                    android:layout_marginStart="4dp"
                     android:textColor="@color/text_primary"
                     android:textSize="15sp"
                     app:fontFamily="@font/open_sans"
