@@ -6,11 +6,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.rpandey.covid19tracker_india.data.repository.CovidIndiaRepository
 import com.rpandey.covid19tracker_india.database.entity.StateEntity
 import com.rpandey.covid19tracker_india.database.provider.CovidDatabase
-import com.rpandey.covid19tracker_india.databinding.ItemSelectStateBinding
+import com.rpandey.covid19tracker_india.databinding.ItemSelectorBinding
 import com.rpandey.covid19tracker_india.databinding.LayoutSelectStateBsBinding
 import com.rpandey.covid19tracker_india.ui.BaseBottomSheetFragment
 import com.rpandey.covid19tracker_india.util.getViewModel
@@ -28,7 +27,7 @@ class SelectStateBottomSheet : BaseBottomSheetFragment() {
     private lateinit var callback: Callback
 
     private val repository by lazy {
-        CovidIndiaRepository(CovidDatabase.getInstance(requireContext()))
+        CovidIndiaRepository(CovidDatabase.getInstance())
     }
 
     private val viewModel by lazy {
@@ -64,9 +63,9 @@ class SelectStateBottomSheet : BaseBottomSheetFragment() {
     private fun inflateStates(states: List<StateEntity>) {
         binding.stateContainer.removeAllViews()
         states.forEach { state ->
-            val itemBinding = ItemSelectStateBinding.inflate(LayoutInflater.from(requireContext()),
+            val itemBinding = ItemSelectorBinding.inflate(LayoutInflater.from(requireContext()),
                 binding.stateContainer, true)
-            itemBinding.tvState.text = state.name
+            itemBinding.title.text = state.name
             itemBinding.root.setOnClickListener {
                 callback.onSateSelected(state)
                 dismissAllowingStateLoss()

@@ -1,9 +1,9 @@
 package com.rpandey.covid19tracker_india.database.provider
 
-import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import com.rpandey.covid19tracker_india.CovidApplication
 import com.rpandey.covid19tracker_india.database.dao.*
 import com.rpandey.covid19tracker_india.database.entity.*
 import com.rpandey.covid19tracker_india.database.provider.CovidDatabase.Companion.VERSION
@@ -32,8 +32,8 @@ abstract class CovidDatabase : RoomDatabase() {
 
         private var database: CovidDatabase? = null
 
-        fun getInstance(context: Context): CovidDatabase {
-            database = database ?: Room.databaseBuilder(context.applicationContext, CovidDatabase::class.java, NAME)
+        fun getInstance(): CovidDatabase {
+            database = database ?: Room.databaseBuilder(CovidApplication.INSTANCE, CovidDatabase::class.java, NAME)
                 .addMigrations(
                     Migrations1to2(),
                     Migrations2to3(),

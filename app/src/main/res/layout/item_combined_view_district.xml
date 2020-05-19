@@ -7,10 +7,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
-        app:cardBackgroundColor="@color/item_background"
         android:foreground="?attr/selectableItemBackground"
-        app:cardElevation="0dp"
-        app:cardCornerRadius="8dp">
+        app:cardBackgroundColor="@color/item_background"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="0dp">
 
         <FrameLayout
             android:layout_width="match_parent"
@@ -53,7 +53,7 @@
                     android:layout_marginEnd="4dp"
                     android:baselineAligned="false"
                     android:orientation="horizontal"
-                    android:paddingBottom="8dp"
+                    android:paddingBottom="10dp"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tv_title">
 
@@ -68,11 +68,11 @@
                             android:id="@+id/tv_confirmed"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_gravity="bottom"
                             android:gravity="center"
-                            app:fontFamily="@font/roboto"
-                            android:textStyle="bold"
                             android:textColor="@color/text_primary"
-                            android:textSize="15sp"
+                            android:textSize="14sp"
+                            app:fontFamily="@font/roboto_medium"
                             tools:text="12,345" />
 
                         <androidx.appcompat.widget.AppCompatTextView
@@ -83,6 +83,7 @@
                             android:layout_marginStart="4dp"
                             android:textColor="@color/number_increase_color"
                             android:textSize="11sp"
+                            app:fontFamily="@font/roboto_medium"
                             tools:text="12,345" />
 
                     </LinearLayout>
@@ -98,10 +99,11 @@
                             android:id="@+id/tv_active"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_gravity="bottom"
                             android:gravity="center"
-                            android:textStyle="bold"
                             android:textColor="@color/text_primary"
-                            android:textSize="15sp"
+                            android:textSize="14sp"
+                            app:fontFamily="@font/roboto_medium"
                             tools:text="12,345" />
 
                     </LinearLayout>
@@ -117,10 +119,11 @@
                             android:id="@+id/tv_recovered"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_gravity="bottom"
                             android:gravity="center"
-                            android:textStyle="bold"
                             android:textColor="@color/text_primary"
-                            android:textSize="15sp"
+                            android:textSize="14sp"
+                            app:fontFamily="@font/roboto_medium"
                             tools:text="12,345" />
 
                         <androidx.appcompat.widget.AppCompatTextView
@@ -131,6 +134,7 @@
                             android:layout_marginStart="4dp"
                             android:textColor="@color/background_recovered"
                             android:textSize="11sp"
+                            app:fontFamily="@font/roboto_medium"
                             tools:text="12,345" />
 
                     </LinearLayout>
@@ -146,10 +150,11 @@
                             android:id="@+id/tv_death"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_gravity="bottom"
                             android:gravity="center"
                             android:textColor="@color/text_primary"
-                            android:textSize="15sp"
-                            android:textStyle="bold"
+                            android:textSize="14sp"
+                            app:fontFamily="@font/roboto_medium"
                             tools:text="123" />
 
                         <androidx.appcompat.widget.AppCompatTextView
@@ -160,6 +165,7 @@
                             android:layout_marginStart="4dp"
                             android:textColor="@color/number_increase_color"
                             android:textSize="11sp"
+                            app:fontFamily="@font/roboto_medium"
                             tools:text="12" />
 
                     </LinearLayout>

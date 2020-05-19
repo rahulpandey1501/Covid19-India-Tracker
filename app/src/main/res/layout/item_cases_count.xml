@@ -46,7 +46,7 @@
                 android:id="@+id/current_count"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="6dp"
                 android:drawableStart="@drawable/ic_baseline_trending_up_24"
                 android:drawablePadding="2dp"
                 android:text="@{data.currentCount}"

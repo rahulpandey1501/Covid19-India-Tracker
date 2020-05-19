@@ -11,7 +11,7 @@ import com.rpandey.covid19tracker_india.database.provider.CovidDatabase
 abstract class BaseFragment : Fragment() {
 
     val repository by lazy {
-        CovidIndiaRepository(CovidDatabase.getInstance(requireContext()))
+        CovidIndiaRepository(CovidDatabase.getInstance())
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

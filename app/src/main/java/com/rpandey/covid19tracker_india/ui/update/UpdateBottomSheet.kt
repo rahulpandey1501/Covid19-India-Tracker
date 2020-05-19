@@ -1,7 +1,5 @@
 package com.rpandey.covid19tracker_india.ui.update
 
-import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,12 +7,13 @@ import android.view.ViewGroup
 import android.widget.FrameLayout
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
-import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.gson.Gson
 import com.rpandey.covid19tracker_india.BuildConfig
+import com.rpandey.covid19tracker_india.R
 import com.rpandey.covid19tracker_india.data.model.LaunchData
 import com.rpandey.covid19tracker_india.databinding.LayoutUpdateAvailableBinding
 import com.rpandey.covid19tracker_india.ui.BaseBottomSheetFragment
+import com.rpandey.covid19tracker_india.util.Util
 
 class UpdateBottomSheet : BaseBottomSheetFragment() {
 
@@ -57,20 +56,24 @@ class UpdateBottomSheet : BaseBottomSheetFragment() {
         binding.later.setOnClickListener {
             dismissAllowingStateLoss()
             logEvent("UPDATE_LATER_CLICKED")
-            if (BuildConfig.VERSION_CODE < launchData.forceUpdate.minVersion)
+            if (BuildConfig.VERSION_CODE < launchData.forceUpdate.minVersion) {
                 requireActivity().finish()
+            }
         }
+
+        val downloadedAPK = Util.apkExist(launchData.latestVersion)
+        val isApkExist = downloadedAPK.first && launchData.config?.autoDownloadEnabled == true
+        binding.tvActionButton.text = if (isApkExist) getString(R.string.install) else getString(R.string.download)
 
         binding.download.setOnClickListener {
-            openBrowser(launchData.downloadUrl)
-            logEvent("UPDATE_DOWNLOAD_CLICKED")
+            if (isApkExist) {
+                logEvent("UPDATE_INSTALL_CLICKED")
+                Util.startInstallerIntent(requireContext(), downloadedAPK.second)
+            } else {
+                logEvent("UPDATE_DOWNLOAD_CLICKED")
+                Util.openBrowser(requireContext(), launchData.downloadUrl)
+            }
         }
-    }
-
-    private fun openBrowser(downloadUrl: String) {
-        val intent = Intent(Intent.ACTION_VIEW)
-        intent.data = Uri.parse(downloadUrl)
-        startActivity(intent)
     }
 }
 

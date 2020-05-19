@@ -9,6 +9,8 @@ class LaunchData(
     val latestVersion: Int,
     @SerializedName("downloadUrl")
     val downloadUrl: String,
+    @SerializedName("apkDownloadUrl")
+    var apkDownloadUrl: String?,
     @SerializedName("shareUrl")
     val shareUrl: String?,
     @SerializedName("marketUpload")
@@ -40,6 +42,7 @@ class MarketUpload(
 
 @Keep
 class Config(
+    @SerializedName("autoDownloadEnabled") var autoDownloadEnabled: Boolean = false,
     @SerializedName("districtInfoUrlPlaceholder") val districtInfoUrlPlaceholder: String?,
     @SerializedName("stateInfoUrlPlaceholder") val stateInfoUrlPlaceholder: String?
 )

@@ -1,19 +1,25 @@
 package com.rpandey.covid19tracker_india
 
+import android.content.BroadcastReceiver
+import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import androidx.lifecycle.Lifecycle
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.iid.FirebaseInstanceId
-import com.google.firebase.messaging.FirebaseMessaging
+import com.google.gson.Gson
 import com.rpandey.covid19tracker_india.data.Status
 import com.rpandey.covid19tracker_india.data.StatusId
 import com.rpandey.covid19tracker_india.data.model.LaunchData
+import com.rpandey.covid19tracker_india.data.processor.CovidIndiaSyncManager
+import com.rpandey.covid19tracker_india.service.ApkDownloadService
 import com.rpandey.covid19tracker_india.ui.BaseActivity
 import com.rpandey.covid19tracker_india.ui.aboutus.AboutUsActivity
 import com.rpandey.covid19tracker_india.ui.search.SearchActivity
@@ -23,9 +29,7 @@ import com.rpandey.covid19tracker_india.util.Util
 import com.rpandey.covid19tracker_india.util.showDialog
 import com.rpandey.covid19tracker_india.util.showToast
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class MainActivity : BaseActivity() {
@@ -36,6 +40,8 @@ class MainActivity : BaseActivity() {
         setTheme(R.style.AppTheme)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        appLaunchSync()
+
         val navView: BottomNavigationView = findViewById(R.id.nav_view)
         val navController = findNavController(R.id.nav_host_fragment)
         navView.setupWithNavController(navController)
@@ -46,13 +52,12 @@ class MainActivity : BaseActivity() {
     }
 
     private fun setupPullToRefresh() {
-        onSynStart()
         pull_refresh.setOnRefreshListener {
-            onSynStart()
+            appLaunchSync()
         }
     }
 
-    private fun onSynStart() {
+    private fun appLaunchSync() {
         if (!pull_refresh.isRefreshing)
             pull_refresh.isRefreshing = true
 
@@ -88,21 +93,13 @@ class MainActivity : BaseActivity() {
                 })
             }
 
-            R.id.share -> {
-                onShareClicked()
-            }
+            R.id.share -> { onShareClicked() }
 
-            R.id.ui_mode -> {
-                ThemeHelper.toggle(this)
-            }
+            R.id.ui_mode -> { ThemeHelper.toggle(this) }
 
-            R.id.about_us -> {
-                startActivity(Intent(this, AboutUsActivity::class.java))
-            }
+            R.id.about_us -> { startActivity(Intent(this, AboutUsActivity::class.java)) }
 
-            R.id.exit -> {
-                finish()
-            }
+            R.id.exit -> { finish() }
         }
         return true
     }
@@ -114,38 +111,71 @@ class MainActivity : BaseActivity() {
     }
 
     private fun startSync(callback: (Status<*>) -> Unit = {}) {
-        CoroutineScope(Dispatchers.IO).launch {
-            dataProcessor.startSync {
-                withContext(Dispatchers.Main) {
-                    onStatusResult(it)
-                    callback(it)
-                }
+        CovidIndiaSyncManager.getInstance().startSync {
+            withContext(Dispatchers.Main) {
+                onStatusResult(it)
+                callback(it)
             }
         }
     }
 
-    private fun <T: Any?> onStatusResult(status: Status<T>) {
-        when(status.statusId) {
+    private fun <T : Any?> onStatusResult(status: Status<T>) {
+        when (status.statusId) {
             StatusId.LAUNCH_DATA -> {
                 if (status is Status.Success) {
                     processAppLaunchData(status.data as LaunchData)
-                    showToast("Data successfully updated!")
                 }
-                pull_refresh.isRefreshing = false
             }
 
             StatusId.OVERALL_DATA -> {
+                if (status is Status.Success) {
+                    showToast("Data successfully updated!")
+                }
                 if (status is Status.Error) {
                     showToast("Oops! something went wrong, unable to update")
                 }
+                pull_refresh.isRefreshing = false
             }
         }
     }
 
     private fun processAppLaunchData(data: LaunchData) {
+//        data.apkDownloadUrl = "https://docs.google.com/uc?export=download&id=1o-IGH-T000z3aByg-A1BgwQSrjSpSG3Z"
+//        data.config?.autoDownloadEnabled = true
+
         if (BuildConfig.VERSION_CODE < data.latestVersion) {
+            if (data.config?.autoDownloadEnabled == true) {
+                ApkDownloadService.start(data)
+
+            } else {
+                showUpdateUI(data)
+            }
+        }
+    }
+
+    private fun showUpdateUI(data: LaunchData) {
+        if (lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)) {
             showDialog(UpdateBottomSheet.TAG) {
                 UpdateBottomSheet.newInstance(data)
+            }
+        }
+    }
+
+    override fun onPause() {
+        LocalBroadcastManager.getInstance(applicationContext).unregisterReceiver(receiver)
+        super.onPause()
+    }
+
+    override fun onResume() {
+        LocalBroadcastManager.getInstance(applicationContext).registerReceiver(receiver, IntentFilter(ApkDownloadService.ACTION))
+        super.onResume()
+    }
+
+    private val receiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context?, intent: Intent?) {
+            if (intent?.getBooleanExtra(ApkDownloadService.KEY_SUCCESS, false) == true) {
+                val launchData = intent.getStringExtra(ApkDownloadService.KEY_LAUNCH_DATA)
+                showUpdateUI(Gson().fromJson(launchData, LaunchData::class.java))
             }
         }
     }

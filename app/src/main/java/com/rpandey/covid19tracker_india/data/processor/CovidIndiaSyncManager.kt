@@ -13,10 +13,11 @@ import com.rpandey.covid19tracker_india.network.ApiHelper
 import com.rpandey.covid19tracker_india.network.FirebaseHostApiService
 import com.rpandey.covid19tracker_india.util.PreferenceHelper
 import kotlinx.coroutines.CoroutineExceptionHandler
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.supervisorScope
 
-class CovidIndiaDataProcessor(
+class CovidIndiaSyncManager(
     private val apiProvider: APIProvider,
     private val covidDatabase: CovidDatabase) {
 
@@ -26,7 +27,20 @@ class CovidIndiaDataProcessor(
     private val testDataProcessor by lazy { TestDataProcessor(covidDatabase) }
     private val resourceDataProcessor by lazy { ResourceDataProcessor(covidDatabase) }
 
-    suspend fun startSync(callback: suspend (Status<*>) -> Unit) = supervisorScope {
+    companion object {
+        private lateinit var INSTANCE: CovidIndiaSyncManager
+        fun getInstance(): CovidIndiaSyncManager {
+            if (!::INSTANCE.isInitialized) {
+                val apiProvider = APIProvider.getInstance()
+                val covidDatabase = CovidDatabase.getInstance()
+                INSTANCE = CovidIndiaSyncManager(apiProvider, covidDatabase)
+            }
+
+            return INSTANCE
+        }
+    }
+
+    fun startSync(callback: suspend (Status<*>) -> Unit = {}) = CoroutineScope(Dispatchers.IO).launch {
 
         // Fetching overall primary data information
         val overallDataStatus = ApiHelper.handleRequest(StatusId.OVERALL_DATA) {

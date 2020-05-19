@@ -13,7 +13,7 @@
         android:ellipsize="end"
         android:padding="10dp"
         android:singleLine="true"
-        android:textSize="18sp"
+        android:textSize="16sp"
         app:fontFamily="@font/open_sans"
         android:fontFamily="@font/open_sans"
         android:textColor="@color/text_primary"

@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.view.animation.AnimationUtils
 import android.view.inputmethod.InputMethodManager
 import androidx.core.widget.doAfterTextChanged
@@ -56,10 +57,12 @@ class SearchActivity : BaseActivity() {
         if (viewType == DISTRICT_SEARCH_VIEW) {
             recycler_view.layoutManager = GridLayoutManager(this, 3)
             et_search.hint = getString(R.string.search_city)
+            header.visibility = View.GONE
 
         } else if (viewType == OVERALL_SEARCH_VIEW) {
             recycler_view.layoutManager = LinearLayoutManager(this)
             et_search.hint = getString(R.string.search_city_state)
+            header.visibility = View.VISIBLE
         }
 
         adapter = SearchListAdapter(

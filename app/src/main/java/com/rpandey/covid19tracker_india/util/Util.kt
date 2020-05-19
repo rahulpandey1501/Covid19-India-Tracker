@@ -7,13 +7,17 @@ import android.net.Uri
 import android.text.format.DateUtils
 import android.util.Log
 import android.view.WindowManager
+import android.webkit.URLUtil
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.core.content.ContextCompat
+import androidx.core.content.FileProvider
+import com.rpandey.covid19tracker_india.BuildConfig
 import com.rpandey.covid19tracker_india.CovidApplication
 import com.rpandey.covid19tracker_india.R
 import com.rpandey.covid19tracker_india.data.Constants
 import com.rpandey.covid19tracker_india.data.model.covidIndia.Zone
 import com.rpandey.covid19tracker_india.util.customchrome.CustomTabsHelper
+import java.io.File
 import java.text.DecimalFormat
 import java.text.DecimalFormatSymbols
 import java.util.*
@@ -98,15 +102,29 @@ object Util {
     }
 
     fun openWebUrl(context: Context, url: String) {
-        val customTabsIntent = CustomTabsIntent.Builder()
-            .setToolbarColor(ContextCompat.getColor(context, R.color.colorPrimary))
-            .setShowTitle(true)
-            .build()
-        CustomTabsHelper.addKeepAliveExtra(context, customTabsIntent.intent)
-        val packageName = CustomTabsHelper.getPackageNameToUse(context)
-        if (packageName != null) {
-            customTabsIntent.intent.setPackage(packageName)
-            customTabsIntent.launchUrl(context, Uri.parse(url))
+        if (URLUtil.isValidUrl(url)) {
+            try {
+                val customTabsIntent = CustomTabsIntent.Builder()
+                    .setToolbarColor(ContextCompat.getColor(context, R.color.colorPrimary))
+                    .setShowTitle(true)
+                    .build()
+                CustomTabsHelper.addKeepAliveExtra(context, customTabsIntent.intent)
+                val packageName = CustomTabsHelper.getPackageNameToUse(context)
+                if (packageName != null) {
+                    customTabsIntent.intent.setPackage(packageName)
+                    customTabsIntent.launchUrl(context, Uri.parse(url))
+                }
+            } catch (e: Exception) {
+                openBrowser(context, url)
+            }
+        }
+    }
+
+    fun openBrowser(context: Context, url: String) {
+        if (URLUtil.isValidUrl(url)) {
+            val intent = Intent(Intent.ACTION_VIEW)
+            intent.data = Uri.parse(url)
+            context.startActivity(intent)
         }
     }
 
@@ -126,5 +144,39 @@ object Util {
         val intent = Intent(Intent.ACTION_DIAL)
         intent.data = Uri.parse("tel:${number}")
         context.startActivity(intent)
+    }
+
+    fun getAppDownloadFileName(versionCode: Int): String {
+        return "Covid19_India_Tracker_${versionCode}.apk"
+    }
+
+    fun getAppDownloadDirectory(): File {
+        return File(CovidApplication.INSTANCE.externalCacheDir, "apk")
+    }
+
+    fun startInstallerIntent(context: Context, file: File) {
+        val intent = Intent(Intent.ACTION_VIEW)
+        val fileUri = getFileUri(context, file)
+        intent.setDataAndType(
+            fileUri, "application/vnd.android.package-archive"
+        )
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+        intent.flags = Intent.FLAG_GRANT_READ_URI_PERMISSION;
+        context.startActivity(intent)
+    }
+
+    fun log(tag: String, message: String) {
+        if (BuildConfig.DEBUG) {
+            Log.d("Covid19 $tag", message)
+        }
+    }
+
+    fun getFileUri(context: Context, file: File): Uri {
+        return FileProvider.getUriForFile(context, BuildConfig.APPLICATION_ID + ".fileprovider", file)
+    }
+
+    fun apkExist(versionCode: Int): Pair<Boolean, File> {
+        val apkFile = File(getAppDownloadDirectory(), getAppDownloadFileName(versionCode))
+        return (apkFile.exists() && apkFile.length() > 100) to apkFile
     }
 }

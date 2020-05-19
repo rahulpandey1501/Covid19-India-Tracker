@@ -53,4 +53,6 @@
     <string name="state">State/UT</string>
     <string name="select_service">Select service</string>
     <string name="service">Service</string>
+    <string name="share_with_friends">Share with friends</string>
+    <string name="install">Install</string>
 </resources>

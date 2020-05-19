@@ -15,7 +15,7 @@
             android:layout_marginTop="24dp"
             android:text="@string/select_state"
             android:textColor="@color/text_primary"
-            android:textSize="20sp"
+            android:textSize="18sp"
             android:visibility="gone"
             android:textStyle="bold"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -27,6 +27,7 @@
             android:layout_height="2dp"
             android:background="@color/text_primary"
             android:paddingTop="4dp"
+            android:alpha="0.8"
             android:visibility="gone"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/title" />
