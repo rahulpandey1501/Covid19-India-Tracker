@@ -40,6 +40,7 @@ class ItemSelectorBottomSheet: BaseBottomSheetFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        title.text = requireArguments().getString(KEY_TITLE)
         CoroutineScope(Dispatchers.IO).launch {
             val items: List<Item> = Gson().fromJson(requireArguments().getString(KEY_ITEMS), object: TypeToken<List<Item>>(){}.type)
             withContext(Dispatchers.Main) {
@@ -61,10 +62,14 @@ class ItemSelectorBottomSheet: BaseBottomSheetFragment() {
     }
 
     companion object {
+        private const val KEY_TITLE = "KEY_TITLE"
         private const val KEY_ITEMS = "KEY_ITEMS"
 
-        fun newInstance(items: List<Item>): ItemSelectorBottomSheet {
-            return ItemSelectorBottomSheet().apply { arguments = Bundle().apply { putString(KEY_ITEMS, Gson().toJson(items)) } }
+        fun newInstance(title: String, items: List<Item>): ItemSelectorBottomSheet {
+            return ItemSelectorBottomSheet().apply { arguments = Bundle().apply {
+                putString(KEY_TITLE, title)
+                putString(KEY_ITEMS, Gson().toJson(items))
+            } }
         }
     }
 }

@@ -70,19 +70,18 @@ class EssentialsFragment : BaseFragment(), ItemSelectorBottomSheet.Callback {
         with(viewModel) {
 
             stateLD.observe(this@EssentialsFragment) { data ->
-                val state = arguments?.getString(KEY_STATE)
-                if (!selectionChanged && data.contains(state)) {
-                    state?.let { selectState(state) }
+                val initialState = arguments?.getString(KEY_STATE)
+                if (!selectionChanged && data.contains(initialState)) {
+                    initialState?.let { selectState(it) }
                 }
             }
 
             districtLD.observe(this@EssentialsFragment) { data ->
-                var district = arguments?.getString(KEY_DISTRICT)
-                if (selectionChanged) {
-                    district = data.firstOrNull()
-                }
-                if (data.contains(district)) {
-                    district?.let { selectDistrict(district) }
+                val initialDistrict = arguments?.getString(KEY_DISTRICT)
+                if (!selectionChanged && data.contains(initialDistrict)) {
+                    initialDistrict?.let { selectDistrict(it) }
+                } else {
+                    district_view.performClick()
                 }
             }
 
@@ -105,19 +104,19 @@ class EssentialsFragment : BaseFragment(), ItemSelectorBottomSheet.Callback {
                 requireContext().showToast("Data not found, please refresh")
                 return@setOnClickListener
             }
-            showDialog(stateSelectionTag, items)
+            showDialog(stateSelectionTag, getString(R.string.select_state), items)
             selectionChanged = true
         }
 
         district_view.setOnClickListener {
             val items = viewModel.districtLD.value?.map { ItemSelectorBottomSheet.Item(it, it) }
-            items?.let { showDialog(districtSelectionTag, items) }
+            items?.let { showDialog(districtSelectionTag, getString(R.string.select_district), items) }
             selectionChanged = true
         }
 
         service_view.setOnClickListener {
             val items = viewModel.categoriesLD.value?.map { ItemSelectorBottomSheet.Item(it, it) }
-            items?.let { showDialog(categorySelectionTag, items) }
+            items?.let { showDialog(categorySelectionTag, getString(R.string.select_essential), items) }
             selectionChanged = true
         }
     }
@@ -139,9 +138,13 @@ class EssentialsFragment : BaseFragment(), ItemSelectorBottomSheet.Callback {
     }
 
     private fun selectState(state: String) {
+        if (selectedState == state) return
+
         selectedState = state
         select_state.text = state
         viewModel.onStateSelected(state)
+        resetDistrict()
+        resetCategory()
     }
 
     private fun selectDistrict(district: String) {
@@ -164,12 +167,22 @@ class EssentialsFragment : BaseFragment(), ItemSelectorBottomSheet.Callback {
         }
     }
 
+    private fun resetDistrict() {
+        selectedDistrict = null
+        select_district.text = getString(R.string.select_district)
+    }
+
+    private fun resetCategory() {
+        selectedCategory = null
+        fillResources(emptyList())
+    }
+
     private fun fillResources(resources: List<ResourcesEntity>) {
-        service_view.visibility = View.VISIBLE
+        service_view.visibility = if (resources.isEmpty()) View.GONE else View.VISIBLE
         adapter.update(resources)
     }
 
-    private fun showDialog(tag: String, items: List<ItemSelectorBottomSheet.Item>) {
-        showDialog(tag) { ItemSelectorBottomSheet.newInstance(items) }
+    private fun showDialog(tag: String, title: String, items: List<ItemSelectorBottomSheet.Item>) {
+        showDialog(tag) { ItemSelectorBottomSheet.newInstance(title, items) }
     }
 }
