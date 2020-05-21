@@ -40,6 +40,13 @@ object Util {
         return size.y
     }
 
+    fun getPercentage(count: Int, totalCount: Int): String {
+        if (totalCount == 0) return ""
+
+        val percentage = (count.toFloat() / totalCount.toFloat()) * 100
+        return "${"%.2f".format(percentage)}%"
+    }
+
     fun timestampToDate(timestamp: Long): String? {
         return try {
             DateUtils.getRelativeTimeSpanString(

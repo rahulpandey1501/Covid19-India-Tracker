@@ -34,7 +34,7 @@ class ItemCountCaseBindingModel(private val context: Context) {
                 title.set(context.getString(R.string.active))
                 backgroundColor.set(getColor(R.color.background_active))
                 confirmCaseModel?.let {
-                    percentageCount.set(getPercentage(confirmCaseModel.totalCount, countModel.totalCount))
+                    percentageCount.set(Util.getPercentage(countModel.totalCount, confirmCaseModel.totalCount))
                 }
 
             }
@@ -42,7 +42,7 @@ class ItemCountCaseBindingModel(private val context: Context) {
                 title.set(context.getString(R.string.recovered))
                 backgroundColor.set(getColor(R.color.background_recovered))
                 confirmCaseModel?.let {
-                    percentageCount.set(getPercentage(confirmCaseModel.totalCount, countModel.totalCount))
+                    percentageCount.set(Util.getPercentage(countModel.totalCount, confirmCaseModel.totalCount))
                 }
 
             }
@@ -50,7 +50,7 @@ class ItemCountCaseBindingModel(private val context: Context) {
                 title.set(context.getString(R.string.deaths))
                 backgroundColor.set(getColor(R.color.background_deceased))
                 confirmCaseModel?.let {
-                    percentageCount.set(getPercentage(confirmCaseModel.totalCount, countModel.totalCount))
+                    percentageCount.set(Util.getPercentage(countModel.totalCount, confirmCaseModel.totalCount))
                 }
 
             }
@@ -63,12 +63,5 @@ class ItemCountCaseBindingModel(private val context: Context) {
 
     private fun getColor(color: Int): Int {
         return ContextCompat.getColor(context, color)
-    }
-
-    private fun getPercentage(confirmedCount: Int, matchingCount: Int): String {
-        if (confirmedCount == 0) return ""
-
-        val percentage = (matchingCount.toFloat() / confirmedCount.toFloat()) * 100
-        return "${"%.2f".format(percentage)}%"
     }
 }

@@ -2,13 +2,17 @@ package com.rpandey.covid19tracker_india.ui.statedetails
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.TypedValue
+import android.view.LayoutInflater
 import android.view.View
+import android.widget.LinearLayout
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.FragmentActivity
 import com.google.gson.Gson
 import com.rpandey.covid19tracker_india.R
 import com.rpandey.covid19tracker_india.data.Constants
 import com.rpandey.covid19tracker_india.data.model.Config
+import com.rpandey.covid19tracker_india.data.model.covidIndia.Zone
 import com.rpandey.covid19tracker_india.database.entity.DistrictEntity
 import com.rpandey.covid19tracker_india.database.entity.StateEntity
 import com.rpandey.covid19tracker_india.database.model.CountModel
@@ -23,6 +27,7 @@ import com.rpandey.covid19tracker_india.ui.home.ItemCountCaseBindingModel
 import com.rpandey.covid19tracker_india.ui.home.UICaseType
 import com.rpandey.covid19tracker_india.util.*
 import kotlinx.android.synthetic.main.activity_state_details.*
+import kotlinx.android.synthetic.main.item_zone_distribution.view.*
 
 class StateDetailsActivity : BaseActivity(), SelectStateBottomSheet.Callback {
 
@@ -84,6 +89,7 @@ class StateDetailsActivity : BaseActivity(), SelectStateBottomSheet.Callback {
 
         viewModel.getDistricts(stateName).observe(this) {
             inflateDistricts(it)
+            inflateZoneDistribution(it)
         }
 
         setupSortClickListeners()
@@ -123,6 +129,42 @@ class StateDetailsActivity : BaseActivity(), SelectStateBottomSheet.Callback {
         container_district_title.visibility = district_header.visibility
 
         adapter.update(data as MutableList<DistrictEntity>)
+    }
+
+    private fun inflateZoneDistribution(data: List<DistrictEntity>) {
+        zone_distribution_container.removeAllViews()
+
+        var orangeCount = 0
+        var redCount = 0
+        var greenCount = 0
+
+        data.forEach {
+            when(it.zone) {
+                Zone.Green.name -> { ++greenCount }
+                Zone.Orange.name -> { ++orangeCount }
+                Zone.Red.name -> { ++redCount }
+            }
+        }
+        val totalZoneCount = orangeCount + greenCount + redCount
+        inflateZoneItem(Zone.Red, redCount, totalZoneCount)
+        inflateZoneItem(Zone.Orange, orangeCount, totalZoneCount)
+        inflateZoneItem(Zone.Green, greenCount, totalZoneCount)
+    }
+
+    private fun inflateZoneItem(zone: Zone, currentZoneCount: Int, totalZoneCount: Int) {
+        val inflater = LayoutInflater.from(this)
+        val zoneItem = inflater.inflate(R.layout.item_zone_distribution, zone_distribution_container, false)
+        zoneItem.indicator.setBackgroundColor(Util.getZoneColor(this, zone.name))
+        zoneItem.distribution.text = Util.getPercentage(currentZoneCount, totalZoneCount)
+        val param = LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams.MATCH_PARENT,
+            LinearLayout.LayoutParams.MATCH_PARENT,
+            1.0f
+        )
+        param.marginStart = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 10f, resources.displayMetrics).toInt()
+        zoneItem.layoutParams = param
+        zoneItem.tv_zone.text = "${zone.name} zone"
+        zone_distribution_container.addView(zoneItem)
     }
 
     private fun openDistrictDetailsView(district: DistrictEntity) {

@@ -55,4 +55,5 @@
     <string name="service">Service</string>
     <string name="share_with_friends">Share with friends</string>
     <string name="install">Install</string>
+    <string name="zone_distribution">Zone Distribution</string>
 </resources>
