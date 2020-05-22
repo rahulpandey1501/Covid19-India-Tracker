@@ -37,6 +37,7 @@ class ViewHolder(val binding: ItemEssentialBinding): RecyclerView.ViewHolder(bin
     fun init(resourcesEntity: ResourcesEntity) {
         binding.title.text = resourcesEntity.organisation
         binding.description.text = resourcesEntity.description
+        binding.description.visibility = if (resourcesEntity.description.isEmpty()) View.GONE else View.VISIBLE
 
         val phoneNumbers = resourcesEntity.phoneNumber.split(",")
         binding.phoneNo1.visibility = View.GONE

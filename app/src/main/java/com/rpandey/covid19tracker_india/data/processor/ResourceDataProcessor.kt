@@ -36,8 +36,9 @@ class ResourceDataProcessor(covidDatabase: CovidDatabase) :
     }
 
     private fun getContact(resourceData: ResourceData): String {
-        val rawContact = resourceData.phoneNumber?.trim() ?: ""
-        return rawContact.replace("\n", "")
+        var rawContact = resourceData.phoneNumber?.trim() ?: ""
+        rawContact = rawContact.replace("\n", ",")
+        return rawContact.split(",").filter { it.isNotEmpty() }.joinToString()
     }
 
     private fun getDistrict(resourceData: ResourceData): String {
