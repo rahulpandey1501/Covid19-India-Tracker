@@ -60,21 +60,28 @@ class DistrictDetailsActivity : BaseActivity() {
 
         more_info.setOnClickListener {
             loadDistrictMoreInfo()
-            extra_info_container.animate()
-                .alpha(0f)
-                .setDuration(1000)
-                .setListener(object : AnimatorListenerAdapter() {
-                    override fun onAnimationEnd(animation: Animator) {
-                        extra_info_container.visibility = View.GONE
-                    }
-                })
+            if (essential_info.visibility == View.GONE) {
+                extra_info_container.animate()
+                    .alpha(0f)
+                    .setDuration(1000)
+                    .setListener(object : AnimatorListenerAdapter() {
+                        override fun onAnimationEnd(animation: Animator) {
+                            extra_info_container.visibility = View.GONE
+                        }
+                    })
+            }
+
+            essential_container.visibility = View.GONE
+            more_info_container.visibility = View.VISIBLE
         }
 
         essential_info.setOnClickListener {
             districtEntity?.let {
-                extra_info_container.visibility = View.GONE
                 loadEssentials(it.stateName, it.district)
             }
+
+            more_info_container.visibility = View.GONE
+            essential_container.visibility = View.VISIBLE
         }
 
         viewModel.getDistrict(districtId).observe(this) {
@@ -134,6 +141,7 @@ class DistrictDetailsActivity : BaseActivity() {
         viewModel.hasResources(stateName, district).observe(this) {
             if (it.isNotEmpty()) {
                 essential_info.visibility = View.VISIBLE
+                essential_info.performClick()
             }
         }
     }
@@ -141,11 +149,13 @@ class DistrictDetailsActivity : BaseActivity() {
     private fun loadEssentials(stateName: String, district: String) {
         logEvent("DISTRICT_ESSENTIALS_CLICKED")
         attachFragment(EssentialsFragment.TAG, R.id.essential_container, false) {
-            EssentialsFragment.newInstance(stateName, district, false)
+            EssentialsFragment.newInstance(stateName, district, true)
         }
     }
 
     private fun loadDistrictMoreInfo() {
+        if (webview.visibility == View.VISIBLE) return
+
         logEvent("DISTRICT_INFO_CLICKED")
         val config = PreferenceHelper.getString(Constants.KEY_CONFIG)
         val configModel = config?.let { Gson().fromJson(it, Config::class.java) }

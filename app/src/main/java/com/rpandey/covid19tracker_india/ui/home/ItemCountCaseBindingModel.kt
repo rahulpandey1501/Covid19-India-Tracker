@@ -19,8 +19,7 @@ class ItemCountCaseBindingModel(private val context: Context) {
     fun init(caseType: UICaseType, caseMapping: Map<UICaseType, CountModel>) {
         val countModel = caseMapping[caseType] ?: error("$caseType not found")
         totalCount.set(Util.formatNumber(countModel.totalCount))
-        if (countModel.currentCount > 0)
-            currentCount.set(Util.formatNumber(countModel.currentCount))
+        setIncrementCount(countModel.currentCount)
 
         val confirmCaseModel = caseMapping[UICaseType.TYPE_CONFIRMED]
         when(caseType) {
@@ -35,6 +34,12 @@ class ItemCountCaseBindingModel(private val context: Context) {
                 backgroundColor.set(getColor(R.color.background_active))
                 confirmCaseModel?.let {
                     percentageCount.set(Util.getPercentage(countModel.totalCount, confirmCaseModel.totalCount))
+                    val recoveredCaseModel = caseMapping[UICaseType.TYPE_RECOVERED]
+                    val deathCaseModel = caseMapping[UICaseType.TYPE_DEATH]
+                    if (recoveredCaseModel != null && deathCaseModel != null) {
+                        val currentActiveCount = confirmCaseModel.currentCount - recoveredCaseModel.currentCount - deathCaseModel.currentCount
+                        setIncrementCount(currentActiveCount)
+                    }
                 }
 
             }
@@ -59,6 +64,11 @@ class ItemCountCaseBindingModel(private val context: Context) {
                 currentCount.set("(+${Util.formatNumber(countModel.currentCount)})")
             }
         }
+    }
+
+    private fun setIncrementCount(currentCount: Int) {
+        if (currentCount > 0)
+            this.currentCount.set("+${Util.formatNumber(currentCount)}")
     }
 
     private fun getColor(color: Int): Int {

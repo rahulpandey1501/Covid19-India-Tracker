@@ -44,8 +44,8 @@
                         android:layout_marginRight="16dp"
                         android:textColor="@color/text_primary"
                         android:textSize="28sp"
-                        app:fontFamily="@font/open_sans"
                         android:textStyle="bold"
+                        app:fontFamily="@font/open_sans"
                         app:layout_constrainedWidth="true"
                         app:layout_constraintHorizontal_bias="0"
                         app:layout_constraintLeft_toLeftOf="parent"
@@ -100,7 +100,6 @@
                         android:layout_marginLeft="16dp"
                         android:layout_marginTop="24dp"
                         android:layout_marginRight="16dp"
-                        android:layout_marginBottom="16dp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/last_update" />
 
@@ -120,63 +119,75 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
+                android:layout_marginTop="16dp"
                 android:animateLayoutChanges="true"
-                android:gravity="center_horizontal"
                 android:orientation="horizontal"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/cases_layout">
 
-                <LinearLayout
+                <androidx.cardview.widget.CardView
                     android:id="@+id/more_info"
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="4dp"
+                    android:foreground="?attr/selectableItemBackground"
                     android:orientation="vertical"
-                    android:padding="8dp">
+                    app:cardBackgroundColor="@color/item_background"
+                    app:cardCornerRadius="6dp"
+                    app:cardElevation="0dp"
+                    app:contentPadding="10dp">
 
                     <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_more_info"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:drawablePadding="2dp"
+                        android:gravity="center"
+                        android:paddingLeft="6dp"
+                        android:paddingRight="6dp"
                         android:text="@string/more_updates"
                         android:textColor="@color/text_primary"
-                        app:fontFamily="@font/open_sans" />
+                        android:textSize="14sp"
+                        app:drawableLeftCompat="@drawable/ic_baseline_rss_feed_24"
+                        app:drawableTint="@color/text_primary"/>
 
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:rotation="180"
-                        android:src="@drawable/ic_sharp_keyboard_arrow_up_24"
-                        android:tint="@color/text_primary" />
+                </androidx.cardview.widget.CardView>
 
-                </LinearLayout>
-
-                <LinearLayout
+                <androidx.cardview.widget.CardView
                     android:id="@+id/essential_info"
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginEnd="16dp"
+                    android:foreground="?attr/selectableItemBackground"
                     android:orientation="vertical"
-                    android:padding="8dp"
-                    android:visibility="gone">
+                    android:visibility="gone"
+                    app:cardBackgroundColor="@color/item_background"
+                    app:cardCornerRadius="6dp"
+                    app:cardElevation="0dp"
+                    app:contentPadding="10dp"
+                    tools:visibility="visible">
 
                     <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_essential_info"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:drawablePadding="4dp"
+                        android:gravity="center"
+                        android:paddingLeft="6dp"
+                        android:paddingRight="6dp"
                         android:text="@string/title_essentials"
                         android:textColor="@color/text_primary"
-                        app:fontFamily="@font/open_sans" />
+                        android:textSize="14sp"
+                        app:drawableLeftCompat="@drawable/ic_baseline_format_list_bulleted_24"
+                        app:drawableTint="@color/text_primary"/>
 
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:rotation="180"
-                        android:src="@drawable/ic_sharp_keyboard_arrow_up_24"
-                        android:tint="@color/text_primary" />
+                </androidx.cardview.widget.CardView>
 
-                </LinearLayout>
             </LinearLayout>
 
             <FrameLayout
@@ -185,8 +196,10 @@
                 android:layout_height="wrap_content" />
 
             <androidx.core.widget.NestedScrollView
+                android:id="@+id/more_info_container"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:layout_marginTop="8dp">
 
                 <WebView
                     android:id="@+id/webview"
