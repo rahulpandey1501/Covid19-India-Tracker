@@ -99,9 +99,7 @@ class MainActivity : BaseActivity() {
             R.id.about_us -> { startActivity(Intent(this, AboutUsActivity::class.java)) }
 
             R.id.analysis -> {
-                val config = PreferenceHelper.getString(Constants.KEY_CONFIG)
-                val configModel = config?.let { Gson().fromJson(it, Config::class.java) }
-                val url = configModel?.analysisUrl ?: Constants.DEFAULT_ANALYSIS_URL
+                val url = Util.getConfig()?.analysisUrl ?: Constants.DEFAULT_ANALYSIS_URL
                 Util.openWebUrl(this, url, getString(R.string.analysis))
             }
 

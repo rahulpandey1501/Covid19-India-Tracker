@@ -157,9 +157,7 @@ class DistrictDetailsActivity : BaseActivity() {
         if (webview.visibility == View.VISIBLE) return
 
         logEvent("DISTRICT_INFO_CLICKED")
-        val config = PreferenceHelper.getString(Constants.KEY_CONFIG)
-        val configModel = config?.let { Gson().fromJson(it, Config::class.java) }
-        val urlPlaceholder = configModel?.districtInfoUrlPlaceholder ?: Constants.DEFAULT_DISTRICT_INFO_PLACEHOLDER
+        val urlPlaceholder = Util.getConfig()?.districtInfoUrlPlaceholder ?: Constants.DEFAULT_DISTRICT_INFO_PLACEHOLDER
         val url = String.format(urlPlaceholder, binding.title.text)
 
         webview.visibility = View.VISIBLE
@@ -179,9 +177,7 @@ class DistrictDetailsActivity : BaseActivity() {
 
     private fun districtMoreInfo() {
         logEvent("DISTRICT_INFO_CLICKED")
-        val config = PreferenceHelper.getString(Constants.KEY_CONFIG)
-        val configModel = config?.let { Gson().fromJson(it, Config::class.java) }
-        val urlPlaceholder = configModel?.districtInfoUrlPlaceholder ?: Constants.DEFAULT_DISTRICT_INFO_PLACEHOLDER
+        val urlPlaceholder = Util.getConfig()?.districtInfoUrlPlaceholder ?: Constants.DEFAULT_DISTRICT_INFO_PLACEHOLDER
         Util.openWebUrl(this, String.format(urlPlaceholder, binding.title.text))
     }
 }

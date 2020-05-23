@@ -5,14 +5,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.rpandey.covid19tracker_india.R
+import com.rpandey.covid19tracker_india.data.Constants
 import com.rpandey.covid19tracker_india.database.entity.ResourcesEntity
 import com.rpandey.covid19tracker_india.databinding.FragmentEssentialsBinding
 import com.rpandey.covid19tracker_india.ui.BaseFragment
 import com.rpandey.covid19tracker_india.ui.common.ItemSelectorBottomSheet
-import com.rpandey.covid19tracker_india.util.getViewModel
-import com.rpandey.covid19tracker_india.util.observe
-import com.rpandey.covid19tracker_india.util.showDialog
-import com.rpandey.covid19tracker_india.util.showToast
+import com.rpandey.covid19tracker_india.util.*
 import kotlinx.android.synthetic.main.fragment_essentials.*
 
 class EssentialsFragment : BaseFragment(), ItemSelectorBottomSheet.Callback {
@@ -62,6 +60,8 @@ class EssentialsFragment : BaseFragment(), ItemSelectorBottomSheet.Callback {
         binding.recyclerView.adapter = adapter
         if (arguments?.getBoolean(KEY_STRICT_VIEW) == true) {
             binding.stateDistrictView.visibility = View.GONE
+            binding.nearbyEssentials.visibility = View.GONE
+            binding.selectLocationTitle.visibility = View.GONE
         }
         return binding.root
     }
@@ -118,6 +118,11 @@ class EssentialsFragment : BaseFragment(), ItemSelectorBottomSheet.Callback {
             val items = viewModel.categoriesLD.value?.map { ItemSelectorBottomSheet.Item(it, it) }
             items?.let { showDialog(categorySelectionTag, getString(R.string.select_essential), items) }
             selectionChanged = true
+        }
+
+        nearby_essentials.setOnClickListener {
+            val url = Util.getConfig()?.nearByEssentialsUrl ?: Constants.DEFAULT_NEARBY_ESSENTIALS_URL
+            Util.openWebUrl(requireContext(), url)
         }
     }
 

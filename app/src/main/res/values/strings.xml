@@ -57,5 +57,7 @@
     <string name="install">Install</string>
     <string name="zone_distribution">Zone Distribution</string>
     <string name="analysis">Analysis</string>
-    <string name="please_wait">Please wait...</string>
+    <string name="please_wait">Please wait…</string>
+    <string name="nearby_essentials">Locate nearby essentials</string>
+    <string name="select_location">Select location</string>
 </resources>

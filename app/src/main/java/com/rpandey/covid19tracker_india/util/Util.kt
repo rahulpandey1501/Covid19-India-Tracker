@@ -11,10 +11,12 @@ import android.webkit.URLUtil
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
+import com.google.gson.Gson
 import com.rpandey.covid19tracker_india.BuildConfig
 import com.rpandey.covid19tracker_india.CovidApplication
 import com.rpandey.covid19tracker_india.R
 import com.rpandey.covid19tracker_india.data.Constants
+import com.rpandey.covid19tracker_india.data.model.Config
 import com.rpandey.covid19tracker_india.data.model.covidIndia.Zone
 import com.rpandey.covid19tracker_india.ui.WebViewActivity
 import com.rpandey.covid19tracker_india.util.customchrome.CustomTabsHelper
@@ -190,5 +192,10 @@ object Util {
     fun apkExist(versionCode: Int): Pair<Boolean, File> {
         val apkFile = File(getAppDownloadDirectory(), getAppDownloadFileName(versionCode))
         return (apkFile.exists() && apkFile.length() > 100) to apkFile
+    }
+
+    fun getConfig(): Config? {
+        val config = PreferenceHelper.getString(Constants.KEY_CONFIG)
+        return config?.let { Gson().fromJson(it, Config::class.java) }
     }
 }
