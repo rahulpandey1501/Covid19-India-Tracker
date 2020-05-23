@@ -15,8 +15,10 @@ import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.iid.FirebaseInstanceId
 import com.google.gson.Gson
+import com.rpandey.covid19tracker_india.data.Constants
 import com.rpandey.covid19tracker_india.data.Status
 import com.rpandey.covid19tracker_india.data.StatusId
+import com.rpandey.covid19tracker_india.data.model.Config
 import com.rpandey.covid19tracker_india.data.model.LaunchData
 import com.rpandey.covid19tracker_india.data.processor.CovidIndiaSyncManager
 import com.rpandey.covid19tracker_india.service.ApkDownloadService
@@ -24,10 +26,7 @@ import com.rpandey.covid19tracker_india.ui.BaseActivity
 import com.rpandey.covid19tracker_india.ui.aboutus.AboutUsActivity
 import com.rpandey.covid19tracker_india.ui.search.SearchActivity
 import com.rpandey.covid19tracker_india.ui.update.UpdateBottomSheet
-import com.rpandey.covid19tracker_india.util.ThemeHelper
-import com.rpandey.covid19tracker_india.util.Util
-import com.rpandey.covid19tracker_india.util.showDialog
-import com.rpandey.covid19tracker_india.util.showToast
+import com.rpandey.covid19tracker_india.util.*
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -98,6 +97,13 @@ class MainActivity : BaseActivity() {
             R.id.ui_mode -> { ThemeHelper.toggle(this) }
 
             R.id.about_us -> { startActivity(Intent(this, AboutUsActivity::class.java)) }
+
+            R.id.analysis -> {
+                val config = PreferenceHelper.getString(Constants.KEY_CONFIG)
+                val configModel = config?.let { Gson().fromJson(it, Config::class.java) }
+                val url = configModel?.analysisUrl ?: Constants.DEFAULT_ANALYSIS_URL
+                Util.openWebUrl(this, url, getString(R.string.analysis))
+            }
 
             R.id.exit -> { finish() }
         }

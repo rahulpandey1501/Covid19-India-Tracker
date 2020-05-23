@@ -16,6 +16,7 @@ import com.rpandey.covid19tracker_india.CovidApplication
 import com.rpandey.covid19tracker_india.R
 import com.rpandey.covid19tracker_india.data.Constants
 import com.rpandey.covid19tracker_india.data.model.covidIndia.Zone
+import com.rpandey.covid19tracker_india.ui.WebViewActivity
 import com.rpandey.covid19tracker_india.util.customchrome.CustomTabsHelper
 import java.io.File
 import java.text.DecimalFormat
@@ -108,7 +109,7 @@ object Util {
         Log.d("Covid19", "$identifier execution time: ${System.currentTimeMillis() - before}ms")
     }
 
-    fun openWebUrl(context: Context, url: String) {
+    fun openWebUrl(context: Context, url: String, title: String? = null) {
         if (URLUtil.isValidUrl(url)) {
             try {
                 val customTabsIntent = CustomTabsIntent.Builder()
@@ -122,9 +123,13 @@ object Util {
                     customTabsIntent.launchUrl(context, Uri.parse(url))
                 }
             } catch (e: Exception) {
-                openBrowser(context, url)
+                openWebviewIntent(context, url, title)
             }
         }
+    }
+
+    fun openWebviewIntent(context: Context, url: String, title: String? = null) {
+        context.startActivity(WebViewActivity.getIntent(context, url, title))
     }
 
     fun openBrowser(context: Context, url: String) {

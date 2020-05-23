@@ -8,4 +8,5 @@ object Constants {
     const val DEFAULT_APP_SHARE_URL = "https://tinyurl.com/covid19IndiaTracker"
     const val DEFAULT_DISTRICT_INFO_PLACEHOLDER = "https://google.com/search?q=%s+corona+news+update"
     const val DEFAULT_STATE_INFO_PLACEHOLDER = "https://www.covid19india.org/state/%s"
+    const val DEFAULT_ANALYSIS_URL = "https://www.covid19india.org/deepdive"
 }

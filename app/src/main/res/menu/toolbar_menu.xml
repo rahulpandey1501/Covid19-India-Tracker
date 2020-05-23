@@ -26,6 +26,11 @@
         app:showAsAction="always" />
 
     <item
+        android:id="@+id/analysis"
+        android:title="@string/analysis"
+        app:showAsAction="never" />
+
+    <item
         android:id="@+id/about_us"
         android:title="@string/about_us"
         app:showAsAction="never" />

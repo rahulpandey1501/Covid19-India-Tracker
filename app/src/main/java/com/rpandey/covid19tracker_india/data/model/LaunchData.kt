@@ -44,5 +44,6 @@ class MarketUpload(
 class Config(
     @SerializedName("autoDownloadEnabled") var autoDownloadEnabled: Boolean = false,
     @SerializedName("districtInfoUrlPlaceholder") val districtInfoUrlPlaceholder: String?,
-    @SerializedName("stateInfoUrlPlaceholder") val stateInfoUrlPlaceholder: String?
+    @SerializedName("stateInfoUrlPlaceholder") val stateInfoUrlPlaceholder: String?,
+    @SerializedName("analysisUrl") val analysisUrl: String?
 )
