@@ -101,7 +101,7 @@ class EssentialsFragment : BaseFragment(), ItemSelectorBottomSheet.Callback {
         state_view.setOnClickListener {
             val items = viewModel.stateLD.value?.map { ItemSelectorBottomSheet.Item(it, it) }
             if (items.isNullOrEmpty()) {
-                requireContext().showToast("Data not found, please refresh")
+                showToast("Data not found, please refresh")
                 return@setOnClickListener
             }
             showDialog(stateSelectionTag, getString(R.string.select_state), items)
@@ -123,6 +123,7 @@ class EssentialsFragment : BaseFragment(), ItemSelectorBottomSheet.Callback {
         nearby_essentials.setOnClickListener {
             val url = Util.getConfig()?.nearByEssentialsUrl ?: Constants.DEFAULT_NEARBY_ESSENTIALS_URL
             Util.openWebUrl(requireContext(), url, null, true)
+            showToast("Make sure your location should be enabled")
         }
     }
 

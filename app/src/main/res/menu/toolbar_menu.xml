@@ -5,6 +5,11 @@
     tools:context=".MainActivity">
 
     <item
+        android:id="@+id/analysis"
+        android:title="@string/analysis"
+        app:showAsAction="never" />
+
+    <item
         android:id="@+id/share"
         android:icon="@drawable/ic_baseline_share_24"
         android:title="@string/share"
@@ -24,11 +29,6 @@
         android:title="@string/dark_mode"
         app:iconTint="@color/ui_mode_selection"
         app:showAsAction="always" />
-
-    <item
-        android:id="@+id/analysis"
-        android:title="@string/analysis"
-        app:showAsAction="never" />
 
     <item
         android:id="@+id/about_us"

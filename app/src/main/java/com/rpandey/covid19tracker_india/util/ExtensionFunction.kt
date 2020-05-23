@@ -105,6 +105,10 @@ fun Context.showToast(message: String) {
     Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
 }
 
+fun Fragment.showToast(message: String) {
+    Toast.makeText(activity?.applicationContext, message, Toast.LENGTH_SHORT).show()
+}
+
 fun AppCompatActivity.provideColor(@ColorRes colorRes: Int): Int {
     return ContextCompat.getColor(this, colorRes)
 }
