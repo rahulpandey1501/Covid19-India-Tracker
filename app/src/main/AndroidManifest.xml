@@ -5,6 +5,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
 
     <application
         android:name=".CovidApplication"
@@ -34,6 +35,7 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/filepaths" />
         </provider>
+
         <provider
             android:name=".contentprovider.AssetsProvider"
             android:authorities="com.rpandey.covid19tracker_india"
@@ -50,10 +52,10 @@
             android:theme="@style/AppTheme.Launcher">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity android:name=".ui.aboutus.AboutUsActivity" />
         <activity android:name=".ui.statedetails.StateDetailsActivity" />
         <activity
@@ -61,13 +63,11 @@
             android:configChanges="uiMode" />
         <activity
             android:name=".ui.search.SearchActivity"
-            android:label="@string/Search"
-            android:screenOrientation="portrait" />
+            android:label="@string/Search" />
 
         <activity android:name=".ui.common.WebViewActivity"
             android:theme="@style/Theme.AppCompat.DayNight.DarkActionBar"
-            android:configChanges="uiMode"
-            android:screenOrientation="portrait" />
+            android:configChanges="uiMode" />
 
         <meta-data
             android:name="preloaded_fonts"
