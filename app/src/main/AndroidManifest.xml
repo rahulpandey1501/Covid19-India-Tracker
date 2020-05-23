@@ -64,7 +64,7 @@
             android:label="@string/Search"
             android:screenOrientation="portrait" />
 
-        <activity android:name=".ui.WebViewActivity"
+        <activity android:name=".ui.common.WebViewActivity"
             android:theme="@style/Theme.AppCompat.DayNight.DarkActionBar"
             android:configChanges="uiMode"
             android:screenOrientation="portrait" />

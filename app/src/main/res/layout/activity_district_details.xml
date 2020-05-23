@@ -24,33 +24,55 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
 
-                    <ImageView
-                        android:id="@+id/iv_close"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:background="?attr/selectableItemBackgroundBorderless"
-                        android:padding="16dp"
-                        android:src="?attr/homeAsUpIndicator"
-                        android:tint="@color/toolbar_icon"
+                    <FrameLayout
+                        android:id="@+id/view_toolbar"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <ImageView
+                            android:id="@+id/iv_close"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:background="?attr/selectableItemBackgroundBorderless"
+                            android:padding="16dp"
+                            android:src="?attr/homeAsUpIndicator"
+                            android:tint="@color/toolbar_icon" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/iv_share"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="end"
+                            android:background="?attr/selectableItemBackground"
+                            android:gravity="center_vertical"
+                            android:padding="16dp"
+                            android:text="@string/share_stats"
+                            android:textColor="@color/text_primary"
+                            android:textSize="12sp"
+                            android:textStyle="italic"
+                            app:drawableLeftCompat="@drawable/ic_outline_near_me_24"
+                            app:drawableTint="@color/text_primary" />
+
+                    </FrameLayout>
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="16dp"
-                        android:layout_marginTop="8dp"
+                        android:layout_marginTop="16dp"
                         android:layout_marginRight="16dp"
                         android:textColor="@color/text_primary"
-                        android:textSize="28sp"
+                        android:textSize="24sp"
                         android:textStyle="bold"
                         app:fontFamily="@font/open_sans"
                         app:layout_constrainedWidth="true"
                         app:layout_constraintHorizontal_bias="0"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintRight_toLeftOf="@+id/indicator_layout"
-                        app:layout_constraintTop_toBottomOf="@+id/iv_close"
+                        app:layout_constraintTop_toBottomOf="@+id/view_toolbar"
                         tools:text="Bengaluru" />
 
                     <LinearLayout
@@ -152,7 +174,7 @@
                         android:textColor="@color/text_primary"
                         android:textSize="14sp"
                         app:drawableLeftCompat="@drawable/ic_baseline_rss_feed_24"
-                        app:drawableTint="@color/text_primary"/>
+                        app:drawableTint="@color/text_primary" />
 
                 </androidx.cardview.widget.CardView>
 
@@ -184,7 +206,7 @@
                         android:textColor="@color/text_primary"
                         android:textSize="14sp"
                         app:drawableLeftCompat="@drawable/ic_baseline_format_list_bulleted_24"
-                        app:drawableTint="@color/text_primary"/>
+                        app:drawableTint="@color/text_primary" />
 
                 </androidx.cardview.widget.CardView>
 
@@ -193,7 +215,8 @@
             <FrameLayout
                 android:id="@+id/essential_container"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp" />
 
             <androidx.core.widget.NestedScrollView
                 android:id="@+id/more_info_container"

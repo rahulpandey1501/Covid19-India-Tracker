@@ -1,4 +1,4 @@
-package com.rpandey.covid19tracker_india.ui
+package com.rpandey.covid19tracker_india.ui.common
 
 import android.annotation.SuppressLint
 import android.content.Context

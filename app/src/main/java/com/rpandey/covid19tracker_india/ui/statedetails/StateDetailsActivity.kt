@@ -8,10 +8,8 @@ import android.view.View
 import android.widget.LinearLayout
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.FragmentActivity
-import com.google.gson.Gson
 import com.rpandey.covid19tracker_india.R
 import com.rpandey.covid19tracker_india.data.Constants
-import com.rpandey.covid19tracker_india.data.model.Config
 import com.rpandey.covid19tracker_india.data.model.covidIndia.Zone
 import com.rpandey.covid19tracker_india.database.entity.DistrictEntity
 import com.rpandey.covid19tracker_india.database.entity.StateEntity
@@ -25,7 +23,10 @@ import com.rpandey.covid19tracker_india.ui.dashboard.SelectStateBottomSheet
 import com.rpandey.covid19tracker_india.ui.districtdetails.DistrictDetailsActivity
 import com.rpandey.covid19tracker_india.ui.home.ItemCountCaseBindingModel
 import com.rpandey.covid19tracker_india.ui.home.UICaseType
-import com.rpandey.covid19tracker_india.util.*
+import com.rpandey.covid19tracker_india.util.Util
+import com.rpandey.covid19tracker_india.util.getViewModel
+import com.rpandey.covid19tracker_india.util.observe
+import com.rpandey.covid19tracker_india.util.showDialog
 import kotlinx.android.synthetic.main.activity_state_details.*
 import kotlinx.android.synthetic.main.item_zone_distribution.view.*
 
@@ -74,6 +75,11 @@ class StateDetailsActivity : BaseActivity(), SelectStateBottomSheet.Callback {
             title.text = stateName
             title.setOnClickListener { stateChangeClicked() }
             ivClose.setOnClickListener { finish() }
+            ivShare.setOnClickListener {
+                val rootView = window.decorView.findViewById<View>(android.R.id.content)
+                logEvent("STATE_STATS_CLICKED")
+                Util.shareScreenshot(rootView)
+            }
         }
 
         viewModel.lastUpdatedTime(stateCode).observe(this) {

@@ -12,7 +12,7 @@
     <item
         android:id="@+id/share"
         android:icon="@drawable/ic_baseline_share_24"
-        android:title="@string/share"
+        android:title="@string/share_stats"
         app:iconTint="@color/toolbar_icon"
         app:showAsAction="ifRoom" />
 

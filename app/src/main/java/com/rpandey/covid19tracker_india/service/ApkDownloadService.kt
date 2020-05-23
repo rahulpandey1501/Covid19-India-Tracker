@@ -3,6 +3,7 @@ package com.rpandey.covid19tracker_india.service
 import android.app.IntentService
 import android.content.Intent
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.gson.Gson
 import com.rpandey.covid19tracker_india.CovidApplication
 import com.rpandey.covid19tracker_india.data.model.LaunchData
@@ -47,6 +48,7 @@ class ApkDownloadService: IntentService("Covid19ApkDownloaderHelper") {
         if (launchData != null) {
             CoroutineScope(Dispatchers.IO).launch {
                 startDownloadProcess(Gson().fromJson(launchData, LaunchData::class.java)) {
+                    FirebaseAnalytics.getInstance(applicationContext).logEvent("AUTO_DOWNLOAD_COMPLETED", null)
                     sendSuccessBroadcast(launchData)
                 }
             }

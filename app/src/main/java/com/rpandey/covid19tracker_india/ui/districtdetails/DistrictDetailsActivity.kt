@@ -9,10 +9,8 @@ import android.webkit.WebChromeClient
 import android.webkit.WebViewClient
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.FragmentActivity
-import com.google.gson.Gson
 import com.rpandey.covid19tracker_india.R
 import com.rpandey.covid19tracker_india.data.Constants
-import com.rpandey.covid19tracker_india.data.model.Config
 import com.rpandey.covid19tracker_india.database.entity.DistrictEntity
 import com.rpandey.covid19tracker_india.database.model.CountModel
 import com.rpandey.covid19tracker_india.databinding.ActivityDistrictDetailsBinding
@@ -20,7 +18,10 @@ import com.rpandey.covid19tracker_india.ui.BaseActivity
 import com.rpandey.covid19tracker_india.ui.essentials.EssentialsFragment
 import com.rpandey.covid19tracker_india.ui.home.ItemCountCaseBindingModel
 import com.rpandey.covid19tracker_india.ui.home.UICaseType
-import com.rpandey.covid19tracker_india.util.*
+import com.rpandey.covid19tracker_india.util.Util
+import com.rpandey.covid19tracker_india.util.attachFragment
+import com.rpandey.covid19tracker_india.util.getViewModel
+import com.rpandey.covid19tracker_india.util.observe
 import kotlinx.android.synthetic.main.activity_district_details.*
 import kotlinx.android.synthetic.main.layout_cases_count.*
 
@@ -82,6 +83,12 @@ class DistrictDetailsActivity : BaseActivity() {
 
             more_info_container.visibility = View.GONE
             essential_container.visibility = View.VISIBLE
+        }
+
+        iv_share.setOnClickListener {
+            val rootView = window.decorView.findViewById<View>(android.R.id.content)
+            logEvent("DISTRICT_STATS_CLICKED")
+            Util.shareScreenshot(rootView)
         }
 
         viewModel.getDistrict(districtId).observe(this) {

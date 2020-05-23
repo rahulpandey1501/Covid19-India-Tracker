@@ -2,10 +2,14 @@ package com.rpandey.covid19tracker_india.util
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.Canvas
+import android.graphics.Color
 import android.graphics.Point
 import android.net.Uri
 import android.text.format.DateUtils
 import android.util.Log
+import android.view.View
 import android.view.WindowManager
 import android.webkit.URLUtil
 import androidx.browser.customtabs.CustomTabsIntent
@@ -18,9 +22,10 @@ import com.rpandey.covid19tracker_india.R
 import com.rpandey.covid19tracker_india.data.Constants
 import com.rpandey.covid19tracker_india.data.model.Config
 import com.rpandey.covid19tracker_india.data.model.covidIndia.Zone
-import com.rpandey.covid19tracker_india.ui.WebViewActivity
+import com.rpandey.covid19tracker_india.ui.common.WebViewActivity
 import com.rpandey.covid19tracker_india.util.customchrome.CustomTabsHelper
 import java.io.File
+import java.io.FileOutputStream
 import java.text.DecimalFormat
 import java.text.DecimalFormatSymbols
 import java.util.*
@@ -94,7 +99,7 @@ object Util {
     }
 
     fun getShareMessage(): String {
-        return "Get the latest updates on Covid19 \uD83D\uDE37cases across India on your mobile.\n" +
+        return "Get the latest updates on Covid-19 \uD83D\uDE37cases across India on your mobile.\n" +
                 "Made for India ❤️\n\n" +
                 "Download link:- \n" +
                 "${getShareUrl()}\n"
@@ -111,7 +116,12 @@ object Util {
         Log.d("Covid19", "$identifier execution time: ${System.currentTimeMillis() - before}ms")
     }
 
-    fun openWebUrl(context: Context, url: String, title: String? = null, forceExternalBrowser: Boolean = false) {
+    fun openWebUrl(
+        context: Context,
+        url: String,
+        title: String? = null,
+        forceExternalBrowser: Boolean = false
+    ) {
         if (URLUtil.isValidUrl(url)) {
             try {
                 val customTabsIntent = CustomTabsIntent.Builder()
@@ -146,7 +156,7 @@ object Util {
                 val intent = Intent(Intent.ACTION_VIEW)
                 intent.data = Uri.parse(url)
                 context.startActivity(intent)
-            } catch (e: Exception) {}
+            } catch (e: Exception) { }
         }
     }
 
@@ -178,7 +188,7 @@ object Util {
 
     fun startInstallerIntent(context: Context, file: File) {
         val intent = Intent(Intent.ACTION_VIEW)
-        val fileUri = getFileUri(context, file)
+        val fileUri = getFileUri(file)
         intent.setDataAndType(
             fileUri, "application/vnd.android.package-archive"
         )
@@ -193,8 +203,10 @@ object Util {
         }
     }
 
-    fun getFileUri(context: Context, file: File): Uri {
-        return FileProvider.getUriForFile(context, BuildConfig.APPLICATION_ID + ".fileprovider", file)
+    fun getFileUri(file: File): Uri {
+        return FileProvider.getUriForFile(
+            CovidApplication.INSTANCE, BuildConfig.APPLICATION_ID + ".fileprovider", file
+        )
     }
 
     fun apkExist(versionCode: Int): Pair<Boolean, File> {
@@ -205,5 +217,44 @@ object Util {
     fun getConfig(): Config? {
         val config = PreferenceHelper.getString(Constants.KEY_CONFIG)
         return config?.let { Gson().fromJson(it, Config::class.java) }
+    }
+
+    fun getBitmapFromView(view: View, defaultColor: Int = Color.WHITE): Bitmap? {
+        val bitmap = Bitmap.createBitmap(view.width, view.height, Bitmap.Config.ARGB_8888)
+        val canvas = Canvas(bitmap)
+        if (defaultColor != -1)
+            canvas.drawColor(defaultColor)
+        view.draw(canvas)
+        return bitmap
+    }
+
+    fun takeScreenshotUri(view: View, callback: (Uri) -> Unit) {
+        val bitmap = getBitmapFromView(view)
+        bitmap?.let {
+            val file = File(CovidApplication.INSTANCE.externalCacheDir, "screenshot.png")
+            val fOut = FileOutputStream(file)
+            try {
+                bitmap.compress(Bitmap.CompressFormat.PNG, 100, fOut)
+                fOut.flush()
+                fOut.close()
+                callback(getFileUri(file))
+            } catch (e: Exception) {}
+
+            finally {
+                fOut.flush()
+                fOut.close()
+            }
+        }
+    }
+
+    fun shareScreenshot(view: View) {
+        takeScreenshotUri(view) {
+            val intent = Intent(Intent.ACTION_SEND)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+            intent.putExtra(Intent.EXTRA_STREAM, it)
+            intent.putExtra(Intent.EXTRA_TEXT, "Get the latest updates on Covid-19 \uD83D\uDE37 cases\n${getShareUrl()}")
+            intent.type = "image/png"
+            view.context.startActivity(Intent.createChooser(intent, "Share using..."))
+        }
     }
 }

@@ -18,7 +18,6 @@ import com.google.gson.Gson
 import com.rpandey.covid19tracker_india.data.Constants
 import com.rpandey.covid19tracker_india.data.Status
 import com.rpandey.covid19tracker_india.data.StatusId
-import com.rpandey.covid19tracker_india.data.model.Config
 import com.rpandey.covid19tracker_india.data.model.LaunchData
 import com.rpandey.covid19tracker_india.data.processor.CovidIndiaSyncManager
 import com.rpandey.covid19tracker_india.service.ApkDownloadService
@@ -26,7 +25,10 @@ import com.rpandey.covid19tracker_india.ui.BaseActivity
 import com.rpandey.covid19tracker_india.ui.aboutus.AboutUsActivity
 import com.rpandey.covid19tracker_india.ui.search.SearchActivity
 import com.rpandey.covid19tracker_india.ui.update.UpdateBottomSheet
-import com.rpandey.covid19tracker_india.util.*
+import com.rpandey.covid19tracker_india.util.ThemeHelper
+import com.rpandey.covid19tracker_india.util.Util
+import com.rpandey.covid19tracker_india.util.showDialog
+import com.rpandey.covid19tracker_india.util.showToast
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -92,7 +94,10 @@ class MainActivity : BaseActivity() {
                 })
             }
 
-            R.id.share -> { onShareClicked() }
+            R.id.share -> {
+                logEvent("MAIN_STATS_CLICKED")
+                Util.shareScreenshot(nav_host_fragment.requireView())
+            }
 
             R.id.ui_mode -> { ThemeHelper.toggle(this) }
 
@@ -106,12 +111,6 @@ class MainActivity : BaseActivity() {
             R.id.exit -> { finish() }
         }
         return true
-    }
-
-    private fun onShareClicked() {
-        logEvent("SHARE_CLICKED")
-        val shareIntent = Util.shareAppIntent()
-        startActivity(Intent.createChooser(shareIntent, "Share using..."))
     }
 
     private fun startSync(callback: (Status<*>) -> Unit = {}) {
