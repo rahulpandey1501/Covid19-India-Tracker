@@ -111,7 +111,7 @@ object Util {
         Log.d("Covid19", "$identifier execution time: ${System.currentTimeMillis() - before}ms")
     }
 
-    fun openWebUrl(context: Context, url: String, title: String? = null) {
+    fun openWebUrl(context: Context, url: String, title: String? = null, forceExternalBrowser: Boolean = false) {
         if (URLUtil.isValidUrl(url)) {
             try {
                 val customTabsIntent = CustomTabsIntent.Builder()
@@ -125,20 +125,28 @@ object Util {
                     customTabsIntent.launchUrl(context, Uri.parse(url))
                 }
             } catch (e: Exception) {
-                openWebviewIntent(context, url, title)
+                if (forceExternalBrowser) {
+                    openBrowser(context, url)
+                } else {
+                    openWebviewIntent(context, url, title)
+                }
             }
         }
     }
 
     fun openWebviewIntent(context: Context, url: String, title: String? = null) {
-        context.startActivity(WebViewActivity.getIntent(context, url, title))
+        if (URLUtil.isValidUrl(url)) {
+            context.startActivity(WebViewActivity.getIntent(context, url, title))
+        }
     }
 
     fun openBrowser(context: Context, url: String) {
         if (URLUtil.isValidUrl(url)) {
-            val intent = Intent(Intent.ACTION_VIEW)
-            intent.data = Uri.parse(url)
-            context.startActivity(intent)
+            try {
+                val intent = Intent(Intent.ACTION_VIEW)
+                intent.data = Uri.parse(url)
+                context.startActivity(intent)
+            } catch (e: Exception) {}
         }
     }
 

@@ -122,7 +122,7 @@ class EssentialsFragment : BaseFragment(), ItemSelectorBottomSheet.Callback {
 
         nearby_essentials.setOnClickListener {
             val url = Util.getConfig()?.nearByEssentialsUrl ?: Constants.DEFAULT_NEARBY_ESSENTIALS_URL
-            Util.openWebUrl(requireContext(), url)
+            Util.openWebUrl(requireContext(), url, null, true)
         }
     }
 
