@@ -13,8 +13,7 @@
 
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
@@ -37,11 +36,11 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
             android:gravity="center"
-            app:fontFamily="@font/open_sans"
-            android:textStyle="bold"
             android:text="@{vm.message.title}"
             android:textColor="@color/text_primary"
             android:textSize="22sp"
+            android:textStyle="bold"
+            app:fontFamily="@font/open_sans"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/icon"
@@ -52,11 +51,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            app:fontFamily="@font/open_sans"
             android:fontFamily="@font/open_sans"
             android:text="@{vm.message.description}"
             android:textColor="@color/text_secondary"
             android:textSize="14sp"
+            app:fontFamily="@font/open_sans"
             app:layout_constraintTop_toBottomOf="@+id/title"
             tools:text="New Update Descriptiopn" />
 
@@ -67,41 +66,57 @@
             android:layout_marginTop="32dp"
             app:cardCornerRadius="16dp"
             app:cardElevation="0dp"
+            app:layout_constraintBottom_toTopOf="@+id/later"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintBottom_toTopOf="@+id/later"
             app:layout_constraintTop_toBottomOf="@+id/description"
             app:layout_constraintVertical_bias="0">
 
             <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_action_button"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="#FED609"
-                android:id="@+id/tv_action_button"
                 android:gravity="center"
                 android:text="@string/download"
-                android:textStyle="bold"
                 android:textColor="#333333"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                android:textStyle="bold" />
         </androidx.cardview.widget.CardView>
 
         <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/trouble_update"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="12dp"
-            android:layout_marginTop="8dp"
             android:fontFamily="@font/open_sans"
-            app:fontFamily="@font/open_sans"
             android:gravity="center"
             android:padding="8dp"
+            android:text="@string/finding_trouble_install"
+            android:textColor="@color/text_secondary"
+            android:textSize="12sp"
+            android:visibility="gone"
+            app:fontFamily="@font/open_sans"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/download"
+            tools:visibility="visible" />
+
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/later"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="12dp"
+            android:fontFamily="@font/open_sans"
+            android:gravity="center"
+            android:padding="8dp"
             android:text="@string/remind_me_later"
             android:textColor="@color/text_secondary"
             android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/download" />
+            app:layout_constraintTop_toBottomOf="@+id/trouble_update" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

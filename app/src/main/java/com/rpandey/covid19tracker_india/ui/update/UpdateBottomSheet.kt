@@ -14,6 +14,7 @@ import com.rpandey.covid19tracker_india.data.model.LaunchData
 import com.rpandey.covid19tracker_india.databinding.LayoutUpdateAvailableBinding
 import com.rpandey.covid19tracker_india.ui.BaseBottomSheetFragment
 import com.rpandey.covid19tracker_india.util.Util
+import kotlinx.android.synthetic.main.layout_update_available.*
 
 class UpdateBottomSheet : BaseBottomSheetFragment() {
 
@@ -64,6 +65,7 @@ class UpdateBottomSheet : BaseBottomSheetFragment() {
         val downloadedAPK = Util.apkExist(launchData.latestVersion)
         val isApkExist = downloadedAPK.first && launchData.config?.autoDownloadEnabled == true
         binding.tvActionButton.text = if (isApkExist) getString(R.string.install) else getString(R.string.download)
+        binding.troubleUpdate.visibility = if (isApkExist) View.VISIBLE else View.GONE
 
         binding.download.setOnClickListener {
             if (isApkExist) {
@@ -73,6 +75,11 @@ class UpdateBottomSheet : BaseBottomSheetFragment() {
                 logEvent("UPDATE_DOWNLOAD_CLICKED")
                 Util.openBrowser(requireContext(), launchData.downloadUrl)
             }
+        }
+
+        binding.troubleUpdate.setOnClickListener {
+            logEvent("TROUBLE_DOWNLOAD_CLICKED")
+            Util.openBrowser(requireContext(), launchData.downloadUrl)
         }
     }
 }
