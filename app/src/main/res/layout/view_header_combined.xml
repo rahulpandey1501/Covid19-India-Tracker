@@ -25,7 +25,6 @@
                 android:gravity="center"
                 android:text="@string/affect"
                 android:textColor="@color/text_secondary"
-                android:textSize="14sp"
                 app:fontFamily="@font/roboto" />
 
             <ImageView
@@ -57,7 +56,6 @@
                 android:gravity="center"
                 android:text="@string/active"
                 android:textColor="@color/text_secondary"
-                android:textSize="14sp"
                 app:fontFamily="@font/roboto" />
 
             <ImageView
@@ -89,7 +87,6 @@
                 android:gravity="center"
                 android:text="@string/recover"
                 android:textColor="@color/text_secondary"
-                android:textSize="14sp"
                 app:fontFamily="@font/roboto" />
 
             <ImageView
@@ -121,7 +118,6 @@
                 android:gravity="center"
                 android:text="@string/deaths"
                 android:textColor="@color/text_secondary"
-                android:textSize="14sp"
                 app:fontFamily="@font/roboto" />
 
             <ImageView
