@@ -7,7 +7,7 @@
     <color name="text_primary">#20242B</color>
     <color name="page_background">#F4F4F4</color>
     <color name="item_background">#FFF</color>
-    <color name="background_confirmed">#FF443E</color>
+    <color name="background_confirmed">#F44336</color>
     <color name="number_increase_color">#ff3e3e</color>
     <color name="background_recovered">#1CB142</color>
     <color name="background_deceased">#6d767e</color>
