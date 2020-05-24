@@ -77,7 +77,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/open_sans"
                 android:includeFontPadding="false"
-                android:text="@{testingVm.currentCount}"
+                android:text="@{testingVm.deltaCount}"
                 android:textColor="@color/text_primary"
                 android:textSize="12sp"
                 app:fontFamily="@font/open_sans"

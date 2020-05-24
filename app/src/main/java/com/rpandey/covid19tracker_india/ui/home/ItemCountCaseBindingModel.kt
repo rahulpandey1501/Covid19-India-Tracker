@@ -12,14 +12,14 @@ class ItemCountCaseBindingModel(private val context: Context) {
 
     val title = ObservableField<String>()
     val totalCount = ObservableField<String>()
-    val currentCount = ObservableField<String>()
+    val deltaCount = ObservableField<String>()
     val percentageCount = ObservableField<String>()
     val backgroundColor = ObservableInt()
 
     fun init(caseType: UICaseType, caseMapping: Map<UICaseType, CountModel>) {
         val countModel = caseMapping[caseType] ?: error("$caseType not found")
         totalCount.set(Util.formatNumber(countModel.totalCount))
-        setIncrementCount(countModel.currentCount)
+        setDeltaCount(countModel.currentCount)
 
         val confirmCaseModel = caseMapping[UICaseType.TYPE_CONFIRMED]
         when(caseType) {
@@ -38,7 +38,7 @@ class ItemCountCaseBindingModel(private val context: Context) {
                     val deathCaseModel = caseMapping[UICaseType.TYPE_DEATH]
                     if (recoveredCaseModel != null && deathCaseModel != null) {
                         val currentActiveCount = confirmCaseModel.currentCount - recoveredCaseModel.currentCount - deathCaseModel.currentCount
-                        setIncrementCount(currentActiveCount)
+                        setDeltaCount(currentActiveCount, true)
                     }
                 }
 
@@ -61,14 +61,18 @@ class ItemCountCaseBindingModel(private val context: Context) {
             }
             UICaseType.TYPE_TESTING -> {
                 title.set(context.getString(R.string.total_testing))
-                currentCount.set("(+${Util.formatNumber(countModel.currentCount)})")
+                deltaCount.set("(+${Util.formatNumber(countModel.currentCount)})")
             }
         }
     }
 
-    private fun setIncrementCount(currentCount: Int) {
-        if (currentCount > 0)
-            this.currentCount.set("+${Util.formatNumber(currentCount)}")
+    private fun setDeltaCount(currentCount: Int, allowNegative: Boolean = false) {
+        if (currentCount > 0) {
+            this.deltaCount.set("+${Util.formatNumber(currentCount)}")
+
+        } else if (currentCount < 0 && allowNegative) {
+            this.deltaCount.set(Util.formatNumber(currentCount))
+        }
     }
 
     private fun getColor(color: Int): Int {

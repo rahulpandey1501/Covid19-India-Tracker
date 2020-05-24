@@ -167,7 +167,7 @@ class StateDetailsActivity : BaseActivity(), SelectStateBottomSheet.Callback {
             LinearLayout.LayoutParams.MATCH_PARENT,
             1.0f
         )
-        param.marginStart = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 10f, resources.displayMetrics).toInt()
+        param.marginStart = Util.dpToPx(10f)
         zoneItem.layoutParams = param
         zoneItem.tv_zone.text = "${zone.name} zone"
         zone_distribution_container.addView(zoneItem)

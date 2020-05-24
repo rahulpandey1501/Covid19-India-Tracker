@@ -2,16 +2,20 @@ package com.rpandey.covid19tracker_india.util
 
 import android.content.Context
 import android.content.Intent
-import android.graphics.Bitmap
-import android.graphics.Canvas
-import android.graphics.Color
-import android.graphics.Point
+import android.graphics.*
 import android.net.Uri
+import android.text.SpannableString
+import android.text.Spanned.SPAN_INCLUSIVE_INCLUSIVE
 import android.text.format.DateUtils
+import android.text.style.AbsoluteSizeSpan
+import android.text.style.ForegroundColorSpan
+import android.text.style.StyleSpan
 import android.util.Log
+import android.util.TypedValue
 import android.view.View
 import android.view.WindowManager
 import android.webkit.URLUtil
+import androidx.annotation.ColorRes
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
@@ -256,5 +260,23 @@ object Util {
             intent.type = "image/png"
             view.context.startActivity(Intent.createChooser(intent, "Share using..."))
         }
+    }
+
+    fun dpToPx(valueInDp: Float): Int {
+        val context = CovidApplication.INSTANCE
+        return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, valueInDp, context.resources.displayMetrics).toInt()
+    }
+
+    fun setTextSpan(originalText: String, spanText: String, textSizeInPx: Int, bold: Boolean = true, @ColorRes color: Int = -1): SpannableString {
+        val startIndex = originalText.indexOf(spanText)
+        val endIndex = startIndex + spanText.length
+        val context = CovidApplication.INSTANCE
+        val spannableString = SpannableString(originalText)
+        spannableString.setSpan(AbsoluteSizeSpan(textSizeInPx), startIndex, endIndex, SPAN_INCLUSIVE_INCLUSIVE) // set size
+        if (color != -1)
+            spannableString.setSpan(ForegroundColorSpan(ContextCompat.getColor(context, color)), startIndex, endIndex, SPAN_INCLUSIVE_INCLUSIVE) // set color
+        if (bold)
+            spannableString.setSpan(StyleSpan(Typeface.BOLD), startIndex, endIndex, SPAN_INCLUSIVE_INCLUSIVE)
+        return spannableString
     }
 }

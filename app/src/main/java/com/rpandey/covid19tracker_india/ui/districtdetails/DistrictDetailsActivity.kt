@@ -24,6 +24,7 @@ import com.rpandey.covid19tracker_india.util.getViewModel
 import com.rpandey.covid19tracker_india.util.observe
 import kotlinx.android.synthetic.main.activity_district_details.*
 import kotlinx.android.synthetic.main.layout_cases_count.*
+import kotlinx.android.synthetic.main.layout_district_rank_meta.*
 
 class DistrictDetailsActivity : BaseActivity() {
 
@@ -102,6 +103,28 @@ class DistrictDetailsActivity : BaseActivity() {
         viewModel.lastUpdatedTime(districtId).observe(this) {
             val title = String.format(getString(R.string.last_updated), it)
             binding.lastUpdate.text = title
+        }
+
+        viewModel.getMetaInfo.observe(this) {
+            val spanSize = 16f
+
+            var spanPlaceholder = Util.getPercentage(it.totalCases, it.totalCasesByState)
+            val deltaPercentageText = String.format(
+                getString(R.string.district_state_delta_percentage), spanPlaceholder, it.stateName
+            )
+            percentage_meta.text = Util.setTextSpan(deltaPercentageText, spanPlaceholder, Util.dpToPx(spanSize))
+
+            spanPlaceholder = "${it.positionByState}"
+            val stateDeltaPositionText = String.format(
+                getString(R.string.district_state_rank), "${it.positionByState}", it.stateName
+            )
+            state_delta_meta.text = Util.setTextSpan(stateDeltaPositionText, spanPlaceholder, Util.dpToPx(spanSize))
+
+            spanPlaceholder = "${it.positionByOverall}"
+            val overallDeltaPositionTex = String.format(
+                getString(R.string.district_overall_rank), "${it.positionByOverall}"
+            )
+            overall_delta_title.text = Util.setTextSpan(overallDeltaPositionTex, spanPlaceholder, Util.dpToPx(spanSize))
         }
     }
 

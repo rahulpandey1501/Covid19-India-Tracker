@@ -51,11 +51,13 @@ class CovidIndiaRepository(private val covidDatabase: CovidDatabase) {
 
     fun searchDistrict(district: String?) = covidDatabase.districtDao().getByDistrictName("%${district}%")
 
-    fun getDistricts(stateName: String, count: Int = -1): LiveData<List<DistrictEntity>> {
-        return if (count > 0) {
+    fun getDistricts(stateName: String?, count: Int = -1): LiveData<List<DistrictEntity>> {
+        return if (count > 0 && stateName != null) {
             covidDatabase.districtDao().getByState(Country.INDIA.code, stateName, count)
-        } else {
+        } else if (stateName != null) {
             covidDatabase.districtDao().getByState(Country.INDIA.code, stateName)
+        } else {
+            covidDatabase.districtDao().getAll(Country.INDIA.code)
         }
     }
 
