@@ -87,9 +87,8 @@ class DistrictDetailsActivity : BaseActivity() {
         }
 
         iv_share.setOnClickListener {
-            val rootView = window.decorView.findViewById<View>(android.R.id.content)
             logEvent("DISTRICT_STATS_CLICKED")
-            Util.shareScreenshot(rootView)
+            Util.shareScreenshot(screen_shot_layout)
         }
 
         viewModel.getDistrict(districtId).observe(this) {

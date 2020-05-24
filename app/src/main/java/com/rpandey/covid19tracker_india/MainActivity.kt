@@ -132,7 +132,7 @@ class MainActivity : BaseActivity() {
 
             StatusId.OVERALL_DATA -> {
                 if (status is Status.Success) {
-                    showToast("Data successfully updated!")
+//                    showToast("Data successfully updated!")
                 }
                 if (status is Status.Error) {
                     showToast("Oops! something went wrong, unable to update")

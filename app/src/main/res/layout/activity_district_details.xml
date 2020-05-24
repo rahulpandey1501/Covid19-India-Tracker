@@ -57,82 +57,91 @@
 
                     </FrameLayout>
 
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/title"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="16dp"
-                        android:layout_marginTop="16dp"
-                        android:layout_marginRight="16dp"
-                        android:textColor="@color/text_primary"
-                        android:textSize="24sp"
-                        android:textStyle="bold"
-                        app:fontFamily="@font/open_sans"
-                        app:layout_constrainedWidth="true"
-                        app:layout_constraintHorizontal_bias="0"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintRight_toLeftOf="@+id/indicator_layout"
-                        app:layout_constraintTop_toBottomOf="@+id/view_toolbar"
-                        tools:text="Bengaluru" />
-
-                    <LinearLayout
-                        android:id="@+id/indicator_layout"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="16dp"
-                        android:orientation="vertical"
-                        app:layout_constraintBottom_toBottomOf="@+id/last_update"
-                        app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toTopOf="@+id/title">
-
-                        <ImageView
-                            android:id="@+id/iv_zone"
-                            android:layout_width="32dp"
-                            android:layout_height="32dp"
-                            android:layout_gravity="center_horizontal"
-                            android:src="@drawable/ic_baseline_traffic_24"
-                            tools:tint="@color/text_primary" />
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/screen_shot_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@color/page_background"
+                        android:paddingTop="16dp"
+                        android:paddingBottom="16dp"
+                        app:layout_constraintTop_toBottomOf="@+id/view_toolbar">
 
                         <androidx.appcompat.widget.AppCompatTextView
-                            android:id="@+id/tv_zone"
+                            android:id="@+id/title"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textSize="14sp"
+                            android:layout_marginLeft="16dp"
+                            android:layout_marginRight="16dp"
+                            android:textColor="@color/text_primary"
+                            android:textSize="24sp"
                             android:textStyle="bold"
+                            app:fontFamily="@font/open_sans"
+                            app:layout_constrainedWidth="true"
+                            app:layout_constraintHorizontal_bias="0"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintRight_toLeftOf="@+id/indicator_layout"
+                            app:layout_constraintTop_toTopOf="parent"
+                            tools:text="Bengaluru" />
+
+                        <LinearLayout
+                            android:id="@+id/indicator_layout"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="16dp"
+                            android:orientation="vertical"
+                            app:layout_constraintBottom_toBottomOf="@+id/last_update"
                             app:layout_constraintRight_toRightOf="parent"
+                            app:layout_constraintTop_toTopOf="@+id/title">
+
+                            <ImageView
+                                android:id="@+id/iv_zone"
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:layout_gravity="center_horizontal"
+                                android:src="@drawable/ic_baseline_traffic_24"
+                                tools:tint="@color/text_primary" />
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/tv_zone"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="14sp"
+                                android:textStyle="bold"
+                                app:layout_constraintRight_toRightOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/title"
+                                tools:text="Red Zone" />
+                        </LinearLayout>
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/last_update"
+                            style="@style/TextAppearance.Toolbar.Subtitle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            app:layout_constraintLeft_toLeftOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/title"
-                            tools:text="Red Zone" />
-                    </LinearLayout>
+                            tools:text="12 Apr 2020" />
 
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/last_update"
-                        style="@style/TextAppearance.Toolbar.Subtitle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/title"
-                        tools:text="12 Apr 2020" />
+                        <include
+                            android:id="@+id/meta_info"
+                            layout="@layout/layout_district_rank_meta"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginTop="20dp"
+                            app:layout_constraintTop_toBottomOf="@+id/last_update" />
 
-                    <include
-                        android:id="@+id/meta_info"
-                        layout="@layout/layout_district_rank_meta"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginTop="20dp"
-                        app:layout_constraintTop_toBottomOf="@+id/last_update" />
-
-                    <include
-                        android:id="@+id/cases_layout"
-                        layout="@layout/layout_cases_count"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="16dp"
-                        android:layout_marginRight="16dp"
-                        android:layout_marginTop="4dp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/meta_info" />
+                        <include
+                            android:id="@+id/cases_layout"
+                            layout="@layout/layout_cases_count"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="16dp"
+                            android:layout_marginTop="4dp"
+                            android:layout_marginRight="16dp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/meta_info" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -150,7 +159,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="16dp"
                 android:animateLayoutChanges="true"
                 android:orientation="horizontal"
                 app:layout_constraintLeft_toLeftOf="parent"
