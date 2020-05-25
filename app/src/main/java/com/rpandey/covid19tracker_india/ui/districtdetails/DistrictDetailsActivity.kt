@@ -107,23 +107,18 @@ class DistrictDetailsActivity : BaseActivity() {
         viewModel.getMetaInfo.observe(this) {
             val spanSize = 16f
 
-            var spanPlaceholder = Util.getPercentage(it.totalCases, it.totalCasesByState)
+            val spanPlaceholder = Util.getPercentage(it.totalCases, it.totalCasesByState)
             val deltaPercentageText = String.format(
                 getString(R.string.district_state_delta_percentage), spanPlaceholder, it.stateName
             )
-            percentage_meta.text = Util.setTextSpan(deltaPercentageText, spanPlaceholder, Util.dpToPx(spanSize))
+            percentage_meta.text = Util.setTextSpan(deltaPercentageText, Util.dpToPx(spanSize), spanPlaceholder)
 
-            spanPlaceholder = "${it.positionByState}"
-            val stateDeltaPositionText = String.format(
-                getString(R.string.district_state_rank), "${it.positionByState}", it.stateName
+            val stateSpanPlaceholder = "${it.positionByState}"
+            val overallSpanPlaceholder = "${it.positionByOverall}"
+            val districtDeltaPositionText = String.format(
+                getString(R.string.district_rank_combined), stateSpanPlaceholder, it.stateName, overallSpanPlaceholder
             )
-            state_delta_meta.text = Util.setTextSpan(stateDeltaPositionText, spanPlaceholder, Util.dpToPx(spanSize))
-
-            spanPlaceholder = "${it.positionByOverall}"
-            val overallDeltaPositionTex = String.format(
-                getString(R.string.district_overall_rank), "${it.positionByOverall}"
-            )
-            overall_delta_title.text = Util.setTextSpan(overallDeltaPositionTex, spanPlaceholder, Util.dpToPx(spanSize))
+            state_delta_meta.text = Util.setTextSpan(districtDeltaPositionText, Util.dpToPx(spanSize), stateSpanPlaceholder, overallSpanPlaceholder)
         }
     }
 

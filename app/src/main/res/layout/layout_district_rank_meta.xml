@@ -7,14 +7,6 @@
     android:orientation="vertical">
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/overall_delta_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/district_overall_rank"
-        android:textColor="@color/text_primary"
-        android:textSize="12sp" />
-
-    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/state_delta_meta"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

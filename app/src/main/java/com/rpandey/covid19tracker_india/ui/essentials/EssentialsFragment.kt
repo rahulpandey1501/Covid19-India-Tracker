@@ -13,7 +13,7 @@ import com.rpandey.covid19tracker_india.ui.common.ItemSelectorBottomSheet
 import com.rpandey.covid19tracker_india.util.*
 import kotlinx.android.synthetic.main.fragment_essentials.*
 
-class EssentialsFragment : BaseFragment(), ItemSelectorBottomSheet.Callback {
+class EssentialsFragment : BaseFragment(), ItemSelectorBottomSheet.Callback<String> {
 
     override fun getScreenName() = "EssentialsFragment"
 
@@ -128,7 +128,7 @@ class EssentialsFragment : BaseFragment(), ItemSelectorBottomSheet.Callback {
         }
     }
 
-    override fun onItemSelected(tag: String, item: ItemSelectorBottomSheet.Item) {
+    override fun onItemSelected(tag: String, item: ItemSelectorBottomSheet.Item<String>) {
         when (tag) {
             stateSelectionTag -> {
                 selectState(item.identifier)
@@ -189,7 +189,7 @@ class EssentialsFragment : BaseFragment(), ItemSelectorBottomSheet.Callback {
         adapter.update(resources)
     }
 
-    private fun showDialog(tag: String, title: String, items: List<ItemSelectorBottomSheet.Item>) {
+    private fun showDialog(tag: String, title: String, items: List<ItemSelectorBottomSheet.Item<String>>) {
         showDialog(tag) { ItemSelectorBottomSheet.newInstance(title, items) }
     }
 }

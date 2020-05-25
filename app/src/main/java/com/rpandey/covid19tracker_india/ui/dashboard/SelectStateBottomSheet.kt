@@ -6,22 +6,32 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
+import com.google.gson.Gson
+import com.rpandey.covid19tracker_india.CovidApplication
+import com.rpandey.covid19tracker_india.R
 import com.rpandey.covid19tracker_india.data.repository.CovidIndiaRepository
 import com.rpandey.covid19tracker_india.database.entity.StateEntity
 import com.rpandey.covid19tracker_india.database.provider.CovidDatabase
-import com.rpandey.covid19tracker_india.databinding.ItemSelectorBinding
-import com.rpandey.covid19tracker_india.databinding.LayoutSelectStateBsBinding
-import com.rpandey.covid19tracker_india.ui.BaseBottomSheetFragment
+import com.rpandey.covid19tracker_india.ui.common.ItemSelectorBottomSheet
 import com.rpandey.covid19tracker_india.util.getViewModel
 
-class SelectStateBottomSheet : BaseBottomSheetFragment() {
+class SelectStateBottomSheet : ItemSelectorBottomSheet<StateEntity>() {
 
     companion object {
         const val TAG = "SelectStateBottomSheet"
+        fun newInstance(): SelectStateBottomSheet {
+            return SelectStateBottomSheet().apply { arguments = Bundle().apply {
+                putString(KEY_TITLE, CovidApplication.INSTANCE.getString(R.string.select_state))
+                putString(KEY_ITEMS, Gson().toJson(emptyList<Item<StateEntity>>()))
+            } }
+        }
     }
 
-    interface Callback {
+    interface Callback: ItemSelectorBottomSheet.Callback<StateEntity> {
         fun onSateSelected(stateEntity: StateEntity)
+        override fun onItemSelected(tag: String, item: Item<StateEntity>) {
+            onSateSelected(item.identifier)
+        }
     }
 
     private lateinit var callback: Callback
@@ -34,8 +44,6 @@ class SelectStateBottomSheet : BaseBottomSheetFragment() {
         getViewModel { SelectStateViewModel(repository) }
     }
 
-    private lateinit var binding: LayoutSelectStateBsBinding
-
     override fun onAttach(context: Context) {
         super.onAttach(context)
         if (context is Callback)
@@ -44,32 +52,11 @@ class SelectStateBottomSheet : BaseBottomSheetFragment() {
             callback = parentFragment as Callback
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        binding = LayoutSelectStateBsBinding.inflate(inflater, container, false)
-        return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        val view = super.onCreateView(inflater, container, savedInstanceState)
         viewModel.getStates().observe(viewLifecycleOwner, Observer {
-            inflateStates(it)
+            inflateItems(it)
         })
-    }
-
-    private fun inflateStates(states: List<StateEntity>) {
-        binding.stateContainer.removeAllViews()
-        states.forEach { state ->
-            val itemBinding = ItemSelectorBinding.inflate(LayoutInflater.from(requireContext()),
-                binding.stateContainer, true)
-            itemBinding.title.text = state.name
-            itemBinding.root.setOnClickListener {
-                callback.onSateSelected(state)
-                dismissAllowingStateLoss()
-            }
-        }
+        return view
     }
 }

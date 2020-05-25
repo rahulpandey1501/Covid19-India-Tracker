@@ -202,7 +202,7 @@ class StateDetailsActivity : BaseActivity(), SelectStateBottomSheet.Callback {
     private fun stateChangeClicked() {
         logEvent("STATE_CHANGE_CLICKED")
         showDialog(SelectStateBottomSheet.TAG) {
-            SelectStateBottomSheet()
+            SelectStateBottomSheet.newInstance()
         }
     }
 

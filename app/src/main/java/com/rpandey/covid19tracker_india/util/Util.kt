@@ -267,16 +267,36 @@ object Util {
         return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, valueInDp, context.resources.displayMetrics).toInt()
     }
 
-    fun setTextSpan(originalText: String, spanText: String, textSizeInPx: Int, bold: Boolean = true, @ColorRes color: Int = -1): SpannableString {
-        val startIndex = originalText.indexOf(spanText)
-        val endIndex = startIndex + spanText.length
-        val context = CovidApplication.INSTANCE
+    fun setTextSpan(originalText: String, textSizeInPx: Int, vararg spanTextList: String, bold: Boolean = true, @ColorRes color: Int = -1): SpannableString {
         val spannableString = SpannableString(originalText)
-        spannableString.setSpan(AbsoluteSizeSpan(textSizeInPx), startIndex, endIndex, SPAN_INCLUSIVE_INCLUSIVE) // set size
-        if (color != -1)
-            spannableString.setSpan(ForegroundColorSpan(ContextCompat.getColor(context, color)), startIndex, endIndex, SPAN_INCLUSIVE_INCLUSIVE) // set color
-        if (bold)
-            spannableString.setSpan(StyleSpan(Typeface.BOLD), startIndex, endIndex, SPAN_INCLUSIVE_INCLUSIVE)
+        spanTextList.forEach { spanText ->
+            var startIndex = originalText.indexOf(spanText)
+            while (startIndex != -1) {
+                val endIndex = startIndex + spanText.length
+                val context = CovidApplication.INSTANCE
+                spannableString.setSpan(
+                    AbsoluteSizeSpan(textSizeInPx),
+                    startIndex,
+                    endIndex,
+                    SPAN_INCLUSIVE_INCLUSIVE
+                ) // set size
+                if (color != -1)
+                    spannableString.setSpan(
+                        ForegroundColorSpan(ContextCompat.getColor(context, color)),
+                        startIndex,
+                        endIndex,
+                        SPAN_INCLUSIVE_INCLUSIVE
+                    ) // set color
+                if (bold)
+                    spannableString.setSpan(
+                        StyleSpan(Typeface.BOLD),
+                        startIndex,
+                        endIndex,
+                        SPAN_INCLUSIVE_INCLUSIVE
+                    )
+                startIndex = originalText.indexOf(spanText, endIndex)
+            }
+        }
         return spannableString
     }
 }

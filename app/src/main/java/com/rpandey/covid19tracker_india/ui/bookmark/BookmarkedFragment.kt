@@ -80,7 +80,7 @@ class BookmarkedFragment : BaseFragment(),
 
     private fun showStateBottomsheet() {
         showDialog(SelectStateBottomSheet.TAG) {
-            SelectStateBottomSheet()
+            SelectStateBottomSheet.newInstance()
         }
     }
 

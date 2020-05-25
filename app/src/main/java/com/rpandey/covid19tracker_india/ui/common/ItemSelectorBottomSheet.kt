@@ -11,27 +11,23 @@ import com.rpandey.covid19tracker_india.R
 import com.rpandey.covid19tracker_india.databinding.ItemSelectorBinding
 import com.rpandey.covid19tracker_india.ui.BaseBottomSheetFragment
 import kotlinx.android.synthetic.main.layout_item_selector_bs.*
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
-class ItemSelectorBottomSheet: BaseBottomSheetFragment() {
+open class ItemSelectorBottomSheet<T>: BaseBottomSheetFragment() {
 
-    data class Item(val name: String, val identifier: String)
+    data class Item<T>(val name: String, val identifier: T)
 
-    interface Callback {
-        fun onItemSelected(tag: String, item: Item)
+    interface Callback<T> {
+        fun onItemSelected(tag: String, item: Item<T>)
     }
 
-    private var callback: Callback? = null
+    private var callback: Callback<T>? = null
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        if (context is Callback)
-            callback = context
-        else if (parentFragment is Callback)
-            callback = parentFragment as Callback
+        if (context is Callback<*>)
+            callback = context as Callback<T>
+        else if (parentFragment is Callback<*>)
+            callback = parentFragment as Callback<T>
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -41,15 +37,15 @@ class ItemSelectorBottomSheet: BaseBottomSheetFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         title.text = requireArguments().getString(KEY_TITLE)
-        CoroutineScope(Dispatchers.IO).launch {
-            val items: List<Item> = Gson().fromJson(requireArguments().getString(KEY_ITEMS), object: TypeToken<List<Item>>(){}.type)
-            withContext(Dispatchers.Main) {
-                inflateItems(items)
-            }
-        }
+        val items: List<Item<T>> = getItems()
+        inflateItems(items)
     }
 
-    private fun inflateItems(items: List<Item>) {
+    open fun getItems():List<Item<T>> {
+        return Gson().fromJson(requireArguments().getString(KEY_ITEMS), object: TypeToken<List<Item<T>>>(){}.type)
+    }
+
+    fun inflateItems(items: List<Item<T>>) {
         container.removeAllViews()
         items.forEach { item ->
             val itemBinding = ItemSelectorBinding.inflate(LayoutInflater.from(requireContext()), container, true)
@@ -62,11 +58,11 @@ class ItemSelectorBottomSheet: BaseBottomSheetFragment() {
     }
 
     companion object {
-        private const val KEY_TITLE = "KEY_TITLE"
-        private const val KEY_ITEMS = "KEY_ITEMS"
+        const val KEY_TITLE = "KEY_TITLE"
+        const val KEY_ITEMS = "KEY_ITEMS"
 
-        fun newInstance(title: String, items: List<Item>): ItemSelectorBottomSheet {
-            return ItemSelectorBottomSheet().apply { arguments = Bundle().apply {
+        fun <T>newInstance(title: String, items: List<Item<T>>): ItemSelectorBottomSheet<T> {
+            return ItemSelectorBottomSheet<T>().apply { arguments = Bundle().apply {
                 putString(KEY_TITLE, title)
                 putString(KEY_ITEMS, Gson().toJson(items))
             } }

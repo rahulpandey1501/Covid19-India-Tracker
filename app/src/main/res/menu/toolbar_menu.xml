@@ -5,16 +5,16 @@
     tools:context=".MainActivity">
 
     <item
-        android:id="@+id/analysis"
-        android:title="@string/analysis"
-        app:showAsAction="never" />
-
-    <item
         android:id="@+id/share"
         android:icon="@drawable/ic_baseline_share_24"
         android:title="@string/share_stats"
         app:iconTint="@color/toolbar_icon"
         app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/analysis"
+        android:title="@string/analysis"
+        app:showAsAction="never" />
 
     <item
         android:id="@+id/search"
