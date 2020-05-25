@@ -56,6 +56,7 @@ class DistrictDetailsActivity : BaseActivity() {
     private fun observeLiveData() {
 
         val districtId = intent.getIntExtra(KEY_DISTRICT_ID, 0)
+        viewModel.init(districtId)
 
         testing_layout.visibility = View.GONE
         iv_close.setOnClickListener { finish() }
@@ -91,7 +92,7 @@ class DistrictDetailsActivity : BaseActivity() {
             Util.shareScreenshot(screen_shot_layout)
         }
 
-        viewModel.getDistrict(districtId).observe(this) {
+        viewModel.getDistrictInfo.observe(this) {
             this.districtEntity = it
             binding.title.text = it.district
             generateUiCaseMode(it)

@@ -22,23 +22,32 @@ class DistrictDetailsViewModel(private val repository: CovidIndiaRepository) : V
     )
 
     val getMetaInfo = MediatorLiveData<MetaInfo>()
+    val getDistrictInfo = MediatorLiveData<DistrictEntity>()
 
-    fun getDistrict(districtId: Int): LiveData<DistrictEntity> {
-        return Transformations.map(repository.getDistrict(districtId)) {
-            generateMeta(it)
-            it
-        }
+    fun init(districtId: Int) {
+        generateDistrictData(districtId)
     }
 
-    private fun generateMeta(district: DistrictEntity) {
+    private fun generateDistrictData(districtId: Int) {
         getMetaInfo.addSource(repository.getDistricts(null)) { allDistricts ->
             CoroutineScope(Dispatchers.IO).launch {
-                val totalCases = district.totalConfirmed
-                val positionByOverall = allDistricts.indexOf(district) + 1
-                val districtsFilterByState = allDistricts.filter { it.stateName == district.stateName }
-                val totalCasesByState = districtsFilterByState.sumBy { it.totalConfirmed }
-                val positionByState = districtsFilterByState.indexOf(district) + 1
-                getMetaInfo.postValue(MetaInfo(district.stateName, totalCases, totalCasesByState, positionByState, positionByOverall))
+                allDistricts.find { it.districtId == districtId }?.let { district ->
+                    getDistrictInfo.postValue(district)
+                    val totalCases = district.totalConfirmed
+                    val positionByOverall = allDistricts.indexOf(district) + 1
+                    val districtsFilterByState = allDistricts.filter { it.stateName == district.stateName }
+                    val totalCasesByState = districtsFilterByState.sumBy { it.totalConfirmed }
+                    val positionByState = districtsFilterByState.indexOf(district) + 1
+                    getMetaInfo.postValue(
+                        MetaInfo(
+                            district.stateName,
+                            totalCases,
+                            totalCasesByState,
+                            positionByState,
+                            positionByOverall
+                        )
+                    )
+                }
             }
         }
     }

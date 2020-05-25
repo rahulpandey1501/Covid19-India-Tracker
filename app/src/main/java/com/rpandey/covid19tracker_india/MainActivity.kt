@@ -135,7 +135,7 @@ class MainActivity : BaseActivity() {
 //                    showToast("Data successfully updated!")
                 }
                 if (status is Status.Error) {
-                    showToast("Oops! something went wrong, unable to update")
+                    showToast("Oops! something went wrong \nUnable to update the data")
                 }
                 pull_refresh.isRefreshing = false
             }
