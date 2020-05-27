@@ -75,7 +75,6 @@
                             android:textColor="@color/text_primary"
                             android:textSize="24sp"
                             android:textStyle="bold"
-                            app:fontFamily="@font/open_sans"
                             app:layout_constrainedWidth="true"
                             app:layout_constraintHorizontal_bias="0"
                             app:layout_constraintLeft_toLeftOf="parent"

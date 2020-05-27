@@ -50,12 +50,10 @@
                 android:id="@+id/testing_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/open_sans"
                 android:includeFontPadding="false"
                 android:text="@string/total_testing"
                 android:textColor="@color/text_primary"
-                android:textSize="14sp"
-                app:fontFamily="@font/open_sans" />
+                android:textSize="14sp" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/testing_count"
@@ -67,7 +65,6 @@
                 android:text="@{testingVm.totalCount}"
                 android:textColor="@color/text_primary"
                 android:textSize="18sp"
-                app:fontFamily="@font/open_sans"
                 android:textStyle="bold"
                 tools:text="1234" />
 
@@ -75,12 +72,10 @@
                 android:id="@+id/testing_current"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/open_sans"
                 android:includeFontPadding="false"
                 android:text="@{testingVm.deltaCount}"
                 android:textColor="@color/text_primary"
                 android:textSize="12sp"
-                app:fontFamily="@font/open_sans"
                 tools:text="+12" />
 
         </LinearLayout>

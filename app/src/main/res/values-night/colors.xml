@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#1d2025</color>
-    <color name="colorPrimaryDark">#1d2025</color>
+    <color name="colorPrimary">@color/page_background</color>
+    <color name="colorPrimaryDark">@color/page_background</color>
     <color name="colorAccent">#323437</color>
     <color name="text_secondary">#c5c6c7</color>
     <color name="text_primary">#FFF</color>
-    <color name="page_background">#1d2025</color>
-    <color name="item_background">#26292e</color>
+    <color name="page_background">#202328</color>
+    <color name="item_background">#272b2f</color>
     <color name="navigation_icon_selected">#FFF</color>
     <color name="navigation_icon_unselected">#6c757b</color>
     <color name="ui_mode_selection">#ffc200</color>

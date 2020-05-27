@@ -45,11 +45,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    android:fontFamily="@font/open_sans"
                     android:text="@string/active_cases"
                     android:textAlignment="center"
                     android:textSize="10sp"
-                    app:fontFamily="@font/open_sans"
                     app:layout_constraintBottom_toBottomOf="@+id/district_title"
                     app:layout_constraintLeft_toRightOf="@+id/district_title"
                     tools:ignore="RtlSymmetry" />

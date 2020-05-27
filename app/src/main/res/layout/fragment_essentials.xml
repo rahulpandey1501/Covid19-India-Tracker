@@ -80,8 +80,7 @@
                         android:text="@string/state"
                         android:textColor="@color/text_primary"
                         android:textSize="14sp"
-                        android:textStyle="bold"
-                        app:fontFamily="@font/open_sans" />
+                        android:textStyle="bold" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/select_state"
@@ -123,8 +122,7 @@
                         android:text="@string/district"
                         android:textColor="@color/text_primary"
                         android:textSize="14sp"
-                        android:textStyle="bold"
-                        app:fontFamily="@font/open_sans" />
+                        android:textStyle="bold" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/select_district"
@@ -171,8 +169,7 @@
                 android:textColor="@color/text_primary"
                 android:textSize="16sp"
                 android:textStyle="bold"
-                app:drawableTint="@color/text_primary"
-                app:fontFamily="@font/open_sans" />
+                app:drawableTint="@color/text_primary" />
 
         </LinearLayout>
 

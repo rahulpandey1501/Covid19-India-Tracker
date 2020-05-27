@@ -28,7 +28,6 @@
         android:textColor="@color/text_primary"
         android:textSize="28sp"
         android:textStyle="bold"
-        app:fontFamily="@font/open_sans"
         app:layout_constrainedWidth="true"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/iv_close" />
@@ -60,9 +59,7 @@
         <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/open_sans"
-            android:text="Made for India ❤"
-            app:fontFamily="@font/open_sans" />
+            android:text="Made for India ❤" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_version"

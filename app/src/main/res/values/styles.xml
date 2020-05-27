@@ -5,7 +5,7 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="fontFamily">@font/open_sans</item>
+        <item name="fontFamily">@font/archia_regular</item>
         <item name="android:colorBackground">@color/page_background</item>
         <item name="bottomSheetDialogTheme">@style/BottomSheetDialogTheme</item>
         <item name="android:navigationBarColor">@color/item_background</item>
