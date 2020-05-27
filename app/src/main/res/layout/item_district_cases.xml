@@ -70,6 +70,8 @@
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:paddingStart="4dp"
+                        android:textStyle="bold"
+                        android:textSize="13sp"
                         android:textColor="@color/number_increase_color"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintRight_toRightOf="parent"

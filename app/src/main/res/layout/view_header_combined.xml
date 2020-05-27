@@ -24,7 +24,7 @@
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:text="@string/affect"
-                android:textColor="@color/text_secondary" />
+                android:textColor="@color/text_primary" />
 
             <ImageView
                 android:id="@+id/confirm_sort_arrow"
@@ -54,7 +54,7 @@
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:text="@string/active"
-                android:textColor="@color/text_secondary" />
+                android:textColor="@color/text_primary" />
 
             <ImageView
                 android:id="@+id/active_sort_arrow"
@@ -84,7 +84,7 @@
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:text="@string/recover"
-                android:textColor="@color/text_secondary" />
+                android:textColor="@color/text_primary" />
 
             <ImageView
                 android:id="@+id/recover_sort_arrow"
@@ -114,7 +114,7 @@
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:text="@string/deaths"
-                android:textColor="@color/text_secondary"/>
+                android:textColor="@color/text_primary"/>
 
             <ImageView
                 android:id="@+id/death_sort_arrow"

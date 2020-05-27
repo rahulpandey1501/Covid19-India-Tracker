@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.text.HtmlCompat
 import com.rpandey.covid19tracker_india.R
 import com.rpandey.covid19tracker_india.databinding.FragmentNotificationsBinding
 import com.rpandey.covid19tracker_india.databinding.ItemUpdatesBinding
@@ -36,11 +37,11 @@ class DailyUpdatesFragment : BaseFragment() {
             binding.noUpdates.visibility = if (it.isEmpty()) View.VISIBLE else View.GONE
             binding.container.removeAllViews()
             it.forEach { data ->
-                val message = getSentence(
+                val message = HtmlCompat.fromHtml(getSentence(
                     data.confirmedCases,
                     data.recoveredCases,
                     data.deceasedCases
-                )
+                ), HtmlCompat.FROM_HTML_MODE_COMPACT)
                 val binding = ItemUpdatesBinding.inflate(LayoutInflater.from(requireContext()), binding.container, true)
                 binding.title.text = data.stateName
                 binding.message.text = message
@@ -58,22 +59,22 @@ class DailyUpdatesFragment : BaseFragment() {
         val deathText = getDeathsText(deathCount)
 
         return if (confirmedCount > 0 && recoveredCount > 0 && deathCount > 0) {
-            String.format("%s new $confirmedText, %s $recoveryText and %s $deathText", confirmedCount, recoveredCount, deathCount)
+            String.format("<b>%s</b> new $confirmedText, <b>%s</b> $recoveryText and <b>%s</b> $deathText", confirmedCount, recoveredCount, deathCount)
 
         } else {
 
             var message = ""
 
             if (confirmedCount > 0)  {
-                message += "$confirmedCount new $confirmedText"
+                message += "<b>$confirmedCount</b> new $confirmedText"
             }
 
             if (recoveredCount > 0)  {
-                message += if (message.isEmpty()) "$recoveredCount $recoveryText" else " and $recoveredCount $recoveryText"
+                message += if (message.isEmpty()) "<b>$recoveredCount</b> $recoveryText" else " and <b>$recoveredCount</b> $recoveryText"
             }
 
             if (deathCount > 0)  {
-                message += if (message.isEmpty()) "$deathCount $deathText" else " and $deathCount $deathText"
+                message += if (message.isEmpty()) "<b>$deathCount</b> $deathText" else " and <b>$deathCount<b/> $deathText"
             }
 
             message
