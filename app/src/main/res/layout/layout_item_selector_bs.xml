@@ -23,7 +23,7 @@
         <View
             android:id="@+id/divider"
             android:layout_width="wrap_content"
-            android:layout_height="0.5dp"
+            android:layout_height="0.8dp"
             android:background="@color/text_primary"
             app:layout_constraintRight_toRightOf="@+id/title"
             app:layout_constraintTop_toBottomOf="@+id/title" />

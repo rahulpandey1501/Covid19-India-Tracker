@@ -80,7 +80,6 @@
                     app:autoSizeMinTextSize="8sp"
                     app:autoSizeStepGranularity="1sp"
                     app:autoSizeTextType="uniform"
-                    app:fontFamily="@font/roboto_medium"
                     app:layout_constrainedWidth="true"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintRight_toRightOf="parent"

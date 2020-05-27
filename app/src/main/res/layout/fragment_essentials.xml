@@ -18,9 +18,9 @@
             android:layout_marginBottom="10dp"
             android:foreground="?attr/selectableItemBackground"
             app:cardBackgroundColor="@color/item_background"
-            app:contentPadding="8dp"
             app:cardCornerRadius="6dp"
-            app:cardElevation="0dp">
+            app:cardElevation="0dp"
+            app:contentPadding="8dp">
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
@@ -38,14 +38,15 @@
         </androidx.cardview.widget.CardView>
 
         <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/select_location_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center"
             android:layout_marginStart="8dp"
-            android:id="@+id/select_location_title"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
+            android:gravity="center"
             android:text="@string/select_location"
+            android:textColor="@color/text_secondary"
             android:textSize="12sp" />
 
         <LinearLayout
@@ -91,7 +92,7 @@
                         android:gravity="center_vertical"
                         android:maxLines="1"
                         android:text="@string/select_state_essential"
-                        app:fontFamily="@font/roboto" />
+                        android:textColor="@color/text_secondary"/>
 
                 </LinearLayout>
 
@@ -131,7 +132,7 @@
                         android:drawableEnd="@drawable/ic_sharp_arrow_drop_down_24"
                         android:gravity="center_vertical"
                         android:text="@string/select_district"
-                        app:fontFamily="@font/roboto" />
+                        android:textColor="@color/text_secondary"/>
 
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
@@ -153,6 +154,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="@string/select_essential"
+                android:textColor="@color/text_secondary"
                 android:textSize="12sp" />
 
             <androidx.appcompat.widget.AppCompatTextView

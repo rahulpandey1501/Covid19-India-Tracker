@@ -71,7 +71,6 @@
                         android:gravity="center"
                         android:paddingStart="4dp"
                         android:textColor="@color/number_increase_color"
-                        app:fontFamily="@font/roboto_medium"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintRight_toRightOf="parent"
                         tools:ignore="RtlSymmetry"

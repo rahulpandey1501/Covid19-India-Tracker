@@ -3,7 +3,7 @@
     <color name="colorPrimary">@color/page_background</color>
     <color name="colorPrimaryDark">@color/page_background</color>
     <color name="colorAccent">#323437</color>
-    <color name="text_secondary">#42484b</color>
+    <color name="text_secondary">#4A5255</color>
     <color name="text_primary">#20242B</color>
     <color name="page_background">#F4F4F4</color>
     <color name="item_background">#FFF</color>
