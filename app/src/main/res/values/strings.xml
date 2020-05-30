@@ -66,4 +66,5 @@
     <string name="district_state_rank">Position %1$s in %2$s</string>
     <string name="district_overall_rank">Position %s in India</string>
     <string name="district_rank_combined">No. %1$s in %2$s and %3$s in India</string>
+    <string name="title_india">India</string>
 </resources>

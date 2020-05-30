@@ -7,12 +7,14 @@ import androidx.databinding.ObservableInt
 import com.rpandey.covid19tracker_india.R
 import com.rpandey.covid19tracker_india.database.model.CountModel
 import com.rpandey.covid19tracker_india.util.Util
+import kotlin.math.absoluteValue
 
 class ItemCountCaseBindingModel(private val context: Context) {
 
     val title = ObservableField<String>()
     val totalCount = ObservableField<String>()
     val deltaCount = ObservableField<String>()
+    val deltaCountInt = ObservableField<Int>()
     val percentageCount = ObservableField<String>()
     val backgroundColor = ObservableInt()
 
@@ -67,12 +69,18 @@ class ItemCountCaseBindingModel(private val context: Context) {
     }
 
     private fun setDeltaCount(currentCount: Int, allowNegative: Boolean = false) {
-        if (currentCount > 0) {
-            this.deltaCount.set("+${Util.formatNumber(currentCount)}")
-
-        } else if (currentCount < 0 && allowNegative) {
-            this.deltaCount.set(Util.formatNumber(currentCount))
+        deltaCountInt.set(currentCount)
+        if (currentCount != 0) {
+            this.deltaCount.set("${Util.formatNumber(currentCount.absoluteValue)}")
         }
+        if (!allowNegative && currentCount < 0) {
+            this.deltaCount.set(null)
+            deltaCountInt.set(0)
+        }
+
+//        } else if (currentCount < 0 && allowNegative) {
+//            this.deltaCount.set(Util.formatNumber(currentCount))
+//        }
     }
 
     private fun getColor(color: Int): Int {

@@ -36,7 +36,7 @@ class HomeFragment : BaseFragment() {
     }
 
     override fun setToolbarTitle(): String {
-        return getString(R.string.title_home)
+        return getString(R.string.title_india)
     }
 
     override fun observeLiveData() {

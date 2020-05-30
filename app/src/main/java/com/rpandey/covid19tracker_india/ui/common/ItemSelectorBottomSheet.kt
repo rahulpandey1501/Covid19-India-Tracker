@@ -37,6 +37,7 @@ open class ItemSelectorBottomSheet<T>: BaseBottomSheetFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         title.text = requireArguments().getString(KEY_TITLE)
+        iv_close.setOnClickListener { dismissAllowingStateLoss() }
         val items: List<Item<T>> = getItems()
         inflateItems(items)
     }

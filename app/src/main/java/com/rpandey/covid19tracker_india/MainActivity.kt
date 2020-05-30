@@ -7,6 +7,7 @@ import android.content.IntentFilter
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import androidx.lifecycle.Lifecycle
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.navigation.findNavController
@@ -96,7 +97,8 @@ class MainActivity : BaseActivity() {
 
             R.id.share -> {
                 logEvent("MAIN_STATS_CLICKED")
-                Util.shareScreenshot(nav_host_fragment.requireView())
+                val rootView = findViewById<View>(android.R.id.content)
+                Util.shareScreenshot(rootView)
             }
 
             R.id.ui_mode -> { ThemeHelper.toggle(this) }

@@ -29,6 +29,9 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:textColor="@color/text_primary"
+        android:gravity="center"
+        android:maxLines="1"
+        android:ellipsize="end"
         android:textSize="9sp"
         tools:text="10%" />
 
