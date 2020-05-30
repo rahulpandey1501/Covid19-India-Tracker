@@ -11,14 +11,14 @@
             android:layout_height="match_parent"
             android:background="@color/page_background"
             android:clipToPadding="false"
-            tools:context=".ui.notifications.DailyUpdatesFragment">
+            tools:context=".ui.notifications.dailyupdates.DailyUpdatesFragment">
 
             <LinearLayout
                 android:id="@+id/container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="16dp" />
+                android:padding="12dp" />
 
         </androidx.core.widget.NestedScrollView>
 

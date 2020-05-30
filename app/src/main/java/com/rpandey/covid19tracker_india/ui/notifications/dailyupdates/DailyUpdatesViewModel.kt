@@ -1,4 +1,4 @@
-package com.rpandey.covid19tracker_india.ui.notifications
+package com.rpandey.covid19tracker_india.ui.notifications.dailyupdates
 
 import androidx.lifecycle.*
 import com.rpandey.covid19tracker_india.data.repository.CovidIndiaRepository

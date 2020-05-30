@@ -7,5 +7,6 @@ enum class StatusId {
     DISTRICT_DATA,
     ZONE_DATA,
     RESOURCE_DATA,
-    FILE_DOWNLOAD
+    FILE_DOWNLOAD,
+    TODAYS_NEWS
 }

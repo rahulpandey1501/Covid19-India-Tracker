@@ -4,8 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:paddingLeft="16dp"
-    android:paddingRight="16dp"
+    android:paddingLeft="12dp"
+    android:paddingRight="12dp"
     android:background="@color/page_background"
     android:orientation="vertical">
 

@@ -1,4 +1,4 @@
-package com.rpandey.covid19tracker_india.ui.notifications
+package com.rpandey.covid19tracker_india.ui.notifications.dailyupdates
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -15,12 +15,20 @@ import com.rpandey.covid19tracker_india.util.observe
 
 class DailyUpdatesFragment : BaseFragment() {
 
+    companion object {
+        const val TAG = "DailyUpdatesFragment"
+    }
+
     override fun getScreenName(): String? = "DailyUpdates"
 
     private lateinit var binding: FragmentNotificationsBinding
 
     private val viewModel by lazy {
-        getViewModel { DailyUpdatesViewModel(repository) }
+        getViewModel {
+            DailyUpdatesViewModel(
+                repository
+            )
+        }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {

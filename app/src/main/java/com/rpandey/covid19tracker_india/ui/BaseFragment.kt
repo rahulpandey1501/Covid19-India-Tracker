@@ -31,6 +31,10 @@ abstract class BaseFragment : Fragment() {
 
     open fun setToolbarTitle(): String = ""
 
+    open fun setToolbarSubTitle(message: String) {
+        (activity as AppCompatActivity?)?.supportActionBar?.subtitle = message
+    }
+
     abstract fun observeLiveData()
 
     fun logEvent(event: String) {

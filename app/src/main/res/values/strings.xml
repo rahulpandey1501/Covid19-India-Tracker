@@ -67,4 +67,10 @@
     <string name="district_overall_rank">Position %s in India</string>
     <string name="district_rank_combined">No. %1$s in %2$s and %3$s in India</string>
     <string name="title_india">India</string>
+    <string name="title_news">News</string>
+    <string name="loading_news">Fetching news...</string>
+    <string name="loading_news_error">Unable to load the news!</string>
+    <string name="try_again">Try again</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

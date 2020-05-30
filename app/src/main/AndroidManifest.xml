@@ -15,6 +15,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
+        <activity android:name=".ui.notifications.todaysnews.details.NewsDetailsActivity" />
         <!-- <service -->
         <!-- android:name=".FCMService" -->
         <!-- android:exported="false"> -->
@@ -35,7 +37,6 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/filepaths" />
         </provider>
-
         <provider
             android:name=".contentprovider.AssetsProvider"
             android:authorities="com.rpandey.covid19tracker_india"
@@ -52,10 +53,10 @@
             android:theme="@style/AppTheme.Launcher">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity android:name=".ui.aboutus.AboutUsActivity" />
         <activity android:name=".ui.statedetails.StateDetailsActivity" />
         <activity
@@ -64,10 +65,10 @@
         <activity
             android:name=".ui.search.SearchActivity"
             android:label="@string/Search" />
-
-        <activity android:name=".ui.common.WebViewActivity"
-            android:theme="@style/Theme.AppCompat.DayNight.DarkActionBar"
-            android:configChanges="uiMode" />
+        <activity
+            android:name=".ui.common.WebViewActivity"
+            android:configChanges="uiMode"
+            android:theme="@style/Theme.AppCompat.DayNight.DarkActionBar" />
 
         <meta-data
             android:name="preloaded_fonts"

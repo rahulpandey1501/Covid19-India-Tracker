@@ -19,9 +19,15 @@
 
     <fragment
         android:id="@+id/navigation_notifications"
-        android:name="com.rpandey.covid19tracker_india.ui.notifications.DailyUpdatesFragment"
+        android:name="com.rpandey.covid19tracker_india.ui.notifications.dailyupdates.DailyUpdatesFragment"
         android:label="@string/title_notifications"
         tools:layout="@layout/fragment_notifications" />
+
+    <fragment
+        android:id="@+id/navigation_news"
+        android:name="com.rpandey.covid19tracker_india.ui.notifications.todaysnews.TodaysNewsFragment"
+        android:label="@string/title_news"
+        tools:layout="@layout/fragment_todays_news" />
 
     <fragment
         android:id="@+id/navigation_essentials"

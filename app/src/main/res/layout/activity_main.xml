@@ -22,7 +22,6 @@
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                android:layout_marginStart="8dp"
                 android:elevation="0dp"
                 app:popupTheme="@style/ToolbarTheme.Popup"
                 app:subtitleTextAppearance="@style/TextAppearance.Toolbar.Subtitle"
