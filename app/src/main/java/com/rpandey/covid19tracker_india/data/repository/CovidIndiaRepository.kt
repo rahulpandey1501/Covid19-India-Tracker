@@ -56,6 +56,8 @@ class CovidIndiaRepository(private val covidDatabase: CovidDatabase) {
             covidDatabase.districtDao().getByState(Country.INDIA.code, stateName, count)
         } else if (stateName != null) {
             covidDatabase.districtDao().getByState(Country.INDIA.code, stateName)
+        } else if (count > 0) {
+            covidDatabase.districtDao().getDistricts(Country.INDIA.code, count)
         } else {
             covidDatabase.districtDao().getAll(Country.INDIA.code)
         }

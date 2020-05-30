@@ -36,9 +36,10 @@
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tv_title"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ellipsize="end"
+                    android:gravity="center_horizontal"
                     android:maxLines="1"
                     android:textColor="@color/text_primary"
                     android:textSize="12sp"
@@ -48,43 +49,25 @@
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tv_count"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="6dp"
+                    android:gravity="center_horizontal"
                     android:maxLines="1"
                     android:textColor="@color/text_primary"
-                    android:textSize="18sp"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
                     app:autoSizeMinTextSize="10sp"
                     app:autoSizeStepGranularity="1sp"
                     app:autoSizeTextType="uniform"
-                    android:textStyle="bold"
                     app:layout_constrainedWidth="true"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintHorizontal_bias="0"
                     app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toLeftOf="@+id/tv_confirmed_delta"
+                    app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tv_title"
                     app:layout_constraintVertical_bias="1"
                     tools:text="12,32345" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tv_confirmed_delta"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginBottom="2dp"
-                    android:gravity="center"
-                    android:maxLines="1"
-                    android:textColor="@color/number_increase_color"
-                    android:textSize="12sp"
-                    app:autoSizeMinTextSize="8sp"
-                    app:autoSizeStepGranularity="1sp"
-                    app:autoSizeTextType="uniform"
-                    app:layout_constrainedWidth="true"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    tools:ignore="RtlSymmetry"
-                    tools:text="12,34" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

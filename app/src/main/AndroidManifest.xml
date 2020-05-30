@@ -16,7 +16,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".ui.notifications.todaysnews.details.NewsDetailsActivity" />
+        <activity
+            android:name=".ui.notifications.todaysnews.details.NewsDetailsActivity"/>
         <!-- <service -->
         <!-- android:name=".FCMService" -->
         <!-- android:exported="false"> -->

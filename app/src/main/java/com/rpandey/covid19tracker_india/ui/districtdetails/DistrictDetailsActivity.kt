@@ -129,7 +129,7 @@ class DistrictDetailsActivity : BaseActivity() {
 
         } else {
             val color = Util.getZoneColor(this, zone)
-            binding.ivZone.setColorFilter(color, android.graphics.PorterDuff.Mode.SRC_IN)
+            Util.setTint(binding.ivZone, color)
             binding.tvZone.setTextColor(color)
             binding.tvZone.text = "$zone Zone"
         }

@@ -39,7 +39,7 @@ class TodaysNewsFragment : BaseFragment() {
     }
 
     override fun setToolbarTitle(): String {
-        return getString(R.string.title_news)
+        return getString(R.string.page_title_news)
     }
 
     override fun onCreateView(
@@ -72,6 +72,7 @@ class TodaysNewsFragment : BaseFragment() {
         val options = ActivityOptionsCompat.makeSceneTransitionAnimation(requireActivity(), p1)
         val intent = Intent(activity, NewsDetailsActivity::class.java).apply {
             putExtra(NewsDetailsActivity.KEY_DATA, Gson().toJson(dataItem))
+            putExtra(NewsDetailsActivity.KEY_SOURCE, viewModel.sourceNews.value)
         }
         startActivity(intent, options.toBundle())
     }

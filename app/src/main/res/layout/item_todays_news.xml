@@ -5,10 +5,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="8dp"
+    android:layout_marginBottom="10dp"
     android:foreground="?attr/selectableItemBackground"
     app:cardCornerRadius="8dp"
-    app:cardElevation="0dp">
+    app:cardElevation="4dp">
 
     <FrameLayout
         android:layout_width="wrap_content"
@@ -33,12 +33,17 @@
             android:layout_gravity="bottom"
             android:maxLines="3"
             android:padding="12dp"
+            android:shadowColor="@android:color/background_dark"
+            android:shadowDx="1"
+            android:shadowDy="1"
+            android:shadowRadius="2"
             android:textColor="@android:color/white"
             android:textSize="16sp"
             android:textStyle="bold"
             app:autoSizeMinTextSize="10sp"
             app:autoSizeStepGranularity="1sp"
             app:autoSizeTextType="uniform"
+            app:fontFamily="@font/open_sans"
             tools:text="India records over 7,000 new coronavirus cases for 2 days in a row, deaths reach 4,971" />
 
     </FrameLayout>

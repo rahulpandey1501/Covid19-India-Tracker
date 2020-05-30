@@ -11,6 +11,7 @@ import com.rpandey.covid19tracker_india.database.model.CountModel
 import com.rpandey.covid19tracker_india.databinding.FragmentHomeBinding
 import com.rpandey.covid19tracker_india.ui.BaseFragment
 import com.rpandey.covid19tracker_india.ui.bookmark.BookmarkedFragment
+import com.rpandey.covid19tracker_india.ui.topcases.TopCasesFragment
 import com.rpandey.covid19tracker_india.util.attachChildFragment
 import com.rpandey.covid19tracker_india.util.getViewModel
 
@@ -25,14 +26,13 @@ class HomeFragment : BaseFragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
         binding.lifecycleOwner = this
-        return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        attachChildFragment(BookmarkedFragment.TAG, R.id.bookmark_container, false) {
+        attachChildFragment(BookmarkedFragment.TAG, binding.bookmarkContainer.id, false) {
             BookmarkedFragment()
         }
+        attachChildFragment(TopCasesFragment.TAG, binding.topCasesContainer.id, false) {
+            TopCasesFragment()
+        }
+        return binding.root
     }
 
     override fun setToolbarTitle(): String {

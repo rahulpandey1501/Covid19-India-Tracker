@@ -16,6 +16,9 @@ interface DistrictDao {
     @Query("select * from district_cases where country = :country order by total_confirmed desc")
     fun getAll(country: String): LiveData<List<DistrictEntity>>
 
+    @Query("select * from district_cases where country = :country order by total_confirmed desc limit :count")
+    fun getDistricts(country: String, count: Int): LiveData<List<DistrictEntity>>
+
     @Query("select * from district_cases where district like :district")
     fun getByDistrictName(district: String?): List<DistrictEntity>
 

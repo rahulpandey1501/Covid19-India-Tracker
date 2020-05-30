@@ -33,10 +33,10 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:paddingStart="10dp"
                     android:paddingTop="8dp"
-                    android:paddingBottom="8dp"
                     android:paddingEnd="8dp"
-                    android:paddingStart="10dp">
+                    android:paddingBottom="8dp">
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tv_title"
@@ -60,19 +60,30 @@
                         android:textStyle="bold"
                         app:layout_constraintHorizontal_bias="0"
                         app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintRight_toLeftOf="@+id/tv_confirmed_delta"
+                        app:layout_constraintRight_toLeftOf="@+id/current_count_arrow"
                         app:layout_constraintTop_toBottomOf="@+id/tv_title"
                         tools:text="12,345" />
+
+                    <ImageView
+                        android:id="@+id/current_count_arrow"
+                        android:layout_width="14dp"
+                        android:layout_height="14dp"
+                        android:paddingStart="4dp"
+                        android:visibility="gone"
+                        android:src="@drawable/ic_baseline_arrow_upward_24"
+                        android:tint="@color/number_increase_color"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintRight_toLeftOf="@+id/tv_confirmed_delta"
+                        app:layout_constraintTop_toTopOf="@+id/tv_confirmed_delta" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tv_confirmed_delta"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:paddingStart="4dp"
-                        android:textStyle="bold"
-                        android:textSize="13sp"
                         android:textColor="@color/number_increase_color"
+                        android:textSize="13sp"
+                        android:textStyle="bold"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintRight_toRightOf="parent"
                         tools:ignore="RtlSymmetry"

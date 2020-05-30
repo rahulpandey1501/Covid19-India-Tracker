@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import com.rpandey.covid19tracker_india.R
 import com.rpandey.covid19tracker_india.database.dao.CombinedCasesModel
 import com.rpandey.covid19tracker_india.database.entity.DistrictEntity
@@ -106,7 +107,8 @@ class BookmarkedFragment : BaseFragment(),
                     tvTitle.text = district.district
                     tvCount.text = Util.formatNumber(district.getActive())
                     if (district.confirmed > 0) {
-                        tvConfirmedDelta.text = String.format("+%s", Util.formatNumber(district.confirmed))
+                        currentCountArrow.visibility = View.VISIBLE
+                        tvConfirmedDelta.text = Util.formatNumber(district.confirmed)
                     }
                     ivCancel.setOnClickListener {
                         viewModel.onDistrictRemoved(district.districtId)
@@ -132,14 +134,18 @@ class BookmarkedFragment : BaseFragment(),
             ItemCombinedViewBinding.inflate(LayoutInflater.from(requireContext()), binding.statesContainer, true).apply {
 
                 tvActive.text = Util.formatNumber(model.activeCases)
+                tvActive.setTextColor(ContextCompat.getColor(requireContext(), R.color.text_primary))
 
                 tvConfirmed.text = Util.formatNumber(model.totalConfirmedCases)
+                tvConfirmed.setTextColor(ContextCompat.getColor(requireContext(), R.color.text_primary))
                 setDelta(tvConfirmedDelta, model.confirmedCases)
 
                 tvRecovered.text = Util.formatNumber(model.totalRecoveredCases)
+                tvRecovered.setTextColor(ContextCompat.getColor(requireContext(), R.color.text_primary))
                 setDelta(tvRecoveredDelta, model.recoveredCases)
 
                 tvDeath.text = Util.formatNumber(model.totalDeceasedCases)
+                tvDeath.setTextColor(ContextCompat.getColor(requireContext(), R.color.text_primary))
                 setDelta(tvDeathDelta, model.deceasedCases)
 
                 tvTitle.text = model.stateName

@@ -1,9 +1,6 @@
 package com.rpandey.covid19tracker_india.ui.notifications.todaysnews.details
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.transition.Explode
-import android.view.Window
 import android.view.WindowManager
 import androidx.core.view.ViewCompat
 import com.google.gson.Gson
@@ -17,6 +14,7 @@ class NewsDetailsActivity : BaseActivity() {
 
     companion object {
         const val KEY_DATA = "data"
+        const val KEY_SOURCE = "source"
         const val VIEW_IMAGE = "newsDetails:ImageView"
         const val VIEW_HEADLINE = "newsDetails:Headline"
     }
@@ -33,12 +31,14 @@ class NewsDetailsActivity : BaseActivity() {
         ViewCompat.setTransitionName(iv_news, VIEW_IMAGE)
         ViewCompat.setTransitionName(headline, VIEW_HEADLINE)
         readBundle()
+        iv_close.setOnClickListener { onBackPressed() }
     }
 
     private fun readBundle() {
         val data = Gson().fromJson(intent.getStringExtra(KEY_DATA), TodaysNewsViewModel.DataItem::class.java)
         headline.text = data.headline
         summary.text = data.summary
+        source.text = "[Source: ${intent.getStringExtra(KEY_SOURCE)}]"
         Picasso.get()
             .load(data.imageLink)
             .into(iv_news)

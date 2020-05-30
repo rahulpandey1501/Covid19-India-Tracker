@@ -15,6 +15,7 @@ import android.util.TypedValue
 import android.view.View
 import android.view.WindowManager
 import android.webkit.URLUtil
+import android.widget.ImageView
 import androidx.annotation.ColorRes
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.core.content.ContextCompat
@@ -298,5 +299,9 @@ object Util {
             }
         }
         return spannableString
+    }
+
+    fun setTint(imageView: ImageView, color: Int) {
+        imageView.setColorFilter(color, android.graphics.PorterDuff.Mode.SRC_IN)
     }
 }
