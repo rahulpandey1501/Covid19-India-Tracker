@@ -113,6 +113,8 @@ class CovidIndiaRepository(private val covidDatabase: CovidDatabase) {
         return covidDatabase.combinedCasesDao().searchOverall("%${keyword}%")
     }
 
+    fun getNews() = covidDatabase.newsDao().getNews(Country.INDIA.code)
+
     fun getResourceStates() = covidDatabase.resourceDao().getStates()
 
     fun getResourceDistrict(stateName: String) = covidDatabase.resourceDao().getDistricts(stateName)

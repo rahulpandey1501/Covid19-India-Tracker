@@ -6,6 +6,7 @@ import com.rpandey.covid19tracker_india.CovidApplication
 import com.rpandey.covid19tracker_india.data.Constants
 import com.rpandey.covid19tracker_india.data.Status
 import com.rpandey.covid19tracker_india.data.StatusId
+import com.rpandey.covid19tracker_india.data.model.Country
 import com.rpandey.covid19tracker_india.data.model.covidIndia.ZoneResponse
 import com.rpandey.covid19tracker_india.database.provider.CovidDatabase
 import com.rpandey.covid19tracker_india.network.APIProvider
@@ -26,6 +27,7 @@ class CovidIndiaSyncManager(
     private val overallDataProcessor by lazy { OverallDataProcessor(covidDatabase) }
     private val testDataProcessor by lazy { TestDataProcessor(covidDatabase) }
     private val resourceDataProcessor by lazy { ResourceDataProcessor(covidDatabase) }
+    private val newsDatProcessor by lazy { NewsDataProcessor(covidDatabase) }
 
     companion object {
         private lateinit var INSTANCE: CovidIndiaSyncManager
@@ -105,6 +107,21 @@ class CovidIndiaSyncManager(
             }
 
             callback(resourceStatus)
+        }
+
+        // fetch news
+        launch {
+            syncNews(Country.INDIA)
+        }
+    }
+
+    suspend fun syncNews(country: Country) {
+        val newsStatus = ApiHelper.handleRequest(StatusId.TODAYS_NEWS) {
+            apiProvider.covidIndia.getNews(Constants.NEWS_URL)
+        }
+
+        if (newsStatus is Status.Success) {
+            newsDatProcessor.process(newsStatus.data)
         }
     }
 

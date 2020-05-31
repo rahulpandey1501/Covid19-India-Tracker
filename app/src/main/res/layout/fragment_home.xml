@@ -23,12 +23,14 @@
                 android:id="@+id/bookmark_container"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginTop="8dp"
                 app:layout_constrainedHeight="true"/>
 
             <FrameLayout
                 android:id="@+id/top_cases_container"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginTop="4dp"
                 app:layout_constrainedHeight="true"/>
 
         </LinearLayout>

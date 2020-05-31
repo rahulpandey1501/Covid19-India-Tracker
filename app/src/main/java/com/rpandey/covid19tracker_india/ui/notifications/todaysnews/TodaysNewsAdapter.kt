@@ -7,11 +7,12 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import com.rpandey.covid19tracker_india.R
+import com.rpandey.covid19tracker_india.database.entity.NewsEntity
 import com.squareup.picasso.Picasso
 
 class TodaysNewsAdapter(
-    private var items: List<TodaysNewsViewModel.DataItem>,
-    private val clickListener: (TodaysNewsViewModel.DataItem, ImageView, TextView) -> Unit
+    private var items: List<NewsEntity>,
+    private val clickListener: (NewsEntity, ImageView, TextView) -> Unit
 ) : RecyclerView.Adapter<TodaysNewsAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -27,7 +28,7 @@ class TodaysNewsAdapter(
 
     override fun getItemCount(): Int = items.size
 
-    fun updateData(items: List<TodaysNewsViewModel.DataItem>) {
+    fun updateData(items: List<NewsEntity>) {
         this.items = items
         notifyDataSetChanged()
     }
@@ -37,10 +38,10 @@ class TodaysNewsAdapter(
         private val imageView: ImageView = view.findViewById(R.id.iv_news)
         private val headline: TextView = view.findViewById(R.id.tv_headlines)
 
-        fun init(dataItem: TodaysNewsViewModel.DataItem) {
+        fun init(dataItem: NewsEntity) {
             Picasso
                 .get()
-                .load(dataItem.imageLink)
+                .load(dataItem.image)
                 .into(imageView)
             headline.text = dataItem.headline
 

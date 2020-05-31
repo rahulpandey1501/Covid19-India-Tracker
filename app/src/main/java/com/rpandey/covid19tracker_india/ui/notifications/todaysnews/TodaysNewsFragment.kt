@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import androidx.core.app.ActivityOptionsCompat
 import com.google.gson.Gson
 import com.rpandey.covid19tracker_india.R
-import com.rpandey.covid19tracker_india.network.APIProvider
+import com.rpandey.covid19tracker_india.database.entity.NewsEntity
 import com.rpandey.covid19tracker_india.ui.BaseFragment
 import com.rpandey.covid19tracker_india.ui.notifications.todaysnews.details.NewsDetailsActivity
 import com.rpandey.covid19tracker_india.util.getViewModel
@@ -28,9 +28,7 @@ class TodaysNewsFragment : BaseFragment() {
 
     private val viewModel by lazy {
         getViewModel {
-            TodaysNewsViewModel(
-                APIProvider.getInstance()
-            )
+            TodaysNewsViewModel(repository)
         }
     }
 
@@ -42,19 +40,14 @@ class TodaysNewsFragment : BaseFragment() {
         return getString(R.string.page_title_news)
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_todays_news, container, false)
         view.rv_news.adapter = adapter
         return view
     }
 
     override fun observeLiveData() {
-
-        viewModel.items.observe(this) {
+        viewModel.getNews().observe(this) {
             if (it.isEmpty()) {
                 showError()
 
@@ -66,25 +59,24 @@ class TodaysNewsFragment : BaseFragment() {
         retry.setOnClickListener { onRetryClicked() }
     }
 
-    private fun onItemClicked(dataItem: TodaysNewsViewModel.DataItem, image: View, headline: View) {
+    private fun onItemClicked(newsEntity: NewsEntity, image: View, headline: View) {
         val p1 = androidx.core.util.Pair.create(image, NewsDetailsActivity.VIEW_IMAGE)
 //        val p2 = androidx.core.util.Pair.create(headline as View, NewsDetailsActivity.VIEW_HEADLINE)
         val options = ActivityOptionsCompat.makeSceneTransitionAnimation(requireActivity(), p1)
         val intent = Intent(activity, NewsDetailsActivity::class.java).apply {
-            putExtra(NewsDetailsActivity.KEY_DATA, Gson().toJson(dataItem))
-            putExtra(NewsDetailsActivity.KEY_SOURCE, viewModel.sourceNews.value)
+            putExtra(NewsDetailsActivity.KEY_DATA, Gson().toJson(newsEntity))
         }
         startActivity(intent, options.toBundle())
     }
 
     private fun onRetryClicked() {
-        viewModel.fetchData()
+        viewModel.refreshData()
         loader.visibility = View.VISIBLE
         error.visibility = View.GONE
         rv_news.visibility = View.GONE
     }
 
-    private fun loadData(items: List<TodaysNewsViewModel.DataItem>) {
+    private fun loadData(items: List<NewsEntity>) {
         loader.visibility = View.GONE
         error.visibility = View.GONE
         rv_news.visibility = View.VISIBLE

@@ -1,6 +1,6 @@
 package com.rpandey.covid19tracker_india.data.model
 
-enum class IndianStates(val stateName: String) {
+enum class IndianStates(val stateCode: String) {
     AN("AN"),
     AP("AP"),
     AR("AR"),

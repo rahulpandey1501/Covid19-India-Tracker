@@ -76,6 +76,8 @@
                     android:layout_marginTop="12dp"
                     android:layout_marginLeft="8dp"
                     android:layout_marginRight="8dp"
+                    android:paddingBottom="8dp"
+                    android:visibility="gone"
                     app:layout_constraintTop_toBottomOf="@+id/district_title" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>

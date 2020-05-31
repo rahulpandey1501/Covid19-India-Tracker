@@ -44,7 +44,7 @@ class DailyStateDataProcessor(covidDatabase: CovidDatabase): ResponseProcessor<D
         val deceasedCases = mutableListOf<DeceasedEntity>()
         val activeCases = mutableListOf<ActiveEntity>()
 
-        val indianStates = IndianStates.values().associateBy { it.stateName }
+        val indianStates = IndianStates.values().associateBy { it.stateCode }
 
         response.forEach {
             val date = 0L

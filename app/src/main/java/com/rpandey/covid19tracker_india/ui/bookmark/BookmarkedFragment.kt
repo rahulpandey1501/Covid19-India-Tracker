@@ -100,6 +100,7 @@ class BookmarkedFragment : BaseFragment(),
     private fun inflateBookmarkedDistricts(data: List<DistrictEntity>) {
         districtCancelViews.clear()
         binding.removeDistrict.visibility = if (data.isEmpty()) View.GONE else View.VISIBLE
+        binding.districtContainer.visibility = binding.removeDistrict.visibility
         GridViewInflater(2, binding.districtContainer) {
             data.forEach { district ->
                 val binding: ItemDistrictCasesBinding = addView(R.layout.item_district_cases)

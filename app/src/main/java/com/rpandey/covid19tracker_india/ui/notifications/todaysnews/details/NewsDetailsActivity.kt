@@ -5,6 +5,7 @@ import android.view.WindowManager
 import androidx.core.view.ViewCompat
 import com.google.gson.Gson
 import com.rpandey.covid19tracker_india.R
+import com.rpandey.covid19tracker_india.database.entity.NewsEntity
 import com.rpandey.covid19tracker_india.ui.BaseActivity
 import com.rpandey.covid19tracker_india.ui.notifications.todaysnews.TodaysNewsViewModel
 import com.squareup.picasso.Picasso
@@ -14,7 +15,6 @@ class NewsDetailsActivity : BaseActivity() {
 
     companion object {
         const val KEY_DATA = "data"
-        const val KEY_SOURCE = "source"
         const val VIEW_IMAGE = "newsDetails:ImageView"
         const val VIEW_HEADLINE = "newsDetails:Headline"
     }
@@ -35,12 +35,12 @@ class NewsDetailsActivity : BaseActivity() {
     }
 
     private fun readBundle() {
-        val data = Gson().fromJson(intent.getStringExtra(KEY_DATA), TodaysNewsViewModel.DataItem::class.java)
+        val data = Gson().fromJson(intent.getStringExtra(KEY_DATA), NewsEntity::class.java)
         headline.text = data.headline
         summary.text = data.summary
-        source.text = "[Source: ${intent.getStringExtra(KEY_SOURCE)}]"
+        source.text = data.source
         Picasso.get()
-            .load(data.imageLink)
+            .load(data.image)
             .into(iv_news)
     }
 }
