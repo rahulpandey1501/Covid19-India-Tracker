@@ -30,6 +30,7 @@ import com.rpandey.covid19tracker_india.util.ThemeHelper
 import com.rpandey.covid19tracker_india.util.Util
 import com.rpandey.covid19tracker_india.util.showDialog
 import com.rpandey.covid19tracker_india.util.showToast
+import com.rpandey.covid19tracker_india.widgets.updateAllAppWidget
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -140,6 +141,10 @@ class MainActivity : BaseActivity() {
                     showToast("Oops! something went wrong \nUnable to update the data")
                 }
                 pull_refresh.isRefreshing = false
+            }
+
+            StatusId.DISTRICT_DATA -> {
+                updateAllAppWidget(this.applicationContext)
             }
         }
     }

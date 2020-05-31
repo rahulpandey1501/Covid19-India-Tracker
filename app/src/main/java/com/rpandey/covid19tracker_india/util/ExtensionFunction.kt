@@ -69,21 +69,34 @@ inline fun <F : Fragment> AppCompatActivity.attachFragment(fragmentTag: String, 
     return fragment
 }
 
-fun <T> LiveData<T>.observeOnce(lifecycleOwner: LifecycleOwner, observer: Observer<T>) {
+fun <T> LiveData<T>.observeOnce(lifecycleOwner: LifecycleOwner, callback: (T) -> Unit) {
     observe(lifecycleOwner, object : Observer<T> {
         override fun onChanged(t: T?) {
-            observer.onChanged(t)
+            t?.let {
+                callback(it)
+                removeObserver(this)
+            }
+        }
+    })
+}
+
+fun <T> LiveData<T>.observeOnce(observer: (T) -> Unit) {
+    observeForever(object : Observer<T> {
+        override fun onChanged(t: T) {
+            observer(t)
             removeObserver(this)
         }
     })
 }
 
-fun <T> LiveData<T>.observe(lifecycleOwner: LifecycleOwner, observer: Observer<T>, observeOnce: Boolean = false) {
+fun <T> LiveData<T>.observe(lifecycleOwner: LifecycleOwner, callback: (T) -> Unit, observeOnce: Boolean = false) {
     observe(lifecycleOwner, object : Observer<T> {
         override fun onChanged(t: T?) {
-            observer.onChanged(t)
-            if (observeOnce) {
-                removeObserver(this)
+            t?.let {
+                callback(t)
+                if (observeOnce) {
+                    removeObserver(this)
+                }
             }
         }
     })

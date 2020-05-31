@@ -74,4 +74,7 @@
     <string name="try_again">Try again</string>
     <string name="page_title_news">Covid19 news</string>
     <string name="top_districts">Most affected districts</string>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="configure">Configure</string>
+    <string name="add_widget">Add widget</string>
 </resources>

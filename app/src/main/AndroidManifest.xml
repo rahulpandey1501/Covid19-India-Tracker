@@ -16,9 +16,22 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity
-            android:name=".ui.notifications.todaysnews.details.NewsDetailsActivity"/>
-        <!-- <service -->
+        <receiver android:name=".widgets.OverallCasesWidget">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/overall_cases_widget_info" />
+        </receiver>
+
+        <activity android:name=".widgets.OverallCasesWidgetConfigureActivity">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".ui.notifications.todaysnews.details.NewsDetailsActivity" /> <!-- <service -->
         <!-- android:name=".FCMService" -->
         <!-- android:exported="false"> -->
         <!-- <intent-filter> -->
