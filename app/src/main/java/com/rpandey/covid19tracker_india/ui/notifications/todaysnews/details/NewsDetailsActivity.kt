@@ -38,7 +38,7 @@ class NewsDetailsActivity : BaseActivity() {
         val data = Gson().fromJson(intent.getStringExtra(KEY_DATA), NewsEntity::class.java)
         headline.text = data.headline
         summary.text = data.summary
-        source.text = data.source
+        source.text = "[Source: ${data.source}]"
         Picasso.get()
             .load(data.image)
             .into(iv_news)

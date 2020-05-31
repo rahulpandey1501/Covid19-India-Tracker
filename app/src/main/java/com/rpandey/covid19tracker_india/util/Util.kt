@@ -257,7 +257,7 @@ object Util {
             val intent = Intent(Intent.ACTION_SEND)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
             intent.putExtra(Intent.EXTRA_STREAM, it)
-            intent.putExtra(Intent.EXTRA_TEXT, "Get the latest updates on Covid-19 \uD83D\uDE37 cases\n${getShareUrl()}")
+            intent.putExtra(Intent.EXTRA_TEXT, "Get the latest \uD83D\uDE37 updates\n${getShareUrl()}")
             intent.type = "image/png"
             view.context.startActivity(Intent.createChooser(intent, "Share using..."))
         }
