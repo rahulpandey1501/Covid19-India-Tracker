@@ -3,10 +3,7 @@ package com.rpandey.covid19tracker_india.data.repository
 import androidx.lifecycle.LiveData
 import com.rpandey.covid19tracker_india.data.model.Country
 import com.rpandey.covid19tracker_india.database.dao.CombinedCasesModel
-import com.rpandey.covid19tracker_india.database.entity.BookmarkType
-import com.rpandey.covid19tracker_india.database.entity.BookmarkedEntity
-import com.rpandey.covid19tracker_india.database.entity.DistrictEntity
-import com.rpandey.covid19tracker_india.database.entity.TestEntity
+import com.rpandey.covid19tracker_india.database.entity.*
 import com.rpandey.covid19tracker_india.database.model.CountModel
 import com.rpandey.covid19tracker_india.database.provider.CovidDatabase
 import kotlinx.coroutines.CoroutineScope
@@ -122,4 +119,8 @@ class CovidIndiaRepository(private val covidDatabase: CovidDatabase) {
     fun getResourceCategories(stateName: String, district: String) = covidDatabase.resourceDao().getCategories(stateName, district)
 
     fun getResources(stateName: String, district: String, category: String) = covidDatabase.resourceDao().getResources(stateName, district, category)
+
+    fun getDailyChanges(totalEntries: Int): LiveData<List<DailyChangesEntity>> {
+        return covidDatabase.dailyChangesDao().getEntries(Country.INDIA.code, totalEntries)
+    }
 }

@@ -5,8 +5,8 @@ import com.google.gson.annotations.SerializedName
 
 @Keep
 class OverAllDataResponse {
-//    @SerializedName("cases_time_series")
-//    val casesTimeSeries: List<CasesTimeSeries>? = null
+    @SerializedName("cases_time_series")
+    val dailyChanges: List<DailyChanges>? = null
     @SerializedName("statewise")
     val stateData: List<StateData>? = null
     @SerializedName("tested")
@@ -34,7 +34,7 @@ data class StateData(
 )
 
 @Keep
-data class CasesTimeSeries(
+data class DailyChanges(
     @SerializedName("dailyconfirmed") val deltaConfirmed: String,
     @SerializedName("dailydeceased") val deltaDeceased: String,
     @SerializedName("dailyrecovered") val deltaRecovered: String,

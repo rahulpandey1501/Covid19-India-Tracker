@@ -24,6 +24,7 @@ import com.rpandey.covid19tracker_india.data.processor.CovidIndiaSyncManager
 import com.rpandey.covid19tracker_india.service.ApkDownloadService
 import com.rpandey.covid19tracker_india.ui.BaseActivity
 import com.rpandey.covid19tracker_india.ui.aboutus.AboutUsActivity
+import com.rpandey.covid19tracker_india.ui.caseshistory.HistoryCasesActivity
 import com.rpandey.covid19tracker_india.ui.help.HelpActivity
 import com.rpandey.covid19tracker_india.ui.search.SearchActivity
 import com.rpandey.covid19tracker_india.ui.update.UpdateBottomSheet
@@ -111,11 +112,13 @@ class MainActivity : BaseActivity() {
                 Util.openWebUrl(this, url, getString(R.string.analysis))
             }
 
+            R.id.history -> {
+                startActivity(Intent(this, HistoryCasesActivity::class.java))
+            }
+
             R.id.add_widget -> {
                 startActivity(Intent(this, HelpActivity::class.java))
             }
-
-            R.id.exit -> { finish() }
         }
         return true
     }

@@ -19,7 +19,8 @@ import com.rpandey.covid19tracker_india.database.provider.CovidDatabase.Companio
         BookmarkedEntity::class,
         TestEntity::class,
         ResourcesEntity::class,
-        NewsEntity::class
+        NewsEntity::class,
+        DailyChangesEntity::class
     ],
     exportSchema = false,
     version = VERSION
@@ -57,4 +58,5 @@ abstract class CovidDatabase : RoomDatabase() {
     abstract fun testDao(): TestDao
     abstract fun resourceDao(): ResourcesDao
     abstract fun newsDao(): NewsDao
+    abstract fun dailyChangesDao(): DailyChangesDao
 }

@@ -17,6 +17,7 @@ class OverallDataProcessor(covidDatabase: CovidDatabase) :
     override fun process(data: OverAllDataResponse) {
         data.stateData?.let { processStateData(it) }
         data.testData?.let { processTestData(it) }
+        data.dailyChanges?.let { processDailyChanges(it) }
     }
 
     private fun processStateData(data: List<StateData>) {
@@ -86,6 +87,33 @@ class OverallDataProcessor(covidDatabase: CovidDatabase) :
         }
 
         persistStateData(activeCases, confirmedCases, recoveredCases, deceasedCases, statesData)
+
+    }
+
+    private fun processDailyChanges(data: List<DailyChanges>) {
+        val dailyChanges = mutableListOf<DailyChangesEntity>()
+        var index = 0
+        data.takeLast(15).forEach { // take last 10 data
+            try {
+                dailyChanges.add(
+                    DailyChangesEntity(
+                        index++,
+                        Country.INDIA.code,
+                        it.deltaConfirmed.toInt(),
+                        it.totalConfirmed.toInt(),
+                        it.deltaDeceased.toInt(),
+                        it.totalDeceased.toInt(),
+                        it.deltaRecovered.toInt(),
+                        it.totalRecovered.toInt(),
+                        it.date.toString()
+                    )
+                )
+            } catch (e: Exception) {}
+        }
+
+        if (dailyChanges.isNotEmpty()) {
+            persistDailyChanges(dailyChanges)
+        }
     }
 
     @Transaction
@@ -131,5 +159,11 @@ class OverallDataProcessor(covidDatabase: CovidDatabase) :
         }
 
         testDataProcessor.process(TestResponse(testDataList))
+    }
+
+    @Transaction
+    private fun persistDailyChanges(entities: MutableList<DailyChangesEntity>) {
+        covidDatabase.dailyChangesDao().delete()
+        covidDatabase.dailyChangesDao().insert(entities)
     }
 }

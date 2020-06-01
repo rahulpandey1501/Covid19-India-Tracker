@@ -50,5 +50,6 @@ class Migrations4to5: Migration(4, 5) {
 class Migrations5to6: Migration(5, 6) {
     override fun migrate(database: SupportSQLiteDatabase) {
         database.execSQL("CREATE TABLE `news` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `country` TEXT NOT NULL, `source` TEXT, `headline` TEXT NOT NULL, `summary` TEXT NOT NULL, `image` TEXT, `link` TEXT)")
+        database.execSQL("CREATE TABLE `daily_changes` (`order` INTEGER NOT NULL, `country` TEXT NOT NULL, `confirmed` INTEGER NOT NULL, `total_confirmed` INTEGER NOT NULL, `deceased` INTEGER NOT NULL, `total_deceased` INTEGER NOT NULL, `recovered` INTEGER NOT NULL, `total_recovered` INTEGER NOT NULL, `date` TEXT NOT NULL, PRIMARY KEY(`order`))")
     }
 }
