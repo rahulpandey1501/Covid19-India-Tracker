@@ -71,7 +71,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="1) Long press on an empty space on your home screen."
+                android:text="1) Minimize the app, go to your home screen."
                 android:textColor="@color/text_primary"
                 android:textSize="18sp" />
 
@@ -79,7 +79,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="2) A window will pop up. Tap Widgets."
+                android:text="2) Long press on an empty space on your home screen."
                 android:textColor="@color/text_primary"
                 android:textSize="18sp" />
 
@@ -87,7 +87,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="3) Choose the widget provided by Covid19 India app."
+                android:text="3) A window will pop up. Tap Widgets."
                 android:textColor="@color/text_primary"
                 android:textSize="18sp" />
 
@@ -95,7 +95,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="4) Resizing the widget vertically will bring monitor districts."
+                android:text="4) Choose the widget provided by Covid19 India app."
+                android:textColor="@color/text_primary"
+                android:textSize="18sp" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="5) Resizing the widget vertically will bring monitor districts."
                 android:textColor="@color/text_primary"
                 android:textSize="18sp" />
 
