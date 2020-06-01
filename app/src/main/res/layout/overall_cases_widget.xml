@@ -1,12 +1,14 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_gravity="top"
     android:background="@drawable/widget_main_bg">
 
     <LinearLayout
         android:id="@+id/root_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:gravity="center"
         android:orientation="vertical">
 
@@ -15,6 +17,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal" />
+
+        <FrameLayout
+            android:id="@+id/divider"
+            android:layout_width="match_parent"
+            android:layout_height="0.1dp"
+            android:alpha="0.3"
+            android:background="@android:color/white"
+            android:visibility="gone" />
 
         <LinearLayout
             android:id="@+id/district_container"
@@ -25,17 +35,17 @@
     </LinearLayout>
 
     <FrameLayout
-        android:layout_width="100dp"
         android:id="@+id/refresh"
+        android:layout_width="100dp"
         android:layout_height="match_parent"
-        android:layout_gravity="bottom|end">
+        android:layout_gravity="end">
 
         <ImageView
             android:layout_width="12dp"
             android:layout_height="12dp"
-            android:alpha="0.7"
+            android:layout_gravity="end|top"
             android:layout_margin="6dp"
-            android:layout_gravity="end|bottom"
+            android:alpha="0.5"
             android:src="@drawable/ic_baseline_refresh_24"
             android:tint="@android:color/white" />
     </FrameLayout>

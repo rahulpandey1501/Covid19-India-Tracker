@@ -6,6 +6,8 @@ import android.appwidget.AppWidgetProvider
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
+import android.os.Bundle
+import android.view.View
 import android.widget.RemoteViews
 import android.widget.Toast
 import com.rpandey.covid19tracker_india.MainActivity
@@ -21,7 +23,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-
+import kotlin.math.floor
 
 /**
  * Implementation of App Widget functionality.
@@ -40,6 +42,13 @@ class OverallCasesWidget : AppWidgetProvider() {
         // When the user deletes the widget, delete the preference associated with it.
         for (appWidgetId in appWidgetIds) {
             deleteTitlePref(context, appWidgetId)
+        }
+    }
+
+    override fun onAppWidgetOptionsChanged(context: Context?, appWidgetManager: AppWidgetManager?, appWidgetId: Int, newOptions: Bundle?) {
+        super.onAppWidgetOptionsChanged(context, appWidgetManager, appWidgetId, newOptions)
+        if (context != null && appWidgetManager != null) {
+            updateAppWidget(context, appWidgetManager, appWidgetId)
         }
     }
 
@@ -152,8 +161,26 @@ internal fun updateAppWidget(context: Context, appWidgetManager: AppWidgetManage
             appWidgetManager.updateAppWidget(appWidgetId, views)
             Util.log("UpdateWidget", "Recover Update call")
         }
-    }
 
+        val options = appWidgetManager.getAppWidgetOptions(appWidgetId)
+        val heightCell = getNoOfHeightCell(options)
+        if (heightCell > 1) {
+            repository.getBookmarkedDistricts().observeOnce { districts ->
+                if (districts.isNotEmpty()) {
+                    views.setViewVisibility(R.id.divider,  View.VISIBLE)
+                }
+                districts.take(4).forEach {
+                    val districtViews = RemoteViews(context.packageName, R.layout.item_cases_count_widget_0dp)
+                    districtViews.setTextViewText(R.id.confirm_title, it.district)
+                    addCaseUI(districtViews, CountModel(it.confirmed, it.getActive()))
+                    views.addView(R.id.district_container, districtViews)
+                }
+                appWidgetManager.updateAppWidget(appWidgetId, views)
+            }
+        } else {
+            views.setViewVisibility(R.id.divider,  View.GONE)
+        }
+    }
 }
 
 internal fun addCaseUI(childView: RemoteViews, countModel: CountModel) {
@@ -162,4 +189,13 @@ internal fun addCaseUI(childView: RemoteViews, countModel: CountModel) {
         Util.formatNumber(countModel.currentCount)
     )
     childView.setTextViewText(R.id.confirm_total_count, Util.formatNumber(countModel.totalCount))
+}
+
+private fun getNoOfWidthCell(newOptions: Bundle): Int {
+    return ((floor(newOptions.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_WIDTH).toDouble() + 30) / 70).toInt())
+}
+
+private fun getNoOfHeightCell(newOptions: Bundle): Int {
+//    return ((floor(newOptions.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_HEIGHT).toDouble() + 30) / 70).toInt())
+    return if (newOptions.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_HEIGHT) > 70) 2 else 1
 }
