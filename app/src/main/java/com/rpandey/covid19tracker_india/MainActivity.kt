@@ -32,8 +32,7 @@ import com.rpandey.covid19tracker_india.util.showDialog
 import com.rpandey.covid19tracker_india.util.showToast
 import com.rpandey.covid19tracker_india.widgets.updateAllAppWidget
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
 
 class MainActivity : BaseActivity() {
 
@@ -135,18 +134,19 @@ class MainActivity : BaseActivity() {
 
             StatusId.OVERALL_DATA -> {
                 if (status is Status.Success) {
-//                    showToast("Data successfully updated!")
+                    updateAppWidget()
                 }
                 if (status is Status.Error) {
                     showToast("Oops! something went wrong \nUnable to update the data")
                 }
                 pull_refresh.isRefreshing = false
             }
-
-            StatusId.DISTRICT_DATA -> {
-                updateAllAppWidget(this.applicationContext)
-            }
         }
+    }
+
+    private fun updateAppWidget() = CoroutineScope(Dispatchers.IO).launch {
+        delay(2000)
+        updateAllAppWidget(CovidApplication.INSTANCE)
     }
 
     private fun processAppLaunchData(data: LaunchData) {

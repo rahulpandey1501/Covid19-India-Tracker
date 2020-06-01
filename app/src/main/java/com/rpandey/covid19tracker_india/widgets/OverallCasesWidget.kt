@@ -28,11 +28,8 @@ import kotlinx.coroutines.withContext
  * App Widget Configuration implemented in [OverallCasesWidgetConfigureActivity]
  */
 class OverallCasesWidget : AppWidgetProvider() {
-    override fun onUpdate(
-        context: Context,
-        appWidgetManager: AppWidgetManager,
-        appWidgetIds: IntArray
-    ) {
+
+    override fun onUpdate(context: Context, appWidgetManager: AppWidgetManager, appWidgetIds: IntArray) {
         // There may be multiple widgets active, so update all of them
         for (appWidgetId in appWidgetIds) {
             updateAppWidget(context, appWidgetManager, appWidgetId)
@@ -63,12 +60,27 @@ class OverallCasesWidget : AppWidgetProvider() {
             CovidIndiaSyncManager.getInstance().syncPrimaryData {
                 if (it.statusId == StatusId.OVERALL_DATA) {
                     withContext(Dispatchers.Main) {
-                        updateAllAppWidget(context)
-                        Toast.makeText(context, "updated", Toast.LENGTH_SHORT).show()
+                        try { // try catch to avoid multiple callbacks because of multiple widgetIds
+                            val widgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, AppWidgetManager.INVALID_APPWIDGET_ID)
+                            if (widgetId != AppWidgetManager.INVALID_APPWIDGET_ID) {
+                                updateAppWidget(context, AppWidgetManager.getInstance(context), widgetId)
+                            }
+                        } catch (e: Exception) {
+                            updateAllAppWidget(context)
+                        }
+
+                        val userAction = intent.getBooleanExtra(USER_CLICK_SOURCE, false)
+                        if (userAction) {
+                            Toast.makeText(context, "updated", Toast.LENGTH_SHORT).show()
+                        }
                     }
                 }
             }
         }
+    }
+
+    companion object {
+        const val USER_CLICK_SOURCE = "USER_CLICK_SOURCE"
     }
 }
 
@@ -100,11 +112,12 @@ internal fun updateAppWidget(context: Context, appWidgetManager: AppWidgetManage
             Intent(context.applicationContext, OverallCasesWidget::class.java).apply {
                 action = AppWidgetManager.ACTION_APPWIDGET_UPDATE
                 putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, appWidgetId)
+                putExtra(OverallCasesWidget.USER_CLICK_SOURCE, true)
             }
 
         views.setOnClickPendingIntent(
             R.id.refresh, PendingIntent.getBroadcast(
-                context, 0, updateDataIntent, 0
+                context, 0, updateDataIntent, PendingIntent.FLAG_UPDATE_CURRENT
             )
         )
 
