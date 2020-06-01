@@ -19,3 +19,10 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+
+-dontoptimize
+
+-renamesourcefileattribute SourceFile
+-keepparameternames
+#-keepattributes Exceptions,*Annotation*,InnerClasses,SourceFile,LineNumberTable,Deprecated
+-keepattributes Signature
