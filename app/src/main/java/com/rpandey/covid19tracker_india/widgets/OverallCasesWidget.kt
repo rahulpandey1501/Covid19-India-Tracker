@@ -197,5 +197,5 @@ private fun getNoOfWidthCell(newOptions: Bundle): Int {
 
 private fun getNoOfHeightCell(newOptions: Bundle): Int {
 //    return ((floor(newOptions.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_HEIGHT).toDouble() + 30) / 70).toInt())
-    return if (newOptions.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_HEIGHT) > 70) 2 else 1
+    return if (newOptions.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_HEIGHT) > 90) 2 else 1
 }
