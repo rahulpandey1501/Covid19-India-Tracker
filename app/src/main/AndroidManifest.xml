@@ -16,6 +16,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
+        <activity android:name=".ui.help.HelpActivity" />
+
         <receiver android:name=".widgets.OverallCasesWidget">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />

@@ -12,11 +12,6 @@
         app:showAsAction="ifRoom" />
 
     <item
-        android:id="@+id/analysis"
-        android:title="@string/analysis"
-        app:showAsAction="never" />
-
-    <item
         android:id="@+id/search"
         android:icon="@drawable/ic_baseline_search_24"
         android:title="@string/Search"
@@ -29,6 +24,16 @@
         android:title="@string/dark_mode"
         app:iconTint="@color/ui_mode_selection"
         app:showAsAction="always" />
+
+    <item
+        android:id="@+id/add_widget"
+        android:title="@string/menu_widget"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/analysis"
+        android:title="@string/analysis"
+        app:showAsAction="never" />
 
     <item
         android:id="@+id/about_us"

@@ -20,7 +20,7 @@ class AboutUsActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_about_us)
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-        window.statusBarColor = resources.getColor(R.color.item_background)
+        window.statusBarColor = resources.getColor(R.color.bottomsheet_background)
         setupData()
         iv_close.setOnClickListener { finish() }
     }

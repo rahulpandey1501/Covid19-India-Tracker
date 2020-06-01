@@ -24,6 +24,7 @@ import com.rpandey.covid19tracker_india.data.processor.CovidIndiaSyncManager
 import com.rpandey.covid19tracker_india.service.ApkDownloadService
 import com.rpandey.covid19tracker_india.ui.BaseActivity
 import com.rpandey.covid19tracker_india.ui.aboutus.AboutUsActivity
+import com.rpandey.covid19tracker_india.ui.help.HelpActivity
 import com.rpandey.covid19tracker_india.ui.search.SearchActivity
 import com.rpandey.covid19tracker_india.ui.update.UpdateBottomSheet
 import com.rpandey.covid19tracker_india.util.ThemeHelper
@@ -108,6 +109,10 @@ class MainActivity : BaseActivity() {
             R.id.analysis -> {
                 val url = Util.getConfig()?.analysisUrl ?: Constants.DEFAULT_ANALYSIS_URL
                 Util.openWebUrl(this, url, getString(R.string.analysis))
+            }
+
+            R.id.add_widget -> {
+                startActivity(Intent(this, HelpActivity::class.java))
             }
 
             R.id.exit -> { finish() }

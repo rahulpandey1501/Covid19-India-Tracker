@@ -4,6 +4,7 @@
     android:initialKeyguardLayout="@layout/overall_cases_widget"
     android:initialLayout="@layout/overall_cases_widget"
     android:minWidth="260dp"
+    android:previewImage="@drawable/widget_preview"
     android:resizeMode="horizontal|vertical"
     android:updatePeriodMillis="1800000"
     android:widgetCategory="home_screen"/>
