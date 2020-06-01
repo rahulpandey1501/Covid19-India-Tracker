@@ -15,7 +15,7 @@ class GridViewInflater(private val column: Int, private val container: ViewGroup
         container.postDelayed({
             container.removeAllViews()
             callback()
-        }, 5)
+        }, 4)
     }
 
     private val parentLL by lazy {

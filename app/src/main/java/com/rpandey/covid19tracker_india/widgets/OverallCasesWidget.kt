@@ -7,6 +7,7 @@ import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.widget.RemoteViews
+import android.widget.Toast
 import com.rpandey.covid19tracker_india.MainActivity
 import com.rpandey.covid19tracker_india.R
 import com.rpandey.covid19tracker_india.data.StatusId
@@ -19,6 +20,8 @@ import com.rpandey.covid19tracker_india.util.observeOnce
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+
 
 /**
  * Implementation of App Widget functionality.
@@ -53,11 +56,16 @@ class OverallCasesWidget : AppWidgetProvider() {
 
     override fun onReceive(context: Context?, intent: Intent?) {
         super.onReceive(context, intent)
-        val widgetId = intent?.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, -1)
-        if (context != null && widgetId != null && widgetId != -1) {
-            CovidIndiaSyncManager.getInstance().startSync {
-                if (it.statusId == StatusId.DISTRICT_DATA) {
-                    updateAppWidget(context, AppWidgetManager.getInstance(context), widgetId)
+        if (context == null || AppWidgetManager.ACTION_APPWIDGET_UPDATE != intent?.action)
+            return
+
+        CoroutineScope(Dispatchers.IO).launch {
+            CovidIndiaSyncManager.getInstance().syncPrimaryData {
+                if (it.statusId == StatusId.OVERALL_DATA) {
+                    withContext(Dispatchers.Main) {
+                        updateAllAppWidget(context)
+                        Toast.makeText(context, "updated", Toast.LENGTH_SHORT).show()
+                    }
                 }
             }
         }
@@ -66,7 +74,12 @@ class OverallCasesWidget : AppWidgetProvider() {
 
 internal fun updateAllAppWidget(context: Context) {
     val appWidgetManager = AppWidgetManager.getInstance(context)
-    val ids = appWidgetManager.getAppWidgetIds(ComponentName(context.applicationContext.packageName, OverallCasesWidget::class.java.name))
+    val ids = appWidgetManager.getAppWidgetIds(
+        ComponentName(
+            context.applicationContext.packageName,
+            OverallCasesWidget::class.java.name
+        )
+    )
     ids.forEach {
         updateAppWidget(context, appWidgetManager, it)
     }
@@ -131,6 +144,9 @@ internal fun updateAppWidget(context: Context, appWidgetManager: AppWidgetManage
 }
 
 internal fun addCaseUI(childView: RemoteViews, countModel: CountModel) {
-    childView.setTextViewText(R.id.confirm_current_count, Util.formatNumber(countModel.currentCount))
+    childView.setTextViewText(
+        R.id.confirm_current_count,
+        Util.formatNumber(countModel.currentCount)
+    )
     childView.setTextViewText(R.id.confirm_total_count, Util.formatNumber(countModel.totalCount))
 }

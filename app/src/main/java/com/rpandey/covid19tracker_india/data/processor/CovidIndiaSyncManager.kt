@@ -44,39 +44,9 @@ class CovidIndiaSyncManager(
 
     fun startSync(callback: suspend (Status<*>) -> Unit = {}) = CoroutineScope(Dispatchers.IO).launch {
 
-        // Fetching overall primary data information
-        val overallDataStatus = ApiHelper.handleRequest(StatusId.OVERALL_DATA) {
-            apiProvider.covidIndia.getOverAllData()
-        }
+        syncPrimaryData(callback)
 
-        if (overallDataStatus is Status.Success) {
-            overallDataProcessor.process(overallDataStatus.data)
-        }
-
-        callback(overallDataStatus)
-
-        // Fetching overall primary data information
-        val districtStatus = ApiHelper.handleRequest(StatusId.DISTRICT_DATA) {
-            apiProvider.covidIndia.getDistrictData()
-        }
-
-        callback(districtStatus)
-
-        // Fetching zonal information
-        val zoneStatus = ApiHelper.handleRequest(StatusId.ZONE_DATA) {
-            apiProvider.covidIndia.getZoneData()
-        }
-
-        if (districtStatus is Status.Success) {
-            val districtData = districtStatus.data
-            var zoneData: ZoneResponse? = null
-            if (zoneStatus is Status.Success)
-                zoneData = zoneStatus.data
-
-            districtDataProcessor.process(districtData to (zoneData?.zones ?: emptyList()))
-        }
-
-        callback(zoneStatus)
+        syncDistrictData(callback)
 
         // Fetching testing data information
         launch {
@@ -113,6 +83,44 @@ class CovidIndiaSyncManager(
         launch {
             syncNews(Country.INDIA)
         }
+    }
+
+    suspend fun syncPrimaryData(callback: suspend (Status<*>) -> Unit) {
+        // Fetching overall primary data information
+        val overallDataStatus = ApiHelper.handleRequest(StatusId.OVERALL_DATA) {
+            apiProvider.covidIndia.getOverAllData()
+        }
+
+        if (overallDataStatus is Status.Success) {
+            overallDataProcessor.process(overallDataStatus.data)
+        }
+
+        callback(overallDataStatus)
+    }
+
+    suspend fun syncDistrictData(callback: suspend (Status<*>) -> Unit) {
+        // Fetching overall primary data information
+        val districtStatus = ApiHelper.handleRequest(StatusId.DISTRICT_DATA) {
+            apiProvider.covidIndia.getDistrictData()
+        }
+
+        callback(districtStatus)
+
+        // Fetching zonal information
+        val zoneStatus = ApiHelper.handleRequest(StatusId.ZONE_DATA) {
+            apiProvider.covidIndia.getZoneData()
+        }
+
+        if (districtStatus is Status.Success) {
+            val districtData = districtStatus.data
+            var zoneData: ZoneResponse? = null
+            if (zoneStatus is Status.Success)
+                zoneData = zoneStatus.data
+
+            districtDataProcessor.process(districtData to (zoneData?.zones ?: emptyList()))
+        }
+
+        callback(zoneStatus)
     }
 
     suspend fun syncNews(country: Country) {

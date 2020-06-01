@@ -56,7 +56,7 @@ class DistrictDataProcessor(covidDatabase: CovidDatabase) :
 
     @Transaction
     private fun persistData(districtEntities: MutableList<DistrictEntity>) {
-        covidDatabase.districtDao().delete()
+//        covidDatabase.districtDao().delete()
         covidDatabase.districtDao().insert(districtEntities)
     }
 }
