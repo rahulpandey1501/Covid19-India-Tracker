@@ -112,10 +112,6 @@ class MainActivity : BaseActivity() {
                 Util.openWebUrl(this, url, getString(R.string.analysis))
             }
 
-            R.id.history -> {
-                startActivity(Intent(this, HistoryCasesActivity::class.java))
-            }
-
             R.id.add_widget -> {
                 startActivity(Intent(this, HelpActivity::class.java))
             }

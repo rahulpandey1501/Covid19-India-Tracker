@@ -1,19 +1,21 @@
 package com.rpandey.covid19tracker_india.ui.home
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.rpandey.covid19tracker_india.R
 import com.rpandey.covid19tracker_india.database.model.CountModel
 import com.rpandey.covid19tracker_india.databinding.FragmentHomeBinding
 import com.rpandey.covid19tracker_india.ui.BaseFragment
 import com.rpandey.covid19tracker_india.ui.bookmark.BookmarkedFragment
+import com.rpandey.covid19tracker_india.ui.caseshistory.HistoryCasesActivity
 import com.rpandey.covid19tracker_india.ui.topcases.TopCasesFragment
 import com.rpandey.covid19tracker_india.util.attachChildFragment
 import com.rpandey.covid19tracker_india.util.getViewModel
+import kotlinx.android.synthetic.main.fragment_home.*
 
 class HomeFragment : BaseFragment() {
 
@@ -50,6 +52,10 @@ class HomeFragment : BaseFragment() {
                 setUiCaseModel(uiCase, it)
             }
         })
+
+        iv_history.setOnClickListener {
+            startActivity(Intent(activity, HistoryCasesActivity::class.java))
+        }
     }
 
     private fun setUiCaseModel(caseType: UICaseType, allCases: Map<UICaseType, CountModel>) {

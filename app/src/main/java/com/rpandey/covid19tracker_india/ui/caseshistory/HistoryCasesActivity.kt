@@ -1,6 +1,7 @@
 package com.rpandey.covid19tracker_india.ui.caseshistory
 
 import android.os.Bundle
+import android.view.WindowManager
 import android.view.animation.AnimationUtils
 import com.rpandey.covid19tracker_india.R
 import com.rpandey.covid19tracker_india.ui.BaseActivity
@@ -23,6 +24,8 @@ class HistoryCasesActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_history_cases)
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+        window.statusBarColor = resources.getColor(R.color.dark_background_page)
         iv_close.setOnClickListener { finish() }
         recycler_view.adapter = adapter
         recycler_view.layoutAnimation = AnimationUtils.loadLayoutAnimation(this, R.anim.layout_animation_fall_down)

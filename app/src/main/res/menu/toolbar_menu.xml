@@ -31,11 +31,6 @@
         app:showAsAction="never" />
 
     <item
-        android:id="@+id/history"
-        android:title="@string/menu_history"
-        app:showAsAction="never" />
-
-    <item
         android:id="@+id/analysis"
         android:title="@string/analysis"
         app:showAsAction="never" />
