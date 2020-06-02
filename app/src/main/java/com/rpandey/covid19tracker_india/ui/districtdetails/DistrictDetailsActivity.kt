@@ -138,7 +138,7 @@ class DistrictDetailsActivity : BaseActivity() {
     private fun generateUiCaseMode(district: DistrictEntity) {
         val uiCaseMap = mapOf(
             UICaseType.TYPE_CONFIRMED to CountModel(district.confirmed, district.totalConfirmed),
-            UICaseType.TYPE_ACTIVE to CountModel(0, district.getActive()),
+            UICaseType.TYPE_ACTIVE to CountModel(district.getCurrentActive(), district.getActive()),
             UICaseType.TYPE_RECOVERED to CountModel(district.recovered, district.totalRecovered),
             UICaseType.TYPE_DEATH to CountModel(district.deceased, district.totalDeceased)
         )

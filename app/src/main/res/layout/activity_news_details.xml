@@ -61,8 +61,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
                     android:textColor="@color/text_secondary"
-                    android:textSize="16sp"
-                    app:lineHeight="24dp"
+                    android:textSize="18sp"
+                    android:lineSpacingExtra="3dp"
                     tools:text="loemr loemr loemr loemr loemr loemr loemr loemr " />
 
                 <androidx.appcompat.widget.AppCompatTextView
