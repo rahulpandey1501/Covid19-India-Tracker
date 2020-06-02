@@ -12,4 +12,5 @@
     <color name="ui_mode_selection">#ffc200</color>
     <color name="toolbar_icon">#FFF</color>
     <color name="bottomsheet_background">@color/page_background</color>
+    <color name="dark_background_page">@color/item_background</color>
 </resources>

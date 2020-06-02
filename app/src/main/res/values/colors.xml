@@ -22,4 +22,5 @@
     <color name="zone_green">#1CB142</color>
     <color name="phone_number">#1CB142</color>
     <color name="bottomsheet_background">@color/item_background</color>
+    <color name="dark_background_page">@color/page_background</color>
 </resources>

@@ -33,8 +33,10 @@ class OverallCasesWidget : AppWidgetProvider() {
 
     override fun onUpdate(context: Context, appWidgetManager: AppWidgetManager, appWidgetIds: IntArray) {
         // There may be multiple widgets active, so update all of them
-        for (appWidgetId in appWidgetIds) {
-            updateAppWidget(context, appWidgetManager, appWidgetId)
+        performSync {
+            for (appWidgetId in appWidgetIds) {
+                updateAppWidget(context, appWidgetManager, appWidgetId)
+            }
         }
     }
 
@@ -65,23 +67,29 @@ class OverallCasesWidget : AppWidgetProvider() {
         if (context == null || AppWidgetManager.ACTION_APPWIDGET_UPDATE != intent?.action)
             return
 
+        performSync {
+            try { // try catch to avoid multiple callbacks because of multiple widgetIds
+                val widgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, AppWidgetManager.INVALID_APPWIDGET_ID)
+                if (widgetId != AppWidgetManager.INVALID_APPWIDGET_ID) {
+                    updateAppWidget(context, AppWidgetManager.getInstance(context), widgetId)
+                }
+            } catch (e: Exception) {
+                updateAllAppWidget(context)
+            }
+
+            val userAction = intent.getBooleanExtra(USER_CLICK_SOURCE, false)
+            if (userAction) {
+                Toast.makeText(context, "updated", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    private fun performSync(callback: () -> Unit) {
         CoroutineScope(Dispatchers.IO).launch {
             CovidIndiaSyncManager.getInstance().syncPrimaryData {
                 if (it.statusId == StatusId.OVERALL_DATA) {
                     withContext(Dispatchers.Main) {
-                        try { // try catch to avoid multiple callbacks because of multiple widgetIds
-                            val widgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, AppWidgetManager.INVALID_APPWIDGET_ID)
-                            if (widgetId != AppWidgetManager.INVALID_APPWIDGET_ID) {
-                                updateAppWidget(context, AppWidgetManager.getInstance(context), widgetId)
-                            }
-                        } catch (e: Exception) {
-                            updateAllAppWidget(context)
-                        }
-
-                        val userAction = intent.getBooleanExtra(USER_CLICK_SOURCE, false)
-                        if (userAction) {
-                            Toast.makeText(context, "updated", Toast.LENGTH_SHORT).show()
-                        }
+                        callback()
                     }
                 }
             }

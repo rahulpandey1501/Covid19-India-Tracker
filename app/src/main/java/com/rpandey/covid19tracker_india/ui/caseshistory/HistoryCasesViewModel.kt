@@ -8,7 +8,7 @@ import com.rpandey.covid19tracker_india.database.entity.DailyChangesEntity
 
 class HistoryCasesViewModel(private val repository: CovidIndiaRepository) : ViewModel() {
 
-    private val count = 10
+    private val count = 15
 
     fun getHistory(): LiveData<List<DataItem>> {
         return Transformations.map(repository.getDailyChanges(count + 1)) { history ->

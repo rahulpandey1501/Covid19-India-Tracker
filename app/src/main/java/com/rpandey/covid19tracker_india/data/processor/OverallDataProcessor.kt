@@ -93,7 +93,7 @@ class OverallDataProcessor(covidDatabase: CovidDatabase) :
     private fun processDailyChanges(data: List<DailyChanges>) {
         val dailyChanges = mutableListOf<DailyChangesEntity>()
         var index = 0
-        data.takeLast(15).forEach { // take last 10 data
+        data.takeLast(20).forEach { // take last 20 data
             try {
                 dailyChanges.add(
                     DailyChangesEntity(
