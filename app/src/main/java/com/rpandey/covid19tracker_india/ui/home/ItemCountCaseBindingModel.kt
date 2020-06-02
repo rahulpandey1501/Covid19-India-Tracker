@@ -36,12 +36,6 @@ class ItemCountCaseBindingModel(private val context: Context) {
                 backgroundColor.set(getColor(R.color.background_active))
                 confirmCaseModel?.let {
                     percentageCount.set(Util.getPercentage(countModel.totalCount, confirmCaseModel.totalCount))
-                    val recoveredCaseModel = caseMapping[UICaseType.TYPE_RECOVERED]
-                    val deathCaseModel = caseMapping[UICaseType.TYPE_DEATH]
-                    if (recoveredCaseModel != null && deathCaseModel != null) {
-                        val currentActiveCount = confirmCaseModel.currentCount - recoveredCaseModel.currentCount - deathCaseModel.currentCount
-                        setDeltaCount(currentActiveCount, true)
-                    }
                 }
 
             }
@@ -68,19 +62,11 @@ class ItemCountCaseBindingModel(private val context: Context) {
         }
     }
 
-    private fun setDeltaCount(currentCount: Int, allowNegative: Boolean = false) {
+    private fun setDeltaCount(currentCount: Int) {
         deltaCountInt.set(currentCount)
         if (currentCount != 0) {
-            this.deltaCount.set("${Util.formatNumber(currentCount.absoluteValue)}")
+            this.deltaCount.set(Util.formatNumber(currentCount.absoluteValue))
         }
-        if (!allowNegative && currentCount < 0) {
-            this.deltaCount.set(null)
-            deltaCountInt.set(0)
-        }
-
-//        } else if (currentCount < 0 && allowNegative) {
-//            this.deltaCount.set(Util.formatNumber(currentCount))
-//        }
     }
 
     private fun getColor(color: Int): Int {

@@ -20,7 +20,7 @@ class CovidIndiaRepository(private val covidDatabase: CovidDatabase) {
         }
     }
 
-    fun getActiveCount(state: String? = null): LiveData<Int> {
+    fun getActiveCount(state: String? = null): LiveData<CountModel> {
         return if (state != null) {
             covidDatabase.activeDao().getCurrentCount(Country.INDIA.code, state)
         } else {

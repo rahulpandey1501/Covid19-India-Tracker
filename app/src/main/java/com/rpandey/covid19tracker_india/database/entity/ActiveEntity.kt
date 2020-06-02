@@ -12,5 +12,6 @@ data class ActiveEntity(
     @ColumnInfo(name = "date", index = true) val date: Long,
     @ColumnInfo(name = "country", index = true) val country: String,
     @ColumnInfo(name = "state", index = true) val state: String,
-    @ColumnInfo(name = "active") val active: Int?
+    @ColumnInfo(name = "active") val active: Int?,
+    @ColumnInfo(name = "current_active") val currentActive: Int?
 )

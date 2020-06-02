@@ -143,8 +143,6 @@ class DailyStateDataProcessor(covidDatabase: CovidDatabase): ResponseProcessor<D
         deceasedCases: MutableList<DeceasedEntity>
     ) {
 
-        var totalActiveCount = 0
-
         repeat(confirmedCases.size) { index ->
             val confirmedCase = confirmedCases[index]
             val recoveredCase = recoveredCases[index]
@@ -158,11 +156,15 @@ class DailyStateDataProcessor(covidDatabase: CovidDatabase): ResponseProcessor<D
             val recoveredCount = recoveredCase.totalRecovered
             val deceasedCount = deceasedCase.totalDeceased
 
-            val currentCount = confirmedCount.minus(recoveredCount).minus(deceasedCount)
-            totalActiveCount += currentCount
+            val currentConfirmedCount = confirmedCase.totalConfirmed
+            val currentRecoveredCount = recoveredCase.totalRecovered
+            val currentDeceasedCount = deceasedCase.totalDeceased
+
+            val totalActiveCount = confirmedCount.minus(recoveredCount).minus(deceasedCount)
+            val currentActiveCount = currentConfirmedCount.minus(currentRecoveredCount).minus(currentDeceasedCount)
 
             activeCases.add(
-                ActiveEntity(date, country, state, currentCount)
+                ActiveEntity(date, country, state, totalActiveCount, currentActiveCount)
             )
         }
     }

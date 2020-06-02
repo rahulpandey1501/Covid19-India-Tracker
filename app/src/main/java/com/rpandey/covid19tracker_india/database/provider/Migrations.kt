@@ -53,3 +53,9 @@ class Migrations5to6: Migration(5, 6) {
         database.execSQL("CREATE TABLE `daily_changes` (`order` INTEGER NOT NULL, `country` TEXT NOT NULL, `confirmed` INTEGER NOT NULL, `total_confirmed` INTEGER NOT NULL, `deceased` INTEGER NOT NULL, `total_deceased` INTEGER NOT NULL, `recovered` INTEGER NOT NULL, `total_recovered` INTEGER NOT NULL, `date` TEXT NOT NULL, PRIMARY KEY(`order`))")
     }
 }
+
+class Migrations6to7: Migration(6, 7) {
+    override fun migrate(database: SupportSQLiteDatabase) {
+        addColumn(database, "active_cases", "current_active", "INTEGER DEFAULT 0")
+    }
+}

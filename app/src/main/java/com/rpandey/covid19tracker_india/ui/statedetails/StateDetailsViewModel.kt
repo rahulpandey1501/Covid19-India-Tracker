@@ -37,7 +37,7 @@ class StateDetailsViewModel(private val repository: CovidIndiaRepository) : View
 
             addSource(getActiveCount(state), Observer {
                 it?.let {
-                    allCases[UICaseType.TYPE_ACTIVE] = CountModel(0, it)
+                    allCases[UICaseType.TYPE_ACTIVE] = it
                     value = allCases
                 }
             })

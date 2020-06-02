@@ -6,6 +6,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.rpandey.covid19tracker_india.database.entity.ActiveEntity
+import com.rpandey.covid19tracker_india.database.model.CountModel
 
 @Dao
 interface ActiveDao {
@@ -19,11 +20,11 @@ interface ActiveDao {
     @Query("SELECT * FROM active_cases WHERE country = :country")
     fun getAll(country: String): LiveData<List<ActiveEntity>>
 
-    @Query("SELECT sum(active) FROM active_cases WHERE country = :country")
-    fun getCurrentCount(country: String): LiveData<Int>
+    @Query("SELECT sum(active) as totalCount, sum(current_active) as currentCount FROM active_cases WHERE country = :country")
+    fun getCurrentCount(country: String): LiveData<CountModel>
 
-    @Query("SELECT sum(active) FROM active_cases WHERE country = :country and state = :state")
-    fun getCurrentCount(country: String, state: String): LiveData<Int>
+    @Query("SELECT sum(active) as totalCount, sum(current_active) as currentCount FROM active_cases WHERE country = :country and state = :state")
+    fun getCurrentCount(country: String, state: String): LiveData<CountModel>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(data: List<ActiveEntity>)

@@ -29,7 +29,7 @@ class HomeViewModel(private val repository: CovidIndiaRepository) : ViewModel() 
             }
 
             addSource(getActiveCount()) {
-                allCases[UICaseType.TYPE_ACTIVE] = CountModel(0, it ?: 0)
+                allCases[UICaseType.TYPE_ACTIVE] = it
                 value = allCases
             }
 

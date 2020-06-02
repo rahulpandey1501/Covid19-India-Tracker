@@ -72,7 +72,8 @@ class OverallDataProcessor(covidDatabase: CovidDatabase) :
                         timestamp,
                         Country.INDIA.code,
                         stateData.stateCode.trim(),
-                        stateData.active
+                        stateData.active,
+                        stateData.deltaConfirmed.minus(stateData.deltaDeaths).minus(stateData.deltaRecovered)
                     )
                 )
 
