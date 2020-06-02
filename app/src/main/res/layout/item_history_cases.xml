@@ -24,7 +24,7 @@
             android:textColor="@color/text_primary"
             android:textSize="18sp"
             android:textStyle="bold"
-            app:fontFamily="@font/open_sans"
+            app:fontFamily="@font/open_sans_semibold"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="20 feb" />
