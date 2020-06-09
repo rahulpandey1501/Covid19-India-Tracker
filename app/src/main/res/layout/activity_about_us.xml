@@ -78,6 +78,7 @@
         android:drawablePadding="8dp"
         android:gravity="center_vertical"
         android:padding="8dp"
+        android:visibility="gone"
         android:textColor="@color/text_secondary"
         android:text="@string/share_with_friends"
         android:textSize="14sp"

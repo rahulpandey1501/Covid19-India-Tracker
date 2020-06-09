@@ -62,9 +62,9 @@ class CovidIndiaSyncManager(
         }
 
         // Fetching app launch data
-        launch {
-            syncAppLaunchData(apiProvider.firebaseHostApiService, callback)
-        }
+//        launch {
+//            syncAppLaunchData(apiProvider.firebaseHostApiService, callback)
+//        }
 
         // Fetching resources data information
         launch {

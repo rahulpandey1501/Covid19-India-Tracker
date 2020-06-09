@@ -28,10 +28,10 @@ class AboutUsActivity : BaseActivity() {
     private fun setupData() {
         val version = BuildConfig.VERSION_NAME
         tv_version.text = String.format("Version: %s", version)
-        tv_share.setOnClickListener {
-            logEvent("ABOUT_SHARE_CLICKED")
-            val shareIntent = Util.shareAppIntent()
-            startActivity(Intent.createChooser(shareIntent, "Share using..."))
-        }
+//        tv_share.setOnClickListener {
+//            logEvent("ABOUT_SHARE_CLICKED")
+//            val shareIntent = Util.shareAppIntent()
+//            startActivity(Intent.createChooser(shareIntent, "Share using..."))
+//        }
     }
 }

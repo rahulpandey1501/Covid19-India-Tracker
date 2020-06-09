@@ -48,39 +48,39 @@ class UpdateBottomSheet : BaseBottomSheetFragment() {
     }
 
     private fun initUi(launchData: LaunchData) {
-        val currentVersion = BuildConfig.VERSION_CODE
-        val forceUpdate = launchData.forceUpdate
-        if (currentVersion < forceUpdate.minVersion) {
-            isCancelable = false
-        }
-
-        binding.later.setOnClickListener {
-            dismissAllowingStateLoss()
-            logEvent("UPDATE_LATER_CLICKED")
-            if (BuildConfig.VERSION_CODE < launchData.forceUpdate.minVersion) {
-                requireActivity().finish()
-            }
-        }
-
-        val downloadedAPK = Util.apkExist(launchData.latestVersion)
-        val isApkExist = downloadedAPK.first && launchData.config?.autoDownloadEnabled == true
-        binding.tvActionButton.text = if (isApkExist) getString(R.string.install) else getString(R.string.download)
-        binding.troubleUpdate.visibility = if (isApkExist) View.VISIBLE else View.GONE
-
-        binding.download.setOnClickListener {
-            if (isApkExist) {
-                logEvent("UPDATE_INSTALL_CLICKED")
-                Util.startInstallerIntent(requireContext(), downloadedAPK.second)
-            } else {
-                logEvent("UPDATE_DOWNLOAD_CLICKED")
-                Util.openBrowser(requireContext(), launchData.downloadUrl)
-            }
-        }
-
-        binding.troubleUpdate.setOnClickListener {
-            logEvent("TROUBLE_DOWNLOAD_CLICKED")
-            Util.openBrowser(requireContext(), launchData.downloadUrl)
-        }
+//        val currentVersion = BuildConfig.VERSION_CODE
+//        val forceUpdate = launchData.forceUpdate
+//        if (currentVersion < forceUpdate.minVersion) {
+//            isCancelable = false
+//        }
+//
+//        binding.later.setOnClickListener {
+//            dismissAllowingStateLoss()
+//            logEvent("UPDATE_LATER_CLICKED")
+//            if (BuildConfig.VERSION_CODE < launchData.forceUpdate.minVersion) {
+//                requireActivity().finish()
+//            }
+//        }
+//
+//        val downloadedAPK = Util.apkExist(launchData.latestVersion)
+//        val isApkExist = downloadedAPK.first && launchData.config?.autoDownloadEnabled == true
+//        binding.tvActionButton.text = if (isApkExist) getString(R.string.install) else getString(R.string.download)
+//        binding.troubleUpdate.visibility = if (isApkExist) View.VISIBLE else View.GONE
+//
+//        binding.download.setOnClickListener {
+//            if (isApkExist) {
+//                logEvent("UPDATE_INSTALL_CLICKED")
+//                Util.startInstallerIntent(requireContext(), downloadedAPK.second)
+//            } else {
+//                logEvent("UPDATE_DOWNLOAD_CLICKED")
+//                Util.openBrowser(requireContext(), launchData.downloadUrl)
+//            }
+//        }
+//
+//        binding.troubleUpdate.setOnClickListener {
+//            logEvent("TROUBLE_DOWNLOAD_CLICKED")
+//            Util.openBrowser(requireContext(), launchData.downloadUrl)
+//        }
     }
 }
 

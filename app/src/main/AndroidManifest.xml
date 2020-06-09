@@ -60,10 +60,6 @@
             android:exported="true"
             android:grantUriPermissions="true" />
 
-        <service
-            android:name=".service.ApkDownloadService"
-            android:enabled="true" />
-
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"

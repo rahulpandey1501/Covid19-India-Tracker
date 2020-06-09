@@ -89,31 +89,31 @@ object Util {
         )
     }
 
-    fun shareAppIntent(): Intent {
-        return Intent().apply {
-            action = Intent.ACTION_SEND
-            putExtra(Intent.EXTRA_TEXT, getShareMessage())
-            putExtra(Intent.EXTRA_STREAM, getUriFromAssets("share_banner.jpg"))
-            type = "image/*"
-            addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-        }
-    }
+//    fun shareAppIntent(): Intent {
+//        return Intent().apply {
+//            action = Intent.ACTION_SEND
+//            putExtra(Intent.EXTRA_TEXT, getShareMessage())
+//            putExtra(Intent.EXTRA_STREAM, getUriFromAssets("share_banner.jpg"))
+//            type = "image/*"
+//            addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+//        }
+//    }
 
     fun getUriFromAssets(fileName: String): Uri {
         return Uri.parse("content://${CovidApplication.INSTANCE.packageName}/$fileName")
     }
 
-    fun getShareMessage(): String {
-        return "Get the latest updates on Covid-19 \uD83D\uDE37cases across India on your mobile.\n" +
-                "Made for India ❤️\n\n" +
-                "Download link:- \n" +
-                "${getShareUrl()}\n"
-    }
-
-    fun getShareUrl(): String {
-        return PreferenceHelper.getString(Constants.KEY_SHARE_URL)
-            ?: Constants.DEFAULT_APP_SHARE_URL
-    }
+//    fun getShareMessage(): String {
+//        return "Get the latest updates on Covid-19 \uD83D\uDE37cases across India on your mobile.\n" +
+//                "Made for India ❤️\n\n" +
+//                "Download link:- \n" +
+//                "${getShareUrl()}\n"
+//    }
+//
+//    fun getShareUrl(): String {
+//        return PreferenceHelper.getString(Constants.KEY_SHARE_URL)
+//            ?: Constants.DEFAULT_APP_SHARE_URL
+//    }
 
     inline fun runWithExecutionTime(identifier: String, block: () -> Unit) {
         val before = System.currentTimeMillis()
@@ -183,24 +183,24 @@ object Util {
         context.startActivity(intent)
     }
 
-    fun getAppDownloadFileName(versionCode: Int): String {
-        return "Covid19_India_Tracker_${versionCode}.apk"
-    }
+//    fun getAppDownloadFileName(versionCode: Int): String {
+//        return "Covid19_India_Tracker_${versionCode}.apk"
+//    }
+//
+//    fun getAppDownloadDirectory(): File {
+//        return File(CovidApplication.INSTANCE.externalCacheDir, "apk")
+//    }
 
-    fun getAppDownloadDirectory(): File {
-        return File(CovidApplication.INSTANCE.externalCacheDir, "apk")
-    }
-
-    fun startInstallerIntent(context: Context, file: File) {
-        val intent = Intent(Intent.ACTION_VIEW)
-        val fileUri = getFileUri(file)
-        intent.setDataAndType(
-            fileUri, "application/vnd.android.package-archive"
-        )
-        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-        intent.flags = Intent.FLAG_GRANT_READ_URI_PERMISSION;
-        context.startActivity(intent)
-    }
+//    fun startInstallerIntent(context: Context, file: File) {
+//        val intent = Intent(Intent.ACTION_VIEW)
+//        val fileUri = getFileUri(file)
+//        intent.setDataAndType(
+//            fileUri, "application/vnd.android.package-archive"
+//        )
+//        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+//        intent.flags = Intent.FLAG_GRANT_READ_URI_PERMISSION;
+//        context.startActivity(intent)
+//    }
 
     fun log(tag: String, message: String) {
         if (BuildConfig.DEBUG) {
@@ -214,10 +214,10 @@ object Util {
         )
     }
 
-    fun apkExist(versionCode: Int): Pair<Boolean, File> {
-        val apkFile = File(getAppDownloadDirectory(), getAppDownloadFileName(versionCode))
-        return (apkFile.exists() && apkFile.length() > 100) to apkFile
-    }
+//    fun apkExist(versionCode: Int): Pair<Boolean, File> {
+//        val apkFile = File(getAppDownloadDirectory(), getAppDownloadFileName(versionCode))
+//        return (apkFile.exists() && apkFile.length() > 100) to apkFile
+//    }
 
     fun getConfig(): Config? {
         val config = PreferenceHelper.getString(Constants.KEY_CONFIG)
@@ -257,7 +257,7 @@ object Util {
             val intent = Intent(Intent.ACTION_SEND)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
             intent.putExtra(Intent.EXTRA_STREAM, it)
-            intent.putExtra(Intent.EXTRA_TEXT, "Get the latest \uD83D\uDE37 updates\n${getShareUrl()}")
+//            intent.putExtra(Intent.EXTRA_TEXT, "Get the latest \uD83D\uDE37 updates\n${getShareUrl()}")
             intent.type = "image/png"
             view.context.startActivity(Intent.createChooser(intent, "Share using..."))
         }
