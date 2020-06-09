@@ -32,7 +32,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
             android:maxLines="3"
-            android:padding="12dp"
+            android:padding="8dp"
             android:shadowColor="#2C2C2C"
             android:shadowDx="0.7"
             android:shadowDy="0.7"
