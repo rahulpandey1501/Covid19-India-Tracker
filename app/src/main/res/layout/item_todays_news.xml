@@ -43,7 +43,7 @@
             app:autoSizeMinTextSize="10sp"
             app:autoSizeStepGranularity="1sp"
             app:autoSizeTextType="uniform"
-            app:fontFamily="@font/open_sans_semibold"
+            app:fontFamily="@font/uni_neue"
             tools:text="India records over 7,000 new coronavirus cases for 2 days in a row, deaths reach 4,971" />
 
     </FrameLayout>
