@@ -60,13 +60,12 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="5.5"
                         android:gravity="center"
-                        android:orientation="horizontal">
+                        android:orientation="vertical">
 
                         <androidx.appcompat.widget.AppCompatTextView
                             android:id="@+id/tv_confirmed"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="bottom"
                             android:gravity="center"
                             android:textColor="@color/text_secondary"
                             android:textStyle="bold"
@@ -76,8 +75,6 @@
                             android:id="@+id/tv_confirmed_delta"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="bottom"
-                            android:layout_marginStart="4dp"
                             android:textColor="@color/number_increase_color"
                             android:textSize="11sp"
                             android:textStyle="bold"
@@ -109,13 +106,12 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="5"
                         android:gravity="center"
-                        android:orientation="horizontal">
+                        android:orientation="vertical">
 
                         <androidx.appcompat.widget.AppCompatTextView
                             android:id="@+id/tv_recovered"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="bottom"
                             android:gravity="center"
                             android:textColor="@color/text_secondary"
                             android:textStyle="bold"
@@ -125,8 +121,6 @@
                             android:id="@+id/tv_recovered_delta"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="bottom"
-                            android:layout_marginStart="4dp"
                             android:textColor="@color/background_recovered"
                             android:textSize="11sp"
                             android:textStyle="bold"
@@ -139,13 +133,12 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="4"
                         android:gravity="center"
-                        android:orientation="horizontal">
+                        android:orientation="vertical">
 
                         <androidx.appcompat.widget.AppCompatTextView
                             android:id="@+id/tv_death"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="bottom"
                             android:gravity="center"
                             android:textColor="@color/text_secondary"
                             android:textStyle="bold"
@@ -155,8 +148,6 @@
                             android:id="@+id/tv_death_delta"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="bottom"
-                            android:layout_marginStart="4dp"
                             android:textColor="@color/number_increase_color"
                             android:textSize="11sp"
                             android:textStyle="bold"
