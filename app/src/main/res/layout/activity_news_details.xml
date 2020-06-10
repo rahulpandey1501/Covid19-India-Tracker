@@ -52,7 +52,7 @@
                     android:textColor="@color/text_primary"
                     android:textSize="20sp"
                     android:textStyle="bold"
-                    app:fontFamily="@font/uni_neue"
+                    app:fontFamily="@font/open_sans"
                     tools:text="loemr loemr loemr loemr loemr loemr loemr loemr " />
 
                 <androidx.appcompat.widget.AppCompatTextView
