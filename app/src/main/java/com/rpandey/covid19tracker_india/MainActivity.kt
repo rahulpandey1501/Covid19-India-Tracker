@@ -24,7 +24,7 @@ import com.rpandey.covid19tracker_india.data.processor.CovidIndiaSyncManager
 import com.rpandey.covid19tracker_india.service.ApkDownloadService
 import com.rpandey.covid19tracker_india.ui.BaseActivity
 import com.rpandey.covid19tracker_india.ui.aboutus.AboutUsActivity
-import com.rpandey.covid19tracker_india.ui.caseshistory.HistoryCasesActivity
+import com.rpandey.covid19tracker_india.ui.essentials.EssentialsActivity
 import com.rpandey.covid19tracker_india.ui.help.HelpActivity
 import com.rpandey.covid19tracker_india.ui.search.SearchActivity
 import com.rpandey.covid19tracker_india.ui.update.UpdateBottomSheet
@@ -104,6 +104,8 @@ class MainActivity : BaseActivity() {
             }
 
             R.id.ui_mode -> { ThemeHelper.toggle(this) }
+
+            R.id.essentials -> { startActivity(Intent(this, EssentialsActivity::class.java)) }
 
             R.id.about_us -> { startActivity(Intent(this, AboutUsActivity::class.java)) }
 

@@ -21,9 +21,4 @@
         android:icon="@drawable/ic_baseline_web_24"
         android:title="@string/title_news" />
 
-    <item
-        android:id="@+id/navigation_essentials"
-        android:icon="@drawable/ic_baseline_format_list_bulleted_24"
-        android:title="@string/title_essentials" />
-
 </menu>

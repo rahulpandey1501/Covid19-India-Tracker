@@ -26,6 +26,11 @@
         app:showAsAction="always" />
 
     <item
+        android:id="@+id/essentials"
+        android:title="@string/title_essentials"
+        app:showAsAction="never" />
+
+    <item
         android:id="@+id/add_widget"
         android:title="@string/menu_widget"
         app:showAsAction="never" />
