@@ -5,41 +5,48 @@ import com.google.gson.annotations.SerializedName
 
 @Keep
 class OverAllDataResponse {
-    @SerializedName("cases_time_series")
-    val dailyChanges: List<DailyChanges>? = null
-    @SerializedName("statewise")
-    val stateData: List<StateData>? = null
-    @SerializedName("tested")
-    val testData: List<OverAllTestData>? = null
+    @SerializedName("districts")
+    val districts: HashMap<String, DistrictData>? = null
+    @SerializedName("meta")
+    val meta: Meta? = null
+    @SerializedName("delta")
+    val delta: Data? = null
+    @SerializedName("total")
+    val total: Data? = null
 }
 
 @Keep
-data class OverAllTestData(
-    @SerializedName("totalsamplestested") val totalTested: String,
-    @SerializedName("updatetimestamp") val date: String // "dd/MM/yyyy hh:mm:ss"
-)
+class Meta {
+    @SerializedName("last_updated")
+    val lastUpdated: String? = null
+    @SerializedName("tested")
+    val tested: Tested? = null
+}
 
 @Keep
-data class StateData(
-    @SerializedName("active") val active: Int,
-    @SerializedName("confirmed") val confirmed: Int,
-    @SerializedName("deaths") val deaths: Int,
-    @SerializedName("deltaconfirmed") val deltaConfirmed: Int,
-    @SerializedName("deltadeaths") val deltaDeaths: Int,
-    @SerializedName("deltarecovered") val deltaRecovered: Int,
-    @SerializedName("lastupdatedtime") val lastUpdatedTime: String,
-    @SerializedName("recovered") val recovered: Int,
-    @SerializedName("state") val stateName: String,
-    @SerializedName("statecode") val stateCode: String
-)
+class Tested {
+    @SerializedName("last_updated")
+    val lastUpdated: String? = null
+}
 
 @Keep
-data class DailyChanges(
-    @SerializedName("dailyconfirmed") val deltaConfirmed: String,
-    @SerializedName("dailydeceased") val deltaDeceased: String,
-    @SerializedName("dailyrecovered") val deltaRecovered: String,
-    @SerializedName("date") val date: String,
-    @SerializedName("totalconfirmed") val totalConfirmed: String,
-    @SerializedName("totaldeceased") val totalDeceased: String,
-    @SerializedName("totalrecovered") val totalRecovered: String
-)
+class Data {
+    @SerializedName("confirmed")
+    val confirmed: Int = 0
+    @SerializedName("recovered")
+    val recovered: Int = 0
+    @SerializedName("deceased")
+    val deceased: Int = 0
+    @SerializedName("tested")
+    val tested: Int = 0
+
+    fun getActive(): Int = confirmed - recovered - deceased
+}
+
+@Keep
+class DistrictData {
+    @SerializedName("delta")
+    val delta: Data? = null
+    @SerializedName("total")
+    val total: Data? = null
+}

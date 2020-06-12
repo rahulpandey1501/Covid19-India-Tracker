@@ -43,7 +43,7 @@ class TopCasesViewModel(private val repository: CovidIndiaRepository) : ViewMode
 
         topCases.addSource(repository.getConfirmedCount(IndianStates.DL.stateCode)) {
             --fetchCount
-            dataList.add(DataItem(Type.STATE, it.totalCount, "Delhi", IndianStates.DL.stateCode))
+            dataList.add(DataItem(Type.STATE, it.totalCount, IndianStates.DL.stateName, IndianStates.DL.stateCode))
             if (fetchCount <= 0)
                 checkList(dataList)
         }

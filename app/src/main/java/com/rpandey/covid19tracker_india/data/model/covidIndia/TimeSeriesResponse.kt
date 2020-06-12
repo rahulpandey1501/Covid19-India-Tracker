@@ -4,8 +4,9 @@ import androidx.annotation.Keep
 import com.google.gson.annotations.SerializedName
 
 @Keep
-class DailyStateResponse {
-
-    @SerializedName("states_daily")
-    val stateDaily: List<MutableMap<String, String>>? = null
+class TimeSeriesResponse {
+    @SerializedName("delta")
+    val delta: Data? = null
+    @SerializedName("total")
+    val total: Data? = null
 }

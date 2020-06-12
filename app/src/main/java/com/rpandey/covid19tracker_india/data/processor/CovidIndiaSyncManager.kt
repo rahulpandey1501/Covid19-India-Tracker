@@ -7,10 +7,10 @@ import com.rpandey.covid19tracker_india.data.Constants
 import com.rpandey.covid19tracker_india.data.Status
 import com.rpandey.covid19tracker_india.data.StatusId
 import com.rpandey.covid19tracker_india.data.model.Country
-import com.rpandey.covid19tracker_india.data.model.covidIndia.ZoneResponse
 import com.rpandey.covid19tracker_india.database.provider.CovidDatabase
 import com.rpandey.covid19tracker_india.network.APIProvider
 import com.rpandey.covid19tracker_india.network.ApiHelper
+import com.rpandey.covid19tracker_india.network.CovidIndiaApiService
 import com.rpandey.covid19tracker_india.network.FirebaseHostApiService
 import com.rpandey.covid19tracker_india.util.PreferenceHelper
 import kotlinx.coroutines.CoroutineExceptionHandler
@@ -22,10 +22,9 @@ class CovidIndiaSyncManager(
     private val apiProvider: APIProvider,
     private val covidDatabase: CovidDatabase) {
 
-    private val stateDataProcessor by lazy { DailyStateDataProcessor(covidDatabase) }
-    private val districtDataProcessor by lazy { DistrictDataProcessor(covidDatabase) }
+    private val zoneProcessor by lazy { ZoneProcessor(covidDatabase) }
     private val overallDataProcessor by lazy { OverallDataProcessor(covidDatabase) }
-    private val testDataProcessor by lazy { TestDataProcessor(covidDatabase) }
+    private val timeSeriesDataProcessor by lazy { TimeSeriesDataProcessor(covidDatabase) }
     private val resourceDataProcessor by lazy { ResourceDataProcessor(covidDatabase) }
     private val newsDatProcessor by lazy { NewsDataProcessor(covidDatabase) }
 
@@ -46,24 +45,15 @@ class CovidIndiaSyncManager(
 
         syncPrimaryData(callback)
 
-        syncDistrictData(callback)
-
-        // Fetching testing data information
-        launch {
-            val testingStatus = ApiHelper.handleRequest(StatusId.TESTING_DATA) {
-                apiProvider.covidIndia.getTestingData()
-            }
-
-            if (testingStatus is Status.Success) {
-                testDataProcessor.process(testingStatus.data)
-            }
-
-            callback(testingStatus)
-        }
-
         // Fetching app launch data
         launch {
             syncAppLaunchData(apiProvider.firebaseHostApiService, callback)
+        }
+
+
+        // Fetching app launch data
+        launch {
+            syncTimeSeriesData(apiProvider.covidIndia, callback)
         }
 
         // Fetching resources data information
@@ -96,28 +86,14 @@ class CovidIndiaSyncManager(
         }
 
         callback(overallDataStatus)
-    }
-
-    suspend fun syncDistrictData(callback: suspend (Status<*>) -> Unit) {
-        // Fetching overall primary data information
-        val districtStatus = ApiHelper.handleRequest(StatusId.DISTRICT_DATA) {
-            apiProvider.covidIndia.getDistrictData()
-        }
-
-        callback(districtStatus)
 
         // Fetching zonal information
         val zoneStatus = ApiHelper.handleRequest(StatusId.ZONE_DATA) {
             apiProvider.covidIndia.getZoneData()
         }
 
-        if (districtStatus is Status.Success) {
-            val districtData = districtStatus.data
-            var zoneData: ZoneResponse? = null
-            if (zoneStatus is Status.Success)
-                zoneData = zoneStatus.data
-
-            districtDataProcessor.process(districtData to (zoneData?.zones ?: emptyList()))
+        if (zoneStatus is Status.Success) {
+            zoneProcessor.process(zoneStatus.data.zones)
         }
 
         callback(zoneStatus)
@@ -138,6 +114,14 @@ class CovidIndiaSyncManager(
         if (status is Status.Success) {
             status.data.config?.let { PreferenceHelper.putString(Constants.KEY_CONFIG, Gson().toJson(it)) }
             status.data.shareUrl?.let { PreferenceHelper.putString(Constants.KEY_SHARE_URL, it) }
+        }
+        callback(status)
+    }
+
+    private suspend fun syncTimeSeriesData(service: CovidIndiaApiService, callback: suspend (Status<*>) -> Unit) {
+        val status = ApiHelper.handleRequest(StatusId.TIME_SERIES) { service.getTimeSeries() }
+        if (status is Status.Success) {
+            timeSeriesDataProcessor.process(status.data)
         }
         callback(status)
     }

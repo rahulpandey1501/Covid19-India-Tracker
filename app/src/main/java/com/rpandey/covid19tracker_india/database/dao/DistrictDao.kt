@@ -3,6 +3,7 @@ package com.rpandey.covid19tracker_india.database.dao
 import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.rpandey.covid19tracker_india.database.entity.DistrictEntity
+import com.rpandey.covid19tracker_india.database.entity.DistrictUpdate
 
 @Dao
 interface DistrictDao {
@@ -30,6 +31,9 @@ interface DistrictDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(data: List<DistrictEntity>)
+
+    @Update(entity = DistrictEntity::class)
+    fun updateZone(data: List<DistrictUpdate>)
 
     @Query("DELETE FROM district_cases")
     fun delete()
