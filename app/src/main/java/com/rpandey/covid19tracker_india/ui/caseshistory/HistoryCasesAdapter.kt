@@ -46,8 +46,8 @@ class HistoryCasesAdapter(private var items: List<HistoryCasesViewModel.DataItem
             itemView.death_count_delta.text = Util.formatNumber(item.deltaDeath.absoluteValue)
 
             itemView.arrow_confirm.rotation = if (item.deltaConfirm < 0) 180f else 0f
-            itemView.arrow_recover.rotation = if (item.deltaConfirm < 0) 180f else 0f
-            itemView.arrow_death.rotation = if (item.deltaConfirm < 0) 180f else 0f
+            itemView.arrow_recover.rotation = if (item.deltaRecover < 0) 180f else 0f
+            itemView.arrow_death.rotation = if (item.deltaDeath < 0) 180f else 0f
         }
     }
 }
