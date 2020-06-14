@@ -5,13 +5,12 @@ import com.google.gson.Gson
 import com.rpandey.covid19tracker_india.CovidApplication
 import com.rpandey.covid19tracker_india.data.Constants
 import com.rpandey.covid19tracker_india.data.Status
-import com.rpandey.covid19tracker_india.data.StatusId
+import com.rpandey.covid19tracker_india.data.RequestId
 import com.rpandey.covid19tracker_india.data.model.Country
+import com.rpandey.covid19tracker_india.data.model.covidIndia.OverAllDataResponse
 import com.rpandey.covid19tracker_india.database.provider.CovidDatabase
 import com.rpandey.covid19tracker_india.network.APIProvider
 import com.rpandey.covid19tracker_india.network.ApiHelper
-import com.rpandey.covid19tracker_india.network.CovidIndiaApiService
-import com.rpandey.covid19tracker_india.network.FirebaseHostApiService
 import com.rpandey.covid19tracker_india.util.PreferenceHelper
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
@@ -41,88 +40,92 @@ class CovidIndiaSyncManager(
         }
     }
 
-    fun startSync(callback: suspend (Status<*>) -> Unit = {}) = CoroutineScope(Dispatchers.IO).launch {
+    fun syncAllData(callback: suspend (Status<*>) -> Unit = {}) = CoroutineScope(Dispatchers.IO).launch {
+        startSync(RequestId.values(), callback)
+    }
 
-        syncPrimaryData(callback)
+    suspend fun startSync(requestList: Array<RequestId>, callback: suspend (Status<*>) -> Unit = {}) = CoroutineScope(Dispatchers.IO).launch {
+        requestList.forEach { requestId ->
+            when (requestId) {
 
-        // Fetching app launch data
-        launch {
-            syncAppLaunchData(apiProvider.firebaseHostApiService, callback)
-        }
+                RequestId.OVERALL_DATA -> {
+                    syncOverallData(callback)
+                }
 
+                RequestId.ZONE_DATA -> {
+                    launch {
+                        syncZone(callback)
+                    }
+                }
 
-        // Fetching app launch data
-        launch {
-            syncTimeSeriesData(apiProvider.covidIndia, callback)
-        }
+                RequestId.TIME_SERIES -> {
+                    launch {
+                        syncTimeSeriesData(callback)
+                    }
+                }
 
-        // Fetching resources data information
-        launch {
-            val resourceStatus = ApiHelper.handleRequest(StatusId.RESOURCE_DATA) {
-                apiProvider.covidIndia.getResources()
+                RequestId.RESOURCE_DATA -> {
+                    launch {
+                        syncResources(callback)
+                    }
+                }
+
+                RequestId.NEWS_DATA -> {
+                    launch {
+                        syncNews(Country.INDIA, callback)
+                    }
+                }
+
+                RequestId.LAUNCH_DATA -> {
+                    launch {
+                        syncAppLaunchData(callback)
+                    }
+                }
+                else -> {}
             }
-
-            if (resourceStatus is Status.Success) {
-                resourceDataProcessor.process(resourceStatus.data)
-            }
-
-            callback(resourceStatus)
-        }
-
-        // fetch news
-        launch {
-            syncNews(Country.INDIA)
         }
     }
 
-    suspend fun syncPrimaryData(callback: suspend (Status<*>) -> Unit) {
-        // Fetching overall primary data information
-        val overallDataStatus = ApiHelper.handleRequest(StatusId.OVERALL_DATA) {
+    private suspend fun syncOverallData(callback: suspend (Status<HashMap<String, OverAllDataResponse>>) -> Unit) {
+        ApiHelper().syncAndProcess(RequestId.OVERALL_DATA, {
             apiProvider.covidIndia.getOverAllData()
-        }
+        }, callback, overallDataProcessor)
+    }
 
-        if (overallDataStatus is Status.Success) {
-            overallDataProcessor.process(overallDataStatus.data)
-        }
-
-        callback(overallDataStatus)
-
-        // Fetching zonal information
-        val zoneStatus = ApiHelper.handleRequest(StatusId.ZONE_DATA) {
+    private suspend fun syncZone(callback: suspend (Status<*>) -> Unit) {
+        ApiHelper().syncAndProcess(RequestId.ZONE_DATA, {
             apiProvider.covidIndia.getZoneData()
-        }
-
-        if (zoneStatus is Status.Success) {
-            zoneProcessor.process(zoneStatus.data.zones)
-        }
-
-        callback(zoneStatus)
+        }, callback, zoneProcessor)
     }
 
-    suspend fun syncNews(country: Country) {
-        val newsStatus = ApiHelper.handleRequest(StatusId.TODAYS_NEWS) {
+    private suspend fun syncResources(callback: suspend (Status<*>) -> Unit) {
+        ApiHelper().syncAndProcess(RequestId.RESOURCE_DATA, {
+            apiProvider.covidIndia.getResources()
+        }, callback, resourceDataProcessor)
+    }
+
+    private suspend fun syncNews(country: Country, callback: suspend (Status<*>) -> Unit) {
+        ApiHelper().syncAndProcess(RequestId.NEWS_DATA, {
             apiProvider.covidIndia.getNews(Constants.NEWS_URL)
-        }
-
-        if (newsStatus is Status.Success) {
-            newsDatProcessor.process(newsStatus.data)
-        }
+        }, callback, newsDatProcessor)
     }
 
-    private suspend fun syncAppLaunchData(service: FirebaseHostApiService, callback: suspend (Status<*>) -> Unit) {
-        val status = ApiHelper.handleRequest(StatusId.LAUNCH_DATA) { service.launchPayload() }
+    private suspend fun syncTimeSeriesData(callback: suspend (Status<*>) -> Unit) {
+        ApiHelper().syncAndProcess(RequestId.TIME_SERIES, {
+            apiProvider.covidIndia.getTimeSeries()
+        }, callback, timeSeriesDataProcessor)
+    }
+
+    private suspend fun syncAppLaunchData(callback: suspend (Status<*>) -> Unit) {
+        val status = ApiHelper().handleRequest(RequestId.LAUNCH_DATA) {
+            apiProvider.firebaseHostApiService.launchPayload()
+        }
+
         if (status is Status.Success) {
             status.data.config?.let { PreferenceHelper.putString(Constants.KEY_CONFIG, Gson().toJson(it)) }
             status.data.shareUrl?.let { PreferenceHelper.putString(Constants.KEY_SHARE_URL, it) }
         }
-        callback(status)
-    }
 
-    private suspend fun syncTimeSeriesData(service: CovidIndiaApiService, callback: suspend (Status<*>) -> Unit) {
-        val status = ApiHelper.handleRequest(StatusId.TIME_SERIES) { service.getTimeSeries() }
-        if (status is Status.Success) {
-            timeSeriesDataProcessor.process(status.data)
-        }
         callback(status)
     }
 

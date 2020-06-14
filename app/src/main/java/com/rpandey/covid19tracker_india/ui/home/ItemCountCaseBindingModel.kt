@@ -57,8 +57,9 @@ class ItemCountCaseBindingModel(private val context: Context) {
             }
             UICaseType.TYPE_TESTING -> {
                 title.set(context.getString(R.string.total_testing))
-                val currentCount = if (countModel.currentCount > 0) Util.formatNumber(countModel.currentCount) else "0"
-                deltaCount.set("(+${currentCount})")
+                if (countModel.currentCount > 0) {
+                    deltaCount.set("(+${Util.formatNumber(countModel.currentCount)})")
+                }
             }
         }
     }

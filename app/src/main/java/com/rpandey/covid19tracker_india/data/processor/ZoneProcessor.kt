@@ -2,16 +2,16 @@ package com.rpandey.covid19tracker_india.data.processor
 
 import androidx.room.Transaction
 import com.rpandey.covid19tracker_india.data.model.Country
-import com.rpandey.covid19tracker_india.data.model.covidIndia.ZoneData
+import com.rpandey.covid19tracker_india.data.model.covidIndia.ZoneResponse
 import com.rpandey.covid19tracker_india.database.entity.DistrictUpdate
 import com.rpandey.covid19tracker_india.database.provider.CovidDatabase
 
 class ZoneProcessor(covidDatabase: CovidDatabase) :
-    ResponseProcessor<List<ZoneData>>(covidDatabase) {
+    ResponseProcessor<ZoneResponse>(covidDatabase) {
 
-    override fun process(data: List<ZoneData>) {
+    override fun process(data: ZoneResponse) {
         val zoneData = mutableListOf<DistrictUpdate>()
-        data.forEach {
+        data.zones.forEach {
             try {
                 zoneData.add(
                     DistrictUpdate(

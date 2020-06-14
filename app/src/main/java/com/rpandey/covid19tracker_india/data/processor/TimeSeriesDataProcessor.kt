@@ -12,11 +12,11 @@ import java.util.*
 class TimeSeriesDataProcessor(covidDatabase: CovidDatabase) :
     ResponseProcessor<HashMap<String, LinkedHashMap<String, TimeSeriesResponse>>>(covidDatabase) {
 
+    private val targetFormat = SimpleDateFormat("dd MMM yy", Locale.getDefault())
     private val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
 
     override fun process(data: HashMap<String, LinkedHashMap<String, TimeSeriesResponse>>) {
         val dailyChanges = mutableListOf<DailyChangesEntity>()
-        val targetFormat = SimpleDateFormat("dd MMM yy", Locale.getDefault())
         val totalCasesSeries = data[Constants.STATE_TOTAL_CASE]
         var index = 0
         totalCasesSeries?.forEach { (seriesDate, caseData) ->

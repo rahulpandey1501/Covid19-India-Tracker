@@ -18,7 +18,7 @@ import com.google.firebase.iid.FirebaseInstanceId
 import com.google.gson.Gson
 import com.rpandey.covid19tracker_india.data.Constants
 import com.rpandey.covid19tracker_india.data.Status
-import com.rpandey.covid19tracker_india.data.StatusId
+import com.rpandey.covid19tracker_india.data.RequestId
 import com.rpandey.covid19tracker_india.data.model.LaunchData
 import com.rpandey.covid19tracker_india.data.processor.CovidIndiaSyncManager
 import com.rpandey.covid19tracker_india.service.ApkDownloadService
@@ -103,11 +103,17 @@ class MainActivity : BaseActivity() {
                 Util.shareScreenshot(rootView)
             }
 
-            R.id.ui_mode -> { ThemeHelper.toggle(this) }
+            R.id.ui_mode -> {
+                ThemeHelper.toggle(this)
+            }
 
-            R.id.essentials -> { startActivity(Intent(this, EssentialsActivity::class.java)) }
+            R.id.essentials -> {
+                startActivity(Intent(this, EssentialsActivity::class.java))
+            }
 
-            R.id.about_us -> { startActivity(Intent(this, AboutUsActivity::class.java)) }
+            R.id.about_us -> {
+                startActivity(Intent(this, AboutUsActivity::class.java))
+            }
 
             R.id.analysis -> {
                 val url = Util.getConfig()?.analysisUrl ?: Constants.DEFAULT_ANALYSIS_URL
@@ -122,7 +128,7 @@ class MainActivity : BaseActivity() {
     }
 
     private fun startSync(callback: (Status<*>) -> Unit = {}) {
-        CovidIndiaSyncManager.getInstance().startSync {
+        CovidIndiaSyncManager.getInstance().syncAllData {
             withContext(Dispatchers.Main) {
                 onStatusResult(it)
                 callback(it)
@@ -131,14 +137,15 @@ class MainActivity : BaseActivity() {
     }
 
     private fun <T : Any?> onStatusResult(status: Status<T>) {
-        when (status.statusId) {
-            StatusId.LAUNCH_DATA -> {
+        when (status.requestId) {
+
+            RequestId.LAUNCH_DATA -> {
                 if (status is Status.Success) {
                     processAppLaunchData(status.data as LaunchData)
                 }
             }
 
-            StatusId.OVERALL_DATA -> {
+            RequestId.OVERALL_DATA -> {
                 if (status is Status.Success) {
                     updateAppWidget()
                 }
