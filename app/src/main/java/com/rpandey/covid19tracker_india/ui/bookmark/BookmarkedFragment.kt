@@ -114,9 +114,6 @@ class BookmarkedFragment : BaseFragment(),
                     ivCancel.setOnClickListener {
                         viewModel.onDistrictRemoved(district.districtId)
                     }
-                    zoneIndicator.setBackgroundColor(
-                        Util.getZoneColor(requireContext(), district.zone)
-                    )
                     districtCancelViews.add(ivCancel)
                     root.setOnClickListener {
                         openDistrictDetailsView(district)
