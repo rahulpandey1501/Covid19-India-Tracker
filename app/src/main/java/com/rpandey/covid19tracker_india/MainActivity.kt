@@ -5,17 +5,19 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import androidx.appcompat.view.menu.MenuBuilder
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.iid.FirebaseInstanceId
 import com.rpandey.covid19tracker_india.data.Constants
+import com.rpandey.covid19tracker_india.data.RequestId
 import com.rpandey.covid19tracker_india.data.Status
-import com.rpandey.covid19tracker_india.data.StatusId
 import com.rpandey.covid19tracker_india.data.processor.CovidIndiaSyncManager
 import com.rpandey.covid19tracker_india.ui.BaseActivity
 import com.rpandey.covid19tracker_india.ui.aboutus.AboutUsActivity
+import com.rpandey.covid19tracker_india.ui.essentials.EssentialsActivity
 import com.rpandey.covid19tracker_india.ui.help.HelpActivity
 import com.rpandey.covid19tracker_india.ui.search.SearchActivity
 import com.rpandey.covid19tracker_india.util.ThemeHelper
@@ -74,6 +76,11 @@ class MainActivity : BaseActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.toolbar_menu, menu)
+        try {
+            if (menu is MenuBuilder) {
+                menu.setOptionalIconsVisible(true)
+            }
+        } catch (e: Exception) {}
         return true
     }
 
@@ -92,14 +99,22 @@ class MainActivity : BaseActivity() {
                 Util.shareScreenshot(rootView)
             }
 
-            R.id.ui_mode -> { ThemeHelper.toggle(this) }
+            R.id.ui_mode -> {
+                ThemeHelper.toggle(this)
+            }
 
-            R.id.about_us -> { startActivity(Intent(this, AboutUsActivity::class.java)) }
+            R.id.essentials -> {
+                startActivity(Intent(this, EssentialsActivity::class.java))
+            }
 
-//            R.id.analysis -> {
-//                val url = Util.getConfig()?.analysisUrl ?: Constants.DEFAULT_ANALYSIS_URL
-//                Util.openWebUrl(this, url, getString(R.string.analysis))
-//            }
+            R.id.about_us -> {
+                startActivity(Intent(this, AboutUsActivity::class.java))
+            }
+
+            R.id.worldwide -> {
+                val url =  Util.getConfig()?.analysisUrl ?: Constants.DEFAULT_ANALYSIS_URL
+                Util.openWebUrl(this, url, getString(R.string.worldwide))
+            }
 
             R.id.add_widget -> {
                 startActivity(Intent(this, HelpActivity::class.java))
@@ -109,7 +124,7 @@ class MainActivity : BaseActivity() {
     }
 
     private fun startSync(callback: (Status<*>) -> Unit = {}) {
-        CovidIndiaSyncManager.getInstance().startSync {
+        CovidIndiaSyncManager.getInstance().syncAllData {
             withContext(Dispatchers.Main) {
                 onStatusResult(it)
                 callback(it)
@@ -118,8 +133,8 @@ class MainActivity : BaseActivity() {
     }
 
     private fun <T : Any?> onStatusResult(status: Status<T>) {
-        when (status.statusId) {
-            StatusId.OVERALL_DATA -> {
+        when (status.requestId) {
+            RequestId.OVERALL_DATA -> {
                 if (status is Status.Success) {
                     updateAppWidget()
                 }

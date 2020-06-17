@@ -73,10 +73,11 @@
     <string name="loading_news_error">Unable to load the news!</string>
     <string name="try_again">Try again</string>
     <string name="page_title_news">Covid19 news</string>
-    <string name="top_districts">Most affected districts</string>
+    <string name="top_districts">Top districts</string>
     <string name="appwidget_text">EXAMPLE</string>
     <string name="configure">Configure</string>
     <string name="add_widget">Add widget</string>
     <string name="menu_widget">Add widget</string>
     <string name="menu_history">History</string>
+    <string name="worldwide">Worldwide</string>
 </resources>

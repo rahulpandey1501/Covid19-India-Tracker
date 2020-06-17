@@ -11,23 +11,17 @@ interface CovidIndiaApiService {
         const val BASE_URL = "https://api.covid19india.org/"
     }
 
-    @GET("data.json")
-    suspend fun getOverAllData(): OverAllDataResponse
-
-    @GET("states_daily.json")
-    suspend fun getStateData(): DailyStateResponse
-
-    @GET("v2/state_district_wise.json")
-    suspend fun getDistrictData(): List<DistrictResponse>
-
-    @GET("state_test_data.json")
-    suspend fun getTestingData(): TestResponse
+    @GET("v3/data.json")
+    suspend fun getOverAllData(): HashMap<String, OverAllDataResponse>
 
     @GET("zones.json")
     suspend fun getZoneData(): ZoneResponse
 
     @GET("resources/resources.json")
     suspend fun getResources(): ResourceResponse
+
+    @GET("v3/timeseries.json")
+    suspend fun getTimeSeries(): HashMap<String, LinkedHashMap<String, TimeSeriesResponse>>
 
     @GET
     suspend fun getNews(@Url url: String): NewsResponse

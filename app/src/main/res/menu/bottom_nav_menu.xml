@@ -9,7 +9,7 @@
     <item
         android:id="@+id/navigation_dashboard"
         android:icon="@drawable/ic_dashboard_black_24dp"
-        android:title="@string/state_tracker" />
+        android:title="@string/states" />
 
     <item
         android:id="@+id/navigation_notifications"
@@ -20,10 +20,5 @@
         android:id="@+id/navigation_news"
         android:icon="@drawable/ic_baseline_web_24"
         android:title="@string/title_news" />
-
-    <item
-        android:id="@+id/navigation_essentials"
-        android:icon="@drawable/ic_baseline_format_list_bulleted_24"
-        android:title="@string/title_essentials" />
 
 </menu>

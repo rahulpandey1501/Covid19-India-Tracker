@@ -6,9 +6,8 @@
 
     <item
         android:id="@+id/share"
-        android:icon="@drawable/ic_baseline_share_24"
+        android:icon="@drawable/ic_outline_near_me_24"
         android:title="@string/share_stats"
-        app:iconTint="@color/toolbar_icon"
         app:showAsAction="ifRoom" />
 
     <item
@@ -26,19 +25,27 @@
         app:showAsAction="always" />
 
     <item
-        android:id="@+id/add_widget"
-        android:title="@string/menu_widget"
+        android:id="@+id/essentials"
+        android:title="@string/title_essentials"
+        android:icon="@drawable/ic_baseline_format_list_bulleted_24"
         app:showAsAction="never" />
 
     <item
-        android:id="@+id/analysis"
-        android:title="@string/analysis"
-        android:visible="false"
+        android:id="@+id/add_widget"
+        android:title="@string/menu_widget"
+        android:icon="@drawable/ic_baseline_web_24"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/worldwide"
+        android:title="@string/worldwide"
+        android:icon="@drawable/ic_baseline_rss_feed_24"
         app:showAsAction="never" />
 
     <item
         android:id="@+id/about_us"
         android:title="@string/about_us"
+        android:icon="@drawable/ic_baseline_help_outline_24"
         app:showAsAction="never" />
 
 </menu>

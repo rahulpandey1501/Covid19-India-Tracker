@@ -302,6 +302,17 @@ object Util {
     }
 
     fun setTint(imageView: ImageView, color: Int) {
-        imageView.setColorFilter(color, android.graphics.PorterDuff.Mode.SRC_IN)
+        imageView.setColorFilter(color, PorterDuff.Mode.SRC_IN)
+    }
+
+    fun getDayOfMonthSuffix(n: Int): String? {
+        return if (n in 11..13) {
+            "th"
+        } else when (n % 10) {
+            1 -> "st"
+            2 -> "nd"
+            3 -> "rd"
+            else -> "th"
+        }
     }
 }

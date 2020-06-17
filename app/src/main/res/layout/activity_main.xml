@@ -93,6 +93,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="0dp"
             android:layout_marginEnd="0dp"
+            app:labelVisibilityMode="labeled"
             android:background="@color/item_background"
             app:itemIconTint="@color/bottom_nav_color"
             app:itemTextAppearanceActive="@style/TextAppearance.Toolbar.Subtitle"

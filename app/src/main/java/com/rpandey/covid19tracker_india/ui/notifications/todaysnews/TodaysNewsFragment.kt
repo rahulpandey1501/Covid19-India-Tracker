@@ -37,7 +37,7 @@ class TodaysNewsFragment : BaseFragment() {
     }
 
     override fun setToolbarTitle(): String {
-        return getString(R.string.page_title_news)
+        return getString(R.string.title_news)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
