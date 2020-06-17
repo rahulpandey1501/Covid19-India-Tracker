@@ -1,7 +1,7 @@
 package com.rpandey.covid19tracker_india.service
 
 import com.rpandey.covid19tracker_india.data.Status
-import com.rpandey.covid19tracker_india.data.StatusId
+import com.rpandey.covid19tracker_india.data.RequestId
 import com.rpandey.covid19tracker_india.network.APIProvider
 import com.rpandey.covid19tracker_india.network.ApiHelper
 import com.rpandey.covid19tracker_india.util.Util
@@ -13,7 +13,7 @@ class FileDownloadService(private val apiProvider: APIProvider) {
 
     suspend fun startDownloading(downloadUrl: String, fileName: String, directoryPath: File, callback: suspend (Boolean, File?) -> Unit) {
         Util.log("Download Stared", downloadUrl)
-        val downloadStatus = ApiHelper.handleRequest(StatusId.FILE_DOWNLOAD) {
+        val downloadStatus = ApiHelper().handleRequest(RequestId.FILE_DOWNLOAD) {
             apiProvider.firebaseHostApiService.downloadFile(downloadUrl)
         }
         if (downloadStatus is Status.Success) {

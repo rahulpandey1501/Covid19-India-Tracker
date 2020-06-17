@@ -25,3 +25,11 @@ data class DistrictEntity constructor(
     fun getActive() = (totalConfirmed - totalRecovered - totalDeceased)
     fun getCurrentActive() = (confirmed - recovered - deceased)
 }
+
+@Entity
+data class DistrictUpdate(
+    @ColumnInfo(name = "country") val country: String,
+    @ColumnInfo(name = "stateName") val stateName: String,
+    @ColumnInfo(name = "district") val district: String,
+    @ColumnInfo(name = "zone") val zone: String
+)

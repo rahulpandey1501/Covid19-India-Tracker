@@ -3,118 +3,163 @@ package com.rpandey.covid19tracker_india.data.processor
 import androidx.room.Transaction
 import com.rpandey.covid19tracker_india.data.Constants
 import com.rpandey.covid19tracker_india.data.model.Country
-import com.rpandey.covid19tracker_india.data.model.covidIndia.*
+import com.rpandey.covid19tracker_india.data.model.IndianStates
+import com.rpandey.covid19tracker_india.data.model.covidIndia.DistrictData
+import com.rpandey.covid19tracker_india.data.model.covidIndia.OverAllDataResponse
 import com.rpandey.covid19tracker_india.database.entity.*
 import com.rpandey.covid19tracker_india.database.provider.CovidDatabase
 import java.text.SimpleDateFormat
 import java.util.*
 
 class OverallDataProcessor(covidDatabase: CovidDatabase) :
-    ResponseProcessor<OverAllDataResponse>(covidDatabase) {
+    ResponseProcessor<HashMap<String, OverAllDataResponse>>(covidDatabase) {
 
-    private val dateFormat = SimpleDateFormat("dd/MM/yyyy hh:mm:ss", Locale.getDefault())
+    private val testingDateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+    private val stateDateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault())
 
-    override fun process(data: OverAllDataResponse) {
-        data.stateData?.let { processStateData(it) }
-        data.testData?.let { processTestData(it) }
-        data.dailyChanges?.let { processDailyChanges(it) }
+    override fun process(data: HashMap<String, OverAllDataResponse>) {
+        if (data.isNotEmpty()) {
+            processStateData(data)
+        }
     }
 
-    private fun processStateData(data: List<StateData>) {
+    private fun processStateData(data: HashMap<String, OverAllDataResponse>) {
 
         val confirmedCases = mutableListOf<ConfirmedEntity>()
         val recoveredCases = mutableListOf<RecoverEntity>()
         val deceasedCases = mutableListOf<DeceasedEntity>()
         val activeCases = mutableListOf<ActiveEntity>()
         val statesData = mutableListOf<StateEntity>()
+        val districtData = mutableListOf<DistrictEntity>()
+        val testData = mutableListOf<TestEntity>()
 
-        data.forEach loop@{ stateData ->
-
-            if (stateData.stateCode == Constants.STATE_TOTAL_CASE)
-                return@loop
+        data.forEach loop@{ (stateCode, stateData) ->
+            val stateCode = stateCode.trim().toUpperCase()
+            val stateName = IndianStates.from(stateCode).stateName
 
             try {
-                val parsedTimestamp = dateFormat.parse(stateData.lastUpdatedTime.trim())
-                val timestamp = parsedTimestamp?.time ?: 0
+                val stateTimestamp = getTimestamp(stateDateFormat, stateData.meta?.lastUpdated)
+                val testingTimestamp = getTimestamp(testingDateFormat, stateData.meta?.tested?.lastUpdated)
+
+                val deltaData = stateData.delta
+                val totalData = stateData.total
+
+                if (stateCode == Constants.STATE_TOTAL_CASE) {
+                    testData.add(
+                        TestEntity(
+                            testingTimestamp,
+                            Country.INDIA.code,
+                            TestEntity.OVER_ALL,
+                            deltaData?.tested ?: 0,
+                            totalData?.tested ?: 0
+                        )
+                    )
+                    return@loop
+                }
 
                 confirmedCases.add(
                     ConfirmedEntity(
-                        timestamp,
+                        stateTimestamp,
                         Country.INDIA.code,
-                        stateData.stateCode.trim(),
-                        stateData.deltaConfirmed,
-                        stateData.confirmed
+                        stateCode,
+                        deltaData?.confirmed ?: 0,
+                        totalData?.confirmed ?: 0
                     )
                 )
 
                 recoveredCases.add(
                     RecoverEntity(
-                        timestamp,
+                        stateTimestamp,
                         Country.INDIA.code,
-                        stateData.stateCode.trim(),
-                        stateData.deltaRecovered,
-                        stateData.recovered
+                        stateCode,
+                        deltaData?.recovered ?: 0,
+                        totalData?.recovered ?: 0
                     )
                 )
 
                 deceasedCases.add(
                     DeceasedEntity(
-                        timestamp,
+                        stateTimestamp,
                         Country.INDIA.code,
-                        stateData.stateCode.trim(),
-                        stateData.deltaDeaths,
-                        stateData.deaths
+                        stateCode,
+                        deltaData?.deceased ?: 0,
+                        totalData?.deceased ?: 0
                     )
                 )
 
                 activeCases.add(
                     ActiveEntity(
-                        timestamp,
+                        stateTimestamp,
                         Country.INDIA.code,
-                        stateData.stateCode.trim(),
-                        stateData.active,
-                        stateData.deltaConfirmed.minus(stateData.deltaDeaths).minus(stateData.deltaRecovered)
+                        stateCode,
+                        totalData?.getActive() ?: 0,
+                        deltaData?.getActive() ?: 0
                     )
                 )
 
                 statesData.add(
                     StateEntity(
                         Country.INDIA.code,
-                        stateData.stateCode.trim(),
-                        stateData.stateName.trim()
+                        stateCode,
+                        stateName
                     )
                 )
+
+                testData.add(
+                    TestEntity(
+                        0,
+                        Country.INDIA.code,
+                        stateName,
+                        deltaData?.tested ?: 0,
+                        totalData?.tested ?: 0
+                    )
+                )
+
+                generateDistrictData(districtData, stateName, stateData.districts)
+
             } catch (e: Exception) {}
         }
 
-        persistStateData(activeCases, confirmedCases, recoveredCases, deceasedCases, statesData)
+        persistStateData(activeCases, confirmedCases, recoveredCases, deceasedCases, statesData, districtData, testData)
 
     }
 
-    private fun processDailyChanges(data: List<DailyChanges>) {
-        val dailyChanges = mutableListOf<DailyChangesEntity>()
-        var index = 0
-        data.takeLast(20).forEach { // take last 20 data
-            try {
-                dailyChanges.add(
-                    DailyChangesEntity(
-                        index++,
+    private fun generateDistrictData(
+        districtData: MutableList<DistrictEntity>,
+        stateName: String,
+        districts: HashMap<String, DistrictData>?) {
+
+        if (!districts.isNullOrEmpty()) {
+            districts.forEach { (district, data) ->
+                districtData.add(
+                    DistrictEntity(
+                        getDistrictId(stateName, district),
                         Country.INDIA.code,
-                        it.deltaConfirmed.toInt(),
-                        it.totalConfirmed.toInt(),
-                        it.deltaDeceased.toInt(),
-                        it.totalDeceased.toInt(),
-                        it.deltaRecovered.toInt(),
-                        it.totalRecovered.toInt(),
-                        it.date.toString()
+                        stateName,
+                        district,
+                        data.delta?.confirmed ?: 0,
+                        data.total?.confirmed ?: 0,
+                        data.delta?.recovered ?: 0,
+                        data.total?.recovered ?: 0,
+                        data.delta?.deceased ?: 0,
+                        data.total?.deceased ?: 0,
+                        null
                     )
                 )
-            } catch (e: Exception) {}
+            }
         }
+    }
 
-        if (dailyChanges.isNotEmpty()) {
-            persistDailyChanges(dailyChanges)
-        }
+    private fun getDistrictId(state: String, district: String): Int {
+        return (state + district).hashCode()
+    }
+
+    private fun getTimestamp(dateFormat: SimpleDateFormat, lastUpdated: String?): Long {
+        try {
+            return if (lastUpdated != null) dateFormat.parse(lastUpdated.trim())?.time ?: 0 else 0
+        } catch (e: Exception) {}
+
+        return 0
     }
 
     @Transaction
@@ -123,48 +168,16 @@ class OverallDataProcessor(covidDatabase: CovidDatabase) :
         confirmedCases: MutableList<ConfirmedEntity>,
         recoveredCases: MutableList<RecoverEntity>,
         deceasedCases: MutableList<DeceasedEntity>,
-        statesData: MutableList<StateEntity>) {
+        statesData: MutableList<StateEntity>,
+        districtData: MutableList<DistrictEntity>,
+        testData: MutableList<TestEntity>) {
 
         covidDatabase.activeDao().insert(activeCases)
         covidDatabase.confirmedDao().insert(confirmedCases)
         covidDatabase.recoveredDao().insert(recoveredCases)
         covidDatabase.deceasedDao().insert(deceasedCases)
         covidDatabase.stateDao().insert(statesData)
-    }
-
-    private fun processTestData(data: List<OverAllTestData>) {
-        // convert to TestData processor format
-        val testDataProcessor = TestDataProcessor(covidDatabase)
-        val testDataList = mutableListOf<TestData>()
-        data.forEach loop@{
-            if (it.date.isEmpty() || it.totalTested.isEmpty())
-                return@loop
-
-            try {
-                // convert to dd/mm/yyyy format
-                val originalFormat = dateFormat
-                val targetFormat = testDataProcessor.dateFormat
-                val date = originalFormat.parse(it.date)
-                if (date != null) {
-                    val formattedDate = targetFormat.format(date)
-                    testDataList.add(
-                        TestData(
-                            TestEntity.OVER_ALL,
-                            it.totalTested,
-                            formattedDate,
-                            -1L
-                        )
-                    )
-                }
-            } catch (e: Exception) {}
-        }
-
-        testDataProcessor.process(TestResponse(testDataList))
-    }
-
-    @Transaction
-    private fun persistDailyChanges(entities: MutableList<DailyChangesEntity>) {
-        covidDatabase.dailyChangesDao().delete()
-        covidDatabase.dailyChangesDao().insert(entities)
+        covidDatabase.districtDao().insert(districtData)
+        covidDatabase.testDao().insert(testData)
     }
 }

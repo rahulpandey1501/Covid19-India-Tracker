@@ -12,7 +12,7 @@ import android.widget.RemoteViews
 import android.widget.Toast
 import com.rpandey.covid19tracker_india.MainActivity
 import com.rpandey.covid19tracker_india.R
-import com.rpandey.covid19tracker_india.data.StatusId
+import com.rpandey.covid19tracker_india.data.RequestId
 import com.rpandey.covid19tracker_india.data.processor.CovidIndiaSyncManager
 import com.rpandey.covid19tracker_india.data.repository.CovidIndiaRepository
 import com.rpandey.covid19tracker_india.database.model.CountModel
@@ -86,8 +86,8 @@ class OverallCasesWidget : AppWidgetProvider() {
 
     private fun performSync(callback: () -> Unit) {
         CoroutineScope(Dispatchers.IO).launch {
-            CovidIndiaSyncManager.getInstance().syncPrimaryData {
-                if (it.statusId == StatusId.OVERALL_DATA) {
+            CovidIndiaSyncManager.getInstance().startSync(arrayOf(RequestId.OVERALL_DATA)) {
+                if (it.requestId == RequestId.OVERALL_DATA) {
                     withContext(Dispatchers.Main) {
                         callback()
                     }
