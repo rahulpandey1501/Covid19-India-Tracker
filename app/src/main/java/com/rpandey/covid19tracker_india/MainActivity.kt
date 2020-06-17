@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import androidx.appcompat.view.menu.MenuBuilder
 import androidx.lifecycle.Lifecycle
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.navigation.findNavController
@@ -17,8 +18,8 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.iid.FirebaseInstanceId
 import com.google.gson.Gson
 import com.rpandey.covid19tracker_india.data.Constants
-import com.rpandey.covid19tracker_india.data.Status
 import com.rpandey.covid19tracker_india.data.RequestId
+import com.rpandey.covid19tracker_india.data.Status
 import com.rpandey.covid19tracker_india.data.model.LaunchData
 import com.rpandey.covid19tracker_india.data.processor.CovidIndiaSyncManager
 import com.rpandey.covid19tracker_india.service.ApkDownloadService
@@ -85,6 +86,11 @@ class MainActivity : BaseActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.toolbar_menu, menu)
+        try {
+            if (menu is MenuBuilder) {
+                menu.setOptionalIconsVisible(true)
+            }
+        } catch (e: Exception) {}
         return true
     }
 
@@ -115,9 +121,9 @@ class MainActivity : BaseActivity() {
                 startActivity(Intent(this, AboutUsActivity::class.java))
             }
 
-            R.id.analysis -> {
-                val url = Util.getConfig()?.analysisUrl ?: Constants.DEFAULT_ANALYSIS_URL
-                Util.openWebUrl(this, url, getString(R.string.analysis))
+            R.id.worldwide -> {
+                val url =  Util.getConfig()?.analysisUrl ?: Constants.DEFAULT_ANALYSIS_URL
+                Util.openWebUrl(this, url, getString(R.string.worldwide))
             }
 
             R.id.add_widget -> {
