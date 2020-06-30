@@ -74,10 +74,9 @@
                             android:id="@+id/tv_confirmed_delta"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="-2dp"
                             android:textColor="@color/number_increase_color"
                             android:textSize="11sp"
-                            app:fontFamily="@font/roboto_medium"
+                            android:textStyle="bold"
                             tools:text="12,345" />
 
                     </LinearLayout>
@@ -121,10 +120,9 @@
                             android:id="@+id/tv_recovered_delta"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="-2dp"
                             android:textColor="@color/background_recovered"
                             android:textSize="11sp"
-                            app:fontFamily="@font/roboto_medium"
+                            android:textStyle="bold"
                             tools:text="12,345" />
 
                     </LinearLayout>
@@ -149,10 +147,9 @@
                             android:id="@+id/tv_death_delta"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="-2dp"
                             android:textColor="@color/number_increase_color"
                             android:textSize="11sp"
-                            app:fontFamily="@font/roboto_medium"
+                            android:textStyle="bold"
                             tools:text="12" />
 
                     </LinearLayout>
