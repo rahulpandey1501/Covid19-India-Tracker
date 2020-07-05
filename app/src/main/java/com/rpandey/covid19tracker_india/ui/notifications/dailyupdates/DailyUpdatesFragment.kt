@@ -1,10 +1,11 @@
 package com.rpandey.covid19tracker_india.ui.notifications.dailyupdates
 
+import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.core.text.HtmlCompat
 import androidx.lifecycle.Lifecycle
 import com.rpandey.covid19tracker_india.R
@@ -14,7 +15,6 @@ import com.rpandey.covid19tracker_india.databinding.ItemUpdatesBinding
 import com.rpandey.covid19tracker_india.ui.BaseFragment
 import com.rpandey.covid19tracker_india.ui.districtdetails.DistrictDetailsActivity
 import com.rpandey.covid19tracker_india.ui.statedetails.StateDetailsActivity
-import com.rpandey.covid19tracker_india.util.Util
 import com.rpandey.covid19tracker_india.util.getViewModel
 import com.rpandey.covid19tracker_india.util.observe
 import kotlinx.android.synthetic.main.fragment_notifications.*
@@ -82,14 +82,34 @@ class DailyUpdatesFragment : BaseFragment() {
         }
 
         toggle.setOnClickListener {
-            if (district_rv.visibility == View.VISIBLE) {
-                district_rv.visibility = View.INVISIBLE
-                state_container.visibility = View.VISIBLE
-                toggle.setImageDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.ic_outline_dashboard_24))
+            if (district_container.visibility == View.VISIBLE) {
+                tv_action_button.text = getString(R.string.districts)
+
+                district_container.animate()
+                    .alpha(0f)
+                    .setDuration(150)
+                    .setListener(object : AnimatorListenerAdapter() {
+                        override fun onAnimationEnd(animation: Animator) {
+                            district_container.visibility = View.INVISIBLE
+                            state_container.visibility = View.VISIBLE
+                            state_container.alpha = 1f
+                        }
+                    })
+
+
             } else {
-                district_rv.visibility = View.VISIBLE
-                state_container.visibility = View.INVISIBLE
-                toggle.setImageDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.ic_dashboard_black_24dp))
+                tv_action_button.text = getString(R.string.states)
+
+                state_container.animate()
+                    .alpha(0f)
+                    .setDuration(150)
+                    .setListener(object : AnimatorListenerAdapter() {
+                        override fun onAnimationEnd(animation: Animator) {
+                            state_container.visibility = View.INVISIBLE
+                            district_container.visibility = View.VISIBLE
+                            district_container.alpha = 1f
+                        }
+                    })
             }
         }
     }

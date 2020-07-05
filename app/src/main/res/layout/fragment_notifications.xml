@@ -23,18 +23,34 @@
 
         </androidx.core.widget.NestedScrollView>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/district_rv"
+        <LinearLayout
+            android:id="@+id/district_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginLeft="8dp"
-            android:paddingTop="12dp"
-            android:layout_marginRight="8dp"
-            android:clipToPadding="false"
-            android:paddingBottom="74dp"
+            android:orientation="vertical"
+            android:paddingLeft="6dp"
+            android:paddingRight="6dp"
             android:visibility="invisible"
-            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-            app:spanCount="3" />
+            tools:visibility="visible">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="4dp"
+                android:text="@string/district_new_cases"
+                android:textColor="@color/text_primary" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/district_rv"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="8dp"
+                android:clipToPadding="false"
+                android:paddingBottom="74dp"
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                app:spanCount="3" />
+        </LinearLayout>
 
         <LinearLayout
             android:id="@+id/no_updates"
@@ -60,16 +76,29 @@
 
         </LinearLayout>
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
+        <androidx.cardview.widget.CardView
             android:id="@+id/toggle"
-            android:layout_width="56dp"
-            android:layout_height="56dp"
-            android:layout_gravity="bottom|end"
-            android:layout_margin="12dp"
-            android:cropToPadding="true"
-            android:src="@drawable/ic_outline_dashboard_24"
-            android:tint="#212121"
-            app:backgroundTint="#ffc200" />
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            app:cardCornerRadius="16dp"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:layout_marginBottom="16dp"
+            android:layout_gravity="bottom|center_horizontal">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_action_button"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="#FDCE37"
+                android:gravity="center"
+                app:drawableTint="#212121"
+                android:paddingLeft="24dp"
+                android:paddingRight="24dp"
+                android:drawablePadding="8dp"
+                android:text="@string/districts"
+                android:textColor="#212121"
+                android:textStyle="bold" />
+        </androidx.cardview.widget.CardView>
 
     </FrameLayout>
 </layout>

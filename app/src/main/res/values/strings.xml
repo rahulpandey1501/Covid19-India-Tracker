@@ -81,4 +81,5 @@
     <string name="menu_widget">Add widget</string>
     <string name="menu_history">History</string>
     <string name="worldwide">Worldwide</string>
+    <string name="district_new_cases">New confirmed cases</string>
 </resources>
