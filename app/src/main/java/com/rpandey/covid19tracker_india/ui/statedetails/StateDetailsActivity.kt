@@ -72,7 +72,7 @@ class StateDetailsActivity : BaseActivity(), SelectStateBottomSheet.Callback {
     private fun observeLiveData(stateCode: String, stateName: String) {
 
         with(binding) {
-            title.text = stateName
+            title.text = "$stateName ⇌"
             title.setOnClickListener { stateChangeClicked() }
             ivClose.setOnClickListener { finish() }
             ivShare.setOnClickListener {

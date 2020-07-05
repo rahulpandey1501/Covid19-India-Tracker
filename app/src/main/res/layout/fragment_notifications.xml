@@ -33,14 +33,6 @@
             android:visibility="invisible"
             tools:visibility="visible">
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="4dp"
-                android:text="@string/district_new_cases"
-                android:textColor="@color/text_primary" />
-
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/district_rv"
                 android:layout_width="match_parent"
@@ -95,7 +87,7 @@
                 android:paddingLeft="24dp"
                 android:paddingRight="24dp"
                 android:drawablePadding="8dp"
-                android:text="@string/districts"
+                android:text="@string/states"
                 android:textColor="#212121"
                 android:textStyle="bold" />
         </androidx.cardview.widget.CardView>

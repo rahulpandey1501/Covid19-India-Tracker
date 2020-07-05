@@ -65,13 +65,10 @@
                         android:layout_marginLeft="12dp"
                         android:layout_marginTop="16dp"
                         android:layout_marginRight="12dp"
-                        android:drawableEnd="@drawable/ic_outline_edit_24"
-                        android:drawablePadding="8dp"
                         android:includeFontPadding="false"
                         android:textColor="@color/text_primary"
                         android:textSize="24sp"
                         android:textStyle="bold"
-                        app:drawableTint="@color/text_secondary"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         tools:text="Madhya Pradesh" />

@@ -11,6 +11,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.FragmentActivity
 import com.rpandey.covid19tracker_india.R
 import com.rpandey.covid19tracker_india.data.Constants
+import com.rpandey.covid19tracker_india.data.model.IndianStates
 import com.rpandey.covid19tracker_india.database.entity.DistrictEntity
 import com.rpandey.covid19tracker_india.database.model.CountModel
 import com.rpandey.covid19tracker_india.databinding.ActivityDistrictDetailsBinding
@@ -18,12 +19,12 @@ import com.rpandey.covid19tracker_india.ui.BaseActivity
 import com.rpandey.covid19tracker_india.ui.essentials.EssentialsFragment
 import com.rpandey.covid19tracker_india.ui.home.ItemCountCaseBindingModel
 import com.rpandey.covid19tracker_india.ui.home.UICaseType
+import com.rpandey.covid19tracker_india.ui.statedetails.StateDetailsActivity
 import com.rpandey.covid19tracker_india.util.Util
 import com.rpandey.covid19tracker_india.util.attachFragment
 import com.rpandey.covid19tracker_india.util.getViewModel
 import com.rpandey.covid19tracker_india.util.observe
 import kotlinx.android.synthetic.main.activity_district_details.*
-import kotlinx.android.synthetic.main.layout_cases_count.*
 import kotlinx.android.synthetic.main.layout_district_rank_meta.*
 
 class DistrictDetailsActivity : BaseActivity() {
@@ -91,10 +92,14 @@ class DistrictDetailsActivity : BaseActivity() {
             Util.shareScreenshot(screen_shot_layout)
         }
 
+        state_name.setOnClickListener {
+            districtEntity?.stateName?.let { openStateDetailsActivity(it) }
+        }
+
         viewModel.getDistrictInfo.observe(this) {
             this.districtEntity = it
             binding.title.text = it.district
-            binding.stateName.text = it.stateName
+            binding.stateName.text = it.stateName+" ↗"
             generateUiCaseMode(it)
             setZoneUI(it.zone)
             checkForEssentialData(it.stateName, it.district)
@@ -131,6 +136,13 @@ class DistrictDetailsActivity : BaseActivity() {
                     testingSpanPlaceholder
                 )
             }
+        }
+    }
+
+    private fun openStateDetailsActivity(stateName: String) {
+        val state = IndianStates.fromName(stateName)
+        if (state != IndianStates.UN) {
+            startActivity(StateDetailsActivity.getIntent(this, state.stateCode, state.stateName))
         }
     }
 

@@ -36,7 +36,7 @@ class NewDistrictCasesAdapter(var data: MutableList<DistrictEntity>, private val
         fun init(district: DistrictEntity) {
             with(binding) {
                 tvTitle.text = district.district
-                tvCount.text = Util.formatNumber(district.confirmed)
+                tvCount.text = "ꜛ"+Util.formatNumber(district.confirmed)
                 itemView.setOnClickListener {
                     callback(adapterPosition)
                 }
