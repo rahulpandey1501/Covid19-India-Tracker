@@ -59,3 +59,12 @@ class Migrations6to7: Migration(6, 7) {
         addColumn(database, "active_cases", "current_active", "INTEGER DEFAULT 0")
     }
 }
+
+class Migrations7to8: Migration(7, 8) {
+    override fun migrate(database: SupportSQLiteDatabase) {
+        addColumn(database, "district_cases", "tested", "INTEGER NOT NULL DEFAULT 0")
+        addColumn(database, "district_cases", "total_tested", "INTEGER NOT NULL DEFAULT 0")
+        addColumn(database, "district_cases", "population", "INTEGER NOT NULL DEFAULT 0")
+        addColumn(database, "states", "population", "INTEGER NOT NULL DEFAULT 0")
+    }
+}

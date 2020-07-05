@@ -21,6 +21,8 @@ class Meta {
     val lastUpdated: String? = null
     @SerializedName("tested")
     val tested: Tested? = null
+    @SerializedName("population")
+    val population: Long? = null
 }
 
 @Keep
@@ -49,4 +51,6 @@ class DistrictData {
     val delta: Data? = null
     @SerializedName("total")
     val total: Data? = null
+    @SerializedName("meta")
+    val meta: Meta? = null
 }

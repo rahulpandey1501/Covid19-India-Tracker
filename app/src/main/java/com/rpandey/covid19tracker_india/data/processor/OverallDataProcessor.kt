@@ -34,7 +34,7 @@ class OverallDataProcessor(covidDatabase: CovidDatabase) :
         val testData = mutableListOf<TestEntity>()
 
         data.forEach loop@{ (stateCode, stateData) ->
-            val stateCode = stateCode.trim().toUpperCase()
+            val stateCode = stateCode.trim().toUpperCase(Locale.getDefault())
             val stateName = IndianStates.from(stateCode).stateName
 
             try {
@@ -101,7 +101,8 @@ class OverallDataProcessor(covidDatabase: CovidDatabase) :
                     StateEntity(
                         Country.INDIA.code,
                         stateCode,
-                        stateName
+                        stateName,
+                        stateData.meta?.population ?: 0
                     )
                 )
 
@@ -143,6 +144,9 @@ class OverallDataProcessor(covidDatabase: CovidDatabase) :
                         data.total?.recovered ?: 0,
                         data.delta?.deceased ?: 0,
                         data.total?.deceased ?: 0,
+                        data.delta?.tested ?: 0,
+                        data.total?.tested ?: 0,
+                        data.meta?.population ?: 0,
                         null
                     )
                 )

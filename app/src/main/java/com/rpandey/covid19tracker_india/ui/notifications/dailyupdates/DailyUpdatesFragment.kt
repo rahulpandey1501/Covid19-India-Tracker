@@ -4,14 +4,21 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.core.text.HtmlCompat
+import androidx.lifecycle.Lifecycle
 import com.rpandey.covid19tracker_india.R
+import com.rpandey.covid19tracker_india.database.entity.DistrictEntity
 import com.rpandey.covid19tracker_india.databinding.FragmentNotificationsBinding
 import com.rpandey.covid19tracker_india.databinding.ItemUpdatesBinding
 import com.rpandey.covid19tracker_india.ui.BaseFragment
+import com.rpandey.covid19tracker_india.ui.districtdetails.DistrictDetailsActivity
 import com.rpandey.covid19tracker_india.ui.statedetails.StateDetailsActivity
+import com.rpandey.covid19tracker_india.util.Util
 import com.rpandey.covid19tracker_india.util.getViewModel
 import com.rpandey.covid19tracker_india.util.observe
+import kotlinx.android.synthetic.main.fragment_notifications.*
+import kotlinx.coroutines.*
 
 class DailyUpdatesFragment : BaseFragment() {
 
@@ -21,6 +28,7 @@ class DailyUpdatesFragment : BaseFragment() {
 
     override fun getScreenName(): String? = "DailyUpdates"
 
+    private lateinit var districtAdapter: NewDistrictCasesAdapter
     private lateinit var binding: FragmentNotificationsBinding
 
     private val viewModel by lazy {
@@ -33,6 +41,10 @@ class DailyUpdatesFragment : BaseFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = FragmentNotificationsBinding.inflate(inflater, container, false)
+        districtAdapter = NewDistrictCasesAdapter(mutableListOf()) {
+            openDistrictDetailsView(it)
+        }
+        binding.districtRv.adapter = districtAdapter
         return binding.root
     }
 
@@ -41,16 +53,16 @@ class DailyUpdatesFragment : BaseFragment() {
     }
 
     override fun observeLiveData() {
-        viewModel.getDailyUpdates().observe(this) {
+        viewModel.getDailyStateUpdates().observe(this) {
             binding.noUpdates.visibility = if (it.isEmpty()) View.VISIBLE else View.GONE
-            binding.container.removeAllViews()
+            binding.stateContainer.removeAllViews()
             it.forEach { data ->
                 val message = HtmlCompat.fromHtml(getSentence(
                     data.confirmedCases,
                     data.recoveredCases,
                     data.deceasedCases
                 ), HtmlCompat.FROM_HTML_MODE_COMPACT)
-                val binding = ItemUpdatesBinding.inflate(LayoutInflater.from(requireContext()), binding.container, true)
+                val binding = ItemUpdatesBinding.inflate(LayoutInflater.from(requireContext()), binding.stateContainer, true)
                 binding.title.text = data.stateName
                 binding.message.text = message
                 binding.root.setOnClickListener {
@@ -58,6 +70,32 @@ class DailyUpdatesFragment : BaseFragment() {
                 }
             }
         }
+
+        CoroutineScope(Dispatchers.Default).launch {
+            delay(500)
+            withContext(Dispatchers.Main) {
+                if (lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED))
+                    viewModel.getDailyDistrictUpdates().observe(this@DailyUpdatesFragment) {
+                        districtAdapter.update(it as MutableList<DistrictEntity>)
+                    }
+            }
+        }
+
+        toggle.setOnClickListener {
+            if (district_rv.visibility == View.VISIBLE) {
+                district_rv.visibility = View.INVISIBLE
+                state_container.visibility = View.VISIBLE
+                toggle.setImageDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.ic_outline_dashboard_24))
+            } else {
+                district_rv.visibility = View.VISIBLE
+                state_container.visibility = View.INVISIBLE
+                toggle.setImageDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.ic_dashboard_black_24dp))
+            }
+        }
+    }
+
+    private fun openDistrictDetailsView(district: DistrictEntity) {
+        startActivity(DistrictDetailsActivity.getIntent(requireActivity(), district.districtId))
     }
 
     private fun getSentence(confirmedCount: Int, recoveredCount: Int, deathCount: Int): String {

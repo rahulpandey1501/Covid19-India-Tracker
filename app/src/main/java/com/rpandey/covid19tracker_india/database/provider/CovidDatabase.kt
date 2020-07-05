@@ -29,7 +29,7 @@ abstract class CovidDatabase : RoomDatabase() {
 
     companion object {
 
-        const val VERSION = 7
+        const val VERSION = 8
         private const val NAME = "covid_database"
 
         private var database: CovidDatabase? = null
@@ -42,7 +42,8 @@ abstract class CovidDatabase : RoomDatabase() {
                     Migrations3to4(),
                     Migrations4to5(),
                     Migrations5to6(),
-                    Migrations6to7()
+                    Migrations6to7(),
+                    Migrations7to8()
                 ).build()
             return database!!
         }

@@ -58,7 +58,6 @@ class DistrictDetailsActivity : BaseActivity() {
         val districtId = intent.getIntExtra(KEY_DISTRICT_ID, 0)
         viewModel.init(districtId)
 
-        testing_layout.visibility = View.GONE
         iv_close.setOnClickListener { finish() }
 
         more_info.setOnClickListener {
@@ -95,6 +94,7 @@ class DistrictDetailsActivity : BaseActivity() {
         viewModel.getDistrictInfo.observe(this) {
             this.districtEntity = it
             binding.title.text = it.district
+            binding.stateName.text = it.stateName
             generateUiCaseMode(it)
             setZoneUI(it.zone)
             checkForEssentialData(it.stateName, it.district)
@@ -120,6 +120,17 @@ class DistrictDetailsActivity : BaseActivity() {
                 getString(R.string.district_rank_combined), stateSpanPlaceholder, it.stateName, overallSpanPlaceholder
             )
             state_delta_meta.text = Util.setTextSpan(districtDeltaPositionText, Util.dpToPx(spanSize), stateSpanPlaceholder, overallSpanPlaceholder)
+
+            val testingSpanPlaceholder = Util.getPercentage(it.totalCases, it.totalTesting)
+            if (testingSpanPlaceholder.isNotEmpty()) {
+                testing_meta.visibility = View.VISIBLE
+                val testingMetaText = String.format(getString(R.string.district_state_meta_testing), testingSpanPlaceholder)
+                testing_meta.text = Util.setTextSpan(
+                    testingMetaText,
+                    Util.dpToPx(spanSize),
+                    testingSpanPlaceholder
+                )
+            }
         }
     }
 
@@ -140,7 +151,8 @@ class DistrictDetailsActivity : BaseActivity() {
             UICaseType.TYPE_CONFIRMED to CountModel(district.confirmed, district.totalConfirmed),
             UICaseType.TYPE_ACTIVE to CountModel(district.getCurrentActive(), district.getActive()),
             UICaseType.TYPE_RECOVERED to CountModel(district.recovered, district.totalRecovered),
-            UICaseType.TYPE_DEATH to CountModel(district.deceased, district.totalDeceased)
+            UICaseType.TYPE_DEATH to CountModel(district.deceased, district.totalDeceased),
+            UICaseType.TYPE_TESTING to CountModel(district.tested, district.totalTested)
         )
 
         uiCaseMap.forEach { (uiCase, _) ->

@@ -43,5 +43,8 @@ enum class IndianStates(val stateCode: String, val stateName: String) {
         fun from(stateCode: String): IndianStates {
             return values().find { it.stateCode == stateCode } ?: UN
         }
+        fun fromName(stateName: String): IndianStates {
+            return values().find { it.stateName == stateName } ?: UN
+        }
     }
 }
