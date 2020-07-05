@@ -20,6 +20,9 @@ class HistoryCasesViewModel(private val repository: CovidIndiaRepository) : View
             var lastDeath: Int? = null
 
             history.reversed().forEach { // start from start
+                if (it.recovered == 0 && it.confirmed == 0 && it.deceased == 0)
+                    return@forEach
+
                 dataItems.add(
                     DataItem(
                         it,
