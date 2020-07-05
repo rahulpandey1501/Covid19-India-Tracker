@@ -18,7 +18,8 @@ class DistrictDetailsViewModel(private val repository: CovidIndiaRepository) : V
         val totalCases: Int,
         val totalCasesByState: Int,
         val positionByState: Int,
-        val positionByOverall: Int
+        val positionByOverall: Int,
+        val totalTesting: Int
     )
 
     val getMetaInfo = MediatorLiveData<MetaInfo>()
@@ -44,7 +45,8 @@ class DistrictDetailsViewModel(private val repository: CovidIndiaRepository) : V
                             totalCases,
                             totalCasesByState,
                             positionByState,
-                            positionByOverall
+                            positionByOverall,
+                            district.totalTested
                         )
                     )
                 }

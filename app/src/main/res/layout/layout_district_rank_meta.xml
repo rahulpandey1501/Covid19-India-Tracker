@@ -11,6 +11,17 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/district_state_rank"
+        android:layout_marginTop="4dp"
+        android:textColor="@color/text_primary"
+        android:textSize="12sp" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/testing_meta"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:layout_marginTop="4dp"
+        android:text="@string/district_state_delta_percentage"
         android:textColor="@color/text_primary"
         android:textSize="12sp" />
 
@@ -20,6 +31,7 @@
         android:layout_height="wrap_content"
         android:text="@string/district_state_delta_percentage"
         android:textColor="@color/text_primary"
+        android:layout_marginTop="4dp"
         android:textSize="12sp" />
 
 </LinearLayout>

@@ -2,6 +2,7 @@ package com.rpandey.covid19tracker_india.data
 
 object Constants {
 
+    const val UNKNOWN = "Unknown"
     const val NEWS_URL = "https://covid-19india-api.herokuapp.com/headlines"
     const val KEY_SHARE_URL = "KEY_SHARE_URL"
     const val KEY_CONFIG = "KEY_CONFIG"

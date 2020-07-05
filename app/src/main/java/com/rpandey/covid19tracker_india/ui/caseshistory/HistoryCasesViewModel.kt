@@ -10,8 +10,8 @@ class HistoryCasesViewModel(private val repository: CovidIndiaRepository) : View
 
     private val count = 15
 
-    fun getHistory(): LiveData<List<DataItem>> {
-        return Transformations.map(repository.getDailyChanges(count + 1)) { history ->
+    fun getHistory(stateCode: String): LiveData<List<DataItem>> {
+        return Transformations.map(repository.getDailyChanges(stateCode, count + 1)) { history ->
 
             val dataItems = mutableListOf<DataItem>()
 
@@ -20,6 +20,9 @@ class HistoryCasesViewModel(private val repository: CovidIndiaRepository) : View
             var lastDeath: Int? = null
 
             history.reversed().forEach { // start from start
+                if (it.recovered == 0 && it.confirmed == 0 && it.deceased == 0)
+                    return@forEach
+
                 dataItems.add(
                     DataItem(
                         it,

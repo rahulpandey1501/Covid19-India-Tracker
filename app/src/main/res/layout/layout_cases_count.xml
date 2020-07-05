@@ -4,6 +4,8 @@
 
     <data>
 
+        <import type="android.view.View" />
+
         <variable
             name="confirmVm"
             type="com.rpandey.covid19tracker_india.ui.home.ItemCountCaseBindingModel" />
@@ -43,6 +45,7 @@
             android:gravity="bottom"
             android:orientation="horizontal"
             android:paddingBottom="12dp"
+            android:visibility="@{testingVm.totalCountInt > 0? View.VISIBLE: View.GONE}"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 

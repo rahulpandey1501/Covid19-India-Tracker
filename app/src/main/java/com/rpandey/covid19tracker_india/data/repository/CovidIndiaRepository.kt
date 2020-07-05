@@ -60,6 +60,14 @@ class CovidIndiaRepository(private val covidDatabase: CovidDatabase) {
         }
     }
 
+    fun getDistrictsNewCases(stateName: String?): LiveData<List<DistrictEntity>> {
+        return if (stateName != null) {
+            covidDatabase.districtDao().newConfirmedCases(stateName)
+        } else {
+            covidDatabase.districtDao().newConfirmedCases()
+        }
+    }
+
     fun getDistrict(districtId: Int) = covidDatabase.districtDao().getByDistrictId(districtId)
 
     fun getStates() = covidDatabase.stateDao().getStates(Country.INDIA.code)
@@ -120,7 +128,7 @@ class CovidIndiaRepository(private val covidDatabase: CovidDatabase) {
 
     fun getResources(stateName: String, district: String, category: String) = covidDatabase.resourceDao().getResources(stateName, district, category)
 
-    fun getDailyChanges(totalEntries: Int): LiveData<List<DailyChangesEntity>> {
-        return covidDatabase.dailyChangesDao().getEntries(Country.INDIA.code, totalEntries)
+    fun getDailyChanges(stateCode: String, totalEntries: Int): LiveData<List<DailyChangesEntity>> {
+        return covidDatabase.dailyChangesDao().getEntries(Country.INDIA.code, stateCode, totalEntries)
     }
 }

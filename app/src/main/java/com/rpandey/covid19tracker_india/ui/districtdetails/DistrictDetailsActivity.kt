@@ -11,6 +11,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.FragmentActivity
 import com.rpandey.covid19tracker_india.R
 import com.rpandey.covid19tracker_india.data.Constants
+import com.rpandey.covid19tracker_india.data.model.IndianStates
 import com.rpandey.covid19tracker_india.database.entity.DistrictEntity
 import com.rpandey.covid19tracker_india.database.model.CountModel
 import com.rpandey.covid19tracker_india.databinding.ActivityDistrictDetailsBinding
@@ -18,12 +19,12 @@ import com.rpandey.covid19tracker_india.ui.BaseActivity
 import com.rpandey.covid19tracker_india.ui.essentials.EssentialsFragment
 import com.rpandey.covid19tracker_india.ui.home.ItemCountCaseBindingModel
 import com.rpandey.covid19tracker_india.ui.home.UICaseType
+import com.rpandey.covid19tracker_india.ui.statedetails.StateDetailsActivity
 import com.rpandey.covid19tracker_india.util.Util
 import com.rpandey.covid19tracker_india.util.attachFragment
 import com.rpandey.covid19tracker_india.util.getViewModel
 import com.rpandey.covid19tracker_india.util.observe
 import kotlinx.android.synthetic.main.activity_district_details.*
-import kotlinx.android.synthetic.main.layout_cases_count.*
 import kotlinx.android.synthetic.main.layout_district_rank_meta.*
 
 class DistrictDetailsActivity : BaseActivity() {
@@ -58,7 +59,6 @@ class DistrictDetailsActivity : BaseActivity() {
         val districtId = intent.getIntExtra(KEY_DISTRICT_ID, 0)
         viewModel.init(districtId)
 
-        testing_layout.visibility = View.GONE
         iv_close.setOnClickListener { finish() }
 
         more_info.setOnClickListener {
@@ -92,9 +92,14 @@ class DistrictDetailsActivity : BaseActivity() {
             Util.shareScreenshot(screen_shot_layout)
         }
 
+        state_name.setOnClickListener {
+            districtEntity?.stateName?.let { openStateDetailsActivity(it) }
+        }
+
         viewModel.getDistrictInfo.observe(this) {
             this.districtEntity = it
             binding.title.text = it.district
+            binding.stateName.text = it.stateName+" ↗"
             generateUiCaseMode(it)
             setZoneUI(it.zone)
             checkForEssentialData(it.stateName, it.district)
@@ -120,6 +125,24 @@ class DistrictDetailsActivity : BaseActivity() {
                 getString(R.string.district_rank_combined), stateSpanPlaceholder, it.stateName, overallSpanPlaceholder
             )
             state_delta_meta.text = Util.setTextSpan(districtDeltaPositionText, Util.dpToPx(spanSize), stateSpanPlaceholder, overallSpanPlaceholder)
+
+            val testingSpanPlaceholder = Util.getPercentage(it.totalCases, it.totalTesting)
+            if (testingSpanPlaceholder.isNotEmpty()) {
+                testing_meta.visibility = View.VISIBLE
+                val testingMetaText = String.format(getString(R.string.district_state_meta_testing), testingSpanPlaceholder)
+                testing_meta.text = Util.setTextSpan(
+                    testingMetaText,
+                    Util.dpToPx(spanSize),
+                    testingSpanPlaceholder
+                )
+            }
+        }
+    }
+
+    private fun openStateDetailsActivity(stateName: String) {
+        val state = IndianStates.fromName(stateName)
+        if (state != IndianStates.UN) {
+            startActivity(StateDetailsActivity.getIntent(this, state.stateCode, state.stateName))
         }
     }
 
@@ -140,7 +163,8 @@ class DistrictDetailsActivity : BaseActivity() {
             UICaseType.TYPE_CONFIRMED to CountModel(district.confirmed, district.totalConfirmed),
             UICaseType.TYPE_ACTIVE to CountModel(district.getCurrentActive(), district.getActive()),
             UICaseType.TYPE_RECOVERED to CountModel(district.recovered, district.totalRecovered),
-            UICaseType.TYPE_DEATH to CountModel(district.deceased, district.totalDeceased)
+            UICaseType.TYPE_DEATH to CountModel(district.deceased, district.totalDeceased),
+            UICaseType.TYPE_TESTING to CountModel(district.tested, district.totalTested)
         )
 
         uiCaseMap.forEach { (uiCase, _) ->

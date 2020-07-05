@@ -15,12 +15,14 @@ class ItemCountCaseBindingModel(private val context: Context) {
     val totalCount = ObservableField<String>()
     val deltaCount = ObservableField<String>()
     val deltaCountInt = ObservableField<Int>()
+    val totalCountInt = ObservableField<Int>()
     val percentageCount = ObservableField<String>()
     val backgroundColor = ObservableInt()
 
     fun init(caseType: UICaseType, caseMapping: Map<UICaseType, CountModel>) {
         val countModel = caseMapping[caseType] ?: error("$caseType not found")
         totalCount.set(Util.formatNumber(countModel.totalCount))
+        totalCountInt.set(countModel.totalCount)
         setDeltaCount(countModel.currentCount)
 
         val confirmCaseModel = caseMapping[UICaseType.TYPE_CONFIRMED]

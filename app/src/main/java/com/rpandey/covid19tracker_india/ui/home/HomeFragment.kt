@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import com.rpandey.covid19tracker_india.R
+import com.rpandey.covid19tracker_india.data.Constants
 import com.rpandey.covid19tracker_india.database.model.CountModel
 import com.rpandey.covid19tracker_india.databinding.FragmentHomeBinding
 import com.rpandey.covid19tracker_india.ui.BaseFragment
@@ -54,7 +55,7 @@ class HomeFragment : BaseFragment() {
         })
 
         iv_history.setOnClickListener {
-            startActivity(Intent(activity, HistoryCasesActivity::class.java))
+            HistoryCasesActivity.fireIntent(requireActivity(), Constants.STATE_TOTAL_CASE)
         }
     }
 

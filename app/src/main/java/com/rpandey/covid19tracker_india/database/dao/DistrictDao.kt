@@ -38,4 +38,10 @@ interface DistrictDao {
     @Query("DELETE FROM district_cases")
     fun delete()
 
+    @Query("SELECT * from district_cases where confirmed > 0 order by confirmed desc")
+    fun newConfirmedCases(): LiveData<List<DistrictEntity>>
+
+    @Query("SELECT * from district_cases where stateName = :stateName and confirmed > 0 order by confirmed desc")
+    fun newConfirmedCases(stateName: String): LiveData<List<DistrictEntity>>
+
 }
