@@ -2,7 +2,6 @@ package com.rpandey.covid19tracker_india.ui.statedetails
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.LinearLayout
@@ -16,6 +15,7 @@ import com.rpandey.covid19tracker_india.database.entity.StateEntity
 import com.rpandey.covid19tracker_india.database.model.CountModel
 import com.rpandey.covid19tracker_india.databinding.ActivityStateDetailsBinding
 import com.rpandey.covid19tracker_india.ui.BaseActivity
+import com.rpandey.covid19tracker_india.ui.caseshistory.HistoryCasesActivity
 import com.rpandey.covid19tracker_india.ui.common.HeaderViewHelper
 import com.rpandey.covid19tracker_india.ui.common.SortOn
 import com.rpandey.covid19tracker_india.ui.common.ViewSortModel
@@ -79,6 +79,10 @@ class StateDetailsActivity : BaseActivity(), SelectStateBottomSheet.Callback {
                 val rootView = window.decorView.findViewById<View>(android.R.id.content)
                 logEvent("STATE_STATS_CLICKED")
                 Util.shareScreenshot(rootView)
+            }
+
+            ivHistory.setOnClickListener {
+                HistoryCasesActivity.fireIntent(this@StateDetailsActivity, stateCode)
             }
         }
 

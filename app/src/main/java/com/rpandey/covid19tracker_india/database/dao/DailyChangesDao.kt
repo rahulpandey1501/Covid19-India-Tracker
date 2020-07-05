@@ -10,8 +10,8 @@ import com.rpandey.covid19tracker_india.database.entity.DailyChangesEntity
 @Dao
 interface DailyChangesDao {
 
-    @Query("select * from daily_changes where country = :country order by `order` desc limit :totalEntries")
-    fun getEntries(country: String, totalEntries: Int): LiveData<List<DailyChangesEntity>>
+    @Query("select * from daily_changes where country = :country and state = :stateCode order by `order` desc limit :totalEntries")
+    fun getEntries(country: String, stateCode: String, totalEntries: Int): LiveData<List<DailyChangesEntity>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(items: List<DailyChangesEntity>)

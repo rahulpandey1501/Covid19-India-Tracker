@@ -20,15 +20,25 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginTop="8dp"
         android:text="@string/menu_history"
-        android:textColor="@color/text_primary"
-        android:textSize="28sp"
+        android:textColor="@color/text_secondary"
+        android:textSize="16sp"
         android:textStyle="bold" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/state_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="4dp"
+        android:textColor="@color/text_primary"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        tools:text="Madhya Pradesh" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"

@@ -68,3 +68,10 @@ class Migrations7to8: Migration(7, 8) {
         addColumn(database, "states", "population", "INTEGER NOT NULL DEFAULT 0")
     }
 }
+
+class Migrations8to9: Migration(8, 9) {
+    override fun migrate(database: SupportSQLiteDatabase) {
+        database.execSQL("DROP TABLE `daily_changes`")
+        database.execSQL("CREATE TABLE `daily_changes` (`order` INTEGER NOT NULL, `country` TEXT NOT NULL, `state` TEXT NOT NULL, `confirmed` INTEGER NOT NULL, `total_confirmed` INTEGER NOT NULL, `deceased` INTEGER NOT NULL, `total_deceased` INTEGER NOT NULL, `recovered` INTEGER NOT NULL, `total_recovered` INTEGER NOT NULL, `date` TEXT NOT NULL, PRIMARY KEY(`order`, `state`))")
+    }
+}

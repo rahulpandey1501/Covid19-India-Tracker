@@ -124,7 +124,7 @@ class CovidIndiaRepository(private val covidDatabase: CovidDatabase) {
 
     fun getResources(stateName: String, district: String, category: String) = covidDatabase.resourceDao().getResources(stateName, district, category)
 
-    fun getDailyChanges(totalEntries: Int): LiveData<List<DailyChangesEntity>> {
-        return covidDatabase.dailyChangesDao().getEntries(Country.INDIA.code, totalEntries)
+    fun getDailyChanges(stateCode: String, totalEntries: Int): LiveData<List<DailyChangesEntity>> {
+        return covidDatabase.dailyChangesDao().getEntries(Country.INDIA.code, stateCode, totalEntries)
     }
 }

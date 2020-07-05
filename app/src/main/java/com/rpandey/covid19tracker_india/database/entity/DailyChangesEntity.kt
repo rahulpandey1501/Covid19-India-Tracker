@@ -2,14 +2,15 @@ package com.rpandey.covid19tracker_india.database.entity
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
-import androidx.room.PrimaryKey
 
 @Entity(
-    tableName = "daily_changes"
+    tableName = "daily_changes",
+    primaryKeys = ["order", "state"]
 )
 data class DailyChangesEntity(
-    @PrimaryKey @ColumnInfo(name = "order") var order: Int = 0,
+    @ColumnInfo(name = "order") var order: Int = 0,
     @ColumnInfo(name = "country") val country: String,
+    @ColumnInfo(name = "state") val stateCode: String,
     @ColumnInfo(name = "confirmed") val confirmed: Int,
     @ColumnInfo(name = "total_confirmed") var totalConfirmed: Int,
     @ColumnInfo(name = "deceased") val deceased: Int,
