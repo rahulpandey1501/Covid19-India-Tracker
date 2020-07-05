@@ -16,7 +16,7 @@ class DailyUpdatesViewModel(private val repository: CovidIndiaRepository) : View
         }
     }
 
-    fun getDailyDistrictUpdates(): LiveData<List<DistrictEntity>> {
-        return repository.getDistrictsNewCases()
+    fun getDailyDistrictUpdates(stateName: String? = null): LiveData<List<DistrictEntity>> {
+        return repository.getDistrictsNewCases(stateName)
     }
 }

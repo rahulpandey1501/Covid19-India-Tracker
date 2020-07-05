@@ -6,19 +6,26 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.core.text.HtmlCompat
 import androidx.lifecycle.Lifecycle
 import com.rpandey.covid19tracker_india.R
+import com.rpandey.covid19tracker_india.database.dao.CombinedCasesModel
 import com.rpandey.covid19tracker_india.database.entity.DistrictEntity
 import com.rpandey.covid19tracker_india.databinding.FragmentNotificationsBinding
+import com.rpandey.covid19tracker_india.databinding.ItemDistrictCasesMinimalBinding
 import com.rpandey.covid19tracker_india.databinding.ItemUpdatesBinding
 import com.rpandey.covid19tracker_india.ui.BaseFragment
 import com.rpandey.covid19tracker_india.ui.districtdetails.DistrictDetailsActivity
 import com.rpandey.covid19tracker_india.ui.statedetails.StateDetailsActivity
+import com.rpandey.covid19tracker_india.util.GridViewInflater
+import com.rpandey.covid19tracker_india.util.Util
 import com.rpandey.covid19tracker_india.util.getViewModel
 import com.rpandey.covid19tracker_india.util.observe
 import kotlinx.android.synthetic.main.fragment_notifications.*
+import kotlinx.android.synthetic.main.item_updates.view.*
 import kotlinx.coroutines.*
+import kotlin.math.absoluteValue
 
 class DailyUpdatesFragment : BaseFragment() {
 
@@ -28,6 +35,7 @@ class DailyUpdatesFragment : BaseFragment() {
 
     override fun getScreenName(): String? = "DailyUpdates"
 
+    private val initialDistrictsOnState = 9
     private lateinit var districtAdapter: NewDistrictCasesAdapter
     private lateinit var binding: FragmentNotificationsBinding
 
@@ -65,8 +73,11 @@ class DailyUpdatesFragment : BaseFragment() {
                 val binding = ItemUpdatesBinding.inflate(LayoutInflater.from(requireContext()), binding.stateContainer, true)
                 binding.title.text = data.stateName
                 binding.message.text = message
-                binding.root.setOnClickListener {
-                    startActivity(StateDetailsActivity.getIntent(requireActivity(), data.state, data.stateName))
+                binding.stateView.setOnClickListener {
+                    openStateDetailsView(data)
+                }
+                binding.ivToggle.setOnClickListener {
+                    showDistrictsOnStates(binding.districtsRoot, binding.ivToggle, data)
                 }
             }
         }
@@ -116,6 +127,60 @@ class DailyUpdatesFragment : BaseFragment() {
 
     private fun openDistrictDetailsView(district: DistrictEntity) {
         startActivity(DistrictDetailsActivity.getIntent(requireActivity(), district.districtId))
+    }
+
+    private fun openStateDetailsView(data: CombinedCasesModel) {
+        startActivity(StateDetailsActivity.getIntent(requireActivity(), data.state, data.stateName))
+    }
+
+    private fun showDistrictsOnStates(root: View, arrowView: ImageView, model: CombinedCasesModel) {
+
+        root.visibility = if (root.visibility == View.VISIBLE) View.GONE else View.VISIBLE
+
+        arrowView.rotation = (arrowView.rotation - 180f).absoluteValue
+
+        if (root.districts.childCount > 0) return
+
+        viewModel.getDailyDistrictUpdates(model.stateName).observe(this) { data ->
+
+            GridViewInflater(3, root.districts) {
+
+                val initialData = data.take(initialDistrictsOnState)
+                val remainingData = if (data.size > initialDistrictsOnState) data.subList(initialDistrictsOnState, data.size) else emptyList()
+
+                if (remainingData.isNotEmpty()) {
+                    root.load_more.visibility = View.VISIBLE
+                }
+
+                initialData.forEach { data ->
+                    val binding: ItemDistrictCasesMinimalBinding =
+                        addView(R.layout.item_district_cases_minimal)
+                    binding.apply {
+                        tvTitle.text = data.district
+                        tvCount.text = Util.formatNumber(data.confirmed)
+                        root.setOnClickListener {
+                            openDistrictDetailsView(data)
+                        }
+                    }
+                }
+
+
+                root.load_more.setOnClickListener {
+                    remainingData.forEach { data ->
+                        val binding: ItemDistrictCasesMinimalBinding =
+                            addView(R.layout.item_district_cases_minimal)
+                        binding.apply {
+                            tvTitle.text = data.district
+                            tvCount.text = Util.formatNumber(data.confirmed)
+                            root.setOnClickListener {
+                                openDistrictDetailsView(data)
+                            }
+                        }
+                    }
+                    root.load_more.visibility = View.GONE
+                }
+            }
+        }
     }
 
     private fun getSentence(confirmedCount: Int, recoveredCount: Int, deathCount: Int): String {

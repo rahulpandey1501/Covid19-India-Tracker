@@ -7,13 +7,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
-        android:foreground="?attr/selectableItemBackground"
         app:cardBackgroundColor="@color/item_background"
-        app:contentPadding="10dp"
         app:cardCornerRadius="6dp"
-        app:cardElevation="0dp">
+        app:cardElevation="0dp"
+        app:contentPadding="10dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/state_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -22,22 +22,73 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@color/text_primary"
-                android:textStyle="bold"
                 android:textSize="14sp"
+                android:textStyle="bold"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="Hello " />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/message"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:textColor="@color/text_secondary"
                 android:textSize="13sp"
+                app:layout_constrainedWidth="true"
                 app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toLeftOf="@+id/iv_toggle"
                 app:layout_constraintTop_toBottomOf="@+id/title"
                 tools:text="Hello " />
+
+            <ImageView
+                android:id="@+id/iv_toggle"
+                android:layout_width="36dp"
+                android:layout_height="0dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
+                android:rotation="180"
+                android:src="@drawable/ic_sharp_keyboard_arrow_up_24"
+                android:tint="@color/text_secondary"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintBottom_toBottomOf="@+id/message"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <LinearLayout
+                android:id="@+id/districts_root"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone"
+                app:layout_constraintTop_toBottomOf="@+id/message">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.2dp"
+                    android:layout_marginTop="10dp"
+                    android:alpha="0.6"
+                    android:background="@color/text_secondary" />
+
+                <FrameLayout
+                    android:id="@+id/districts"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/load_more"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:background="?attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:text="@string/show_all"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="12sp"
+                    android:visibility="gone" />
+            </LinearLayout>
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.cardview.widget.CardView>

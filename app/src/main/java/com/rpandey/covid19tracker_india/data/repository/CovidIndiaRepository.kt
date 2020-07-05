@@ -60,8 +60,12 @@ class CovidIndiaRepository(private val covidDatabase: CovidDatabase) {
         }
     }
 
-    fun getDistrictsNewCases(): LiveData<List<DistrictEntity>> {
-        return covidDatabase.districtDao().newConfirmedCases()
+    fun getDistrictsNewCases(stateName: String?): LiveData<List<DistrictEntity>> {
+        return if (stateName != null) {
+            covidDatabase.districtDao().newConfirmedCases(stateName)
+        } else {
+            covidDatabase.districtDao().newConfirmedCases()
+        }
     }
 
     fun getDistrict(districtId: Int) = covidDatabase.districtDao().getByDistrictId(districtId)

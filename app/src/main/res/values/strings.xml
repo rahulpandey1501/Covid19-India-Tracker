@@ -82,4 +82,6 @@
     <string name="menu_history">History</string>
     <string name="worldwide">Worldwide</string>
     <string name="district_new_cases">New confirmed cases</string>
+    <string name="show_all">Show all</string>
+    <string name="hide_all">Hide all</string>
 </resources>
