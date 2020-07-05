@@ -158,7 +158,7 @@ class DailyUpdatesFragment : BaseFragment() {
                     binding.apply {
                         tvTitle.text = data.district
                         tvCount.text = Util.formatNumber(data.confirmed)
-                        root.setOnClickListener {
+                        this.root.setOnClickListener {
                             openDistrictDetailsView(data)
                         }
                     }
@@ -172,7 +172,7 @@ class DailyUpdatesFragment : BaseFragment() {
                         binding.apply {
                             tvTitle.text = data.district
                             tvCount.text = Util.formatNumber(data.confirmed)
-                            root.setOnClickListener {
+                            this.root.setOnClickListener {
                                 openDistrictDetailsView(data)
                             }
                         }

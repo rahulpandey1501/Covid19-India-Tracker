@@ -42,7 +42,7 @@ class HistoryCasesActivity : BaseActivity() {
         val stateCode = intent.extras?.getString(KEY_STATE_CODE)!!
         state_name.text = getStateName(stateCode)
         recycler_view.adapter = adapter
-        recycler_view.layoutAnimation = AnimationUtils.loadLayoutAnimation(this, R.anim.layout_animation_fall_down)
+//        recycler_view.layoutAnimation = AnimationUtils.loadLayoutAnimation(this, R.anim.layout_animation_fall_down)
         observeData(stateCode)
     }
 
