@@ -19,7 +19,7 @@ class DailyUpdatesViewModel(private val repository: CovidIndiaRepository) : View
 
     fun getDailyDistrictUpdates(stateName: String? = null): LiveData<List<DistrictEntity>> {
         return Transformations.map(repository.getDistrictsNewCases(stateName)) {
-            it.filter { Constants.UNKNOWN.equals(it.district, true) }
+            it.filter { !Constants.UNKNOWN.equals(it.district, true) }
         }
     }
 }
