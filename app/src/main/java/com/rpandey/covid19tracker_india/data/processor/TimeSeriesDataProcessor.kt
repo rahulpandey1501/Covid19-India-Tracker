@@ -10,16 +10,16 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class TimeSeriesDataProcessor(covidDatabase: CovidDatabase) :
-    ResponseProcessor<HashMap<String, LinkedHashMap<String, TimeSeriesResponse>>>(covidDatabase) {
+    ResponseProcessor<HashMap<String, TimeSeriesResponse>>(covidDatabase) {
 
     private val targetFormat = SimpleDateFormat("dd MMM yy", Locale.getDefault())
     private val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
 
-    override fun process(data: HashMap<String, LinkedHashMap<String, TimeSeriesResponse>>) {
+    override fun process(data: HashMap<String, TimeSeriesResponse>) {
         val dailyChanges = mutableListOf<DailyChangesEntity>()
         data.forEach { (state, timeSeries) ->
             var index = 25 // max entries we want
-            timeSeries.toSortedMap(reverseOrder()).forEach { (seriesDate, caseData) ->
+            timeSeries.dates?.toSortedMap(reverseOrder())?.forEach { (seriesDate, caseData) ->
                 try {
                     if (index >= 0) {
                         val date = targetFormat.format(dateFormat.parse(seriesDate))

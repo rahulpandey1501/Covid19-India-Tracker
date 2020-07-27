@@ -24,7 +24,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginTop="8dp"
-        android:text="@string/menu_history"
+        android:text="@string/daily_new_cases"
         android:textColor="@color/text_secondary"
         android:textSize="16sp"
         android:textStyle="bold" />

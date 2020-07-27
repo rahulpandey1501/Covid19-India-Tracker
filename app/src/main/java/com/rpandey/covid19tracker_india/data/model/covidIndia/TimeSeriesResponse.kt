@@ -5,6 +5,12 @@ import com.google.gson.annotations.SerializedName
 
 @Keep
 class TimeSeriesResponse {
+    @SerializedName("dates")
+    val dates: LinkedHashMap<String, TimeSeriesData>? = null
+}
+
+@Keep
+class TimeSeriesData {
     @SerializedName("delta")
     val delta: Data? = null
     @SerializedName("total")
