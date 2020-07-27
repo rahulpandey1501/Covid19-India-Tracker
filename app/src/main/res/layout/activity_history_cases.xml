@@ -26,7 +26,7 @@
         android:layout_marginTop="8dp"
         android:text="@string/daily_new_cases"
         android:textColor="@color/text_secondary"
-        android:textSize="16sp"
+        android:textSize="12sp"
         android:textStyle="bold" />
 
     <androidx.appcompat.widget.AppCompatTextView
