@@ -25,7 +25,7 @@ class WebViewActivity : AppCompatActivity() {
         val title = intent.getStringExtra(KEY_TITLE)
         title?.let { setPageTitle(it) }
 
-        val url = intent.getStringExtra(KEY_URL)
+        val url = intent.getStringExtra(KEY_URL)!!
         webview.webViewClient = object : WebViewClient() {
             override fun onPageFinished(view: WebView?, url: String?) {
                 super.onPageFinished(view, url)
@@ -43,7 +43,7 @@ class WebViewActivity : AppCompatActivity() {
         webview.loadUrl(url)
     }
 
-    private fun setPageTitle(title: String) {
+    private fun setPageTitle(title: String?) {
         supportActionBar?.title = title
     }
 
