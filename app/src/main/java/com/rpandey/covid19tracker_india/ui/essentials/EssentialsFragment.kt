@@ -17,6 +17,8 @@ class EssentialsFragment : BaseFragment(), ItemSelectorBottomSheet.Callback<Stri
 
     override fun getScreenName() = "EssentialsFragment"
 
+    private val testingWord = "testing"
+
     companion object {
         const val TAG = "EssentialsFragment"
         const val KEY_STATE = "KEY_STATE"
@@ -86,7 +88,8 @@ class EssentialsFragment : BaseFragment(), ItemSelectorBottomSheet.Callback<Stri
             }
 
             categoriesLD.observe(this@EssentialsFragment) { data ->
-                data.firstOrNull()?.let { selectCategory(it) }
+                val defaultSelectedEssential = data.find { it.contains(testingWord, true) } ?: data.firstOrNull()
+                defaultSelectedEssential?.let { selectCategory(it) }
             }
 
             resourcesLD.observe(this@EssentialsFragment) {

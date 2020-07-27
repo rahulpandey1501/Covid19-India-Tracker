@@ -1,6 +1,7 @@
 package com.rpandey.covid19tracker_india.ui.notifications.dailyupdates
 
 import androidx.lifecycle.*
+import com.rpandey.covid19tracker_india.data.Constants
 import com.rpandey.covid19tracker_india.data.model.IndianStates
 import com.rpandey.covid19tracker_india.data.repository.CovidIndiaRepository
 import com.rpandey.covid19tracker_india.database.dao.CombinedCasesModel
@@ -17,6 +18,8 @@ class DailyUpdatesViewModel(private val repository: CovidIndiaRepository) : View
     }
 
     fun getDailyDistrictUpdates(stateName: String? = null): LiveData<List<DistrictEntity>> {
-        return repository.getDistrictsNewCases(stateName)
+        return Transformations.map(repository.getDistrictsNewCases(stateName)) {
+            it.filter { Constants.UNKNOWN.equals(it.district, true) }
+        }
     }
 }
