@@ -24,7 +24,7 @@ android {
         applicationId "com.rpandey.covid19tracker_india"
         minSdkVersion 21
         targetSdkVersion 30
-        versionCode 26
+        versionCode 27
         versionName "2.7"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
