@@ -7,7 +7,7 @@ import com.google.gson.Gson
 import com.rpandey.covid19tracker_india.R
 import com.rpandey.covid19tracker_india.database.entity.NewsEntity
 import com.rpandey.covid19tracker_india.ui.BaseActivity
-import com.rpandey.covid19tracker_india.ui.notifications.todaysnews.TodaysNewsViewModel
+import com.rpandey.covid19tracker_india.util.Util
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_news_details.*
 
@@ -31,7 +31,6 @@ class NewsDetailsActivity : BaseActivity() {
         ViewCompat.setTransitionName(iv_news, VIEW_IMAGE)
         ViewCompat.setTransitionName(headline, VIEW_HEADLINE)
         readBundle()
-        iv_close.setOnClickListener { onBackPressed() }
     }
 
     private fun readBundle() {
@@ -42,5 +41,10 @@ class NewsDetailsActivity : BaseActivity() {
         Picasso.get()
             .load(data.image)
             .into(iv_news)
+        iv_close.setOnClickListener {
+            data.link?.let {
+                Util.openWebUrl(this, data.link)
+            }
+        }
     }
 }

@@ -1,7 +1,7 @@
 package com.rpandey.covid19tracker_india.network
 
 import com.rpandey.covid19tracker_india.data.model.covidIndia.*
-import com.rpandey.covid19tracker_india.data.model.covidIndia.news.NewsResponse
+import com.rpandey.covid19tracker_india.data.model.covidIndia.news.NewsListResponse
 import retrofit2.http.GET
 import retrofit2.http.Url
 
@@ -24,5 +24,5 @@ interface CovidIndiaApiService {
     suspend fun getTimeSeries(): HashMap<String, TimeSeriesResponse>
 
     @GET
-    suspend fun getNews(@Url url: String): NewsResponse
+    suspend fun getNews(@Url url: String): NewsListResponse
 }

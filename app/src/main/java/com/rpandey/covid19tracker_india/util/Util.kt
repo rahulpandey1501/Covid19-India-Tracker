@@ -135,9 +135,17 @@ object Util {
                     .build()
                 CustomTabsHelper.addKeepAliveExtra(context, customTabsIntent.intent)
                 val packageName = CustomTabsHelper.getPackageNameToUse(context)
-                if (packageName != null) {
-                    customTabsIntent.intent.setPackage(packageName)
-                    customTabsIntent.launchUrl(context, Uri.parse(url))
+                when {
+                    packageName != null -> {
+                        customTabsIntent.intent.setPackage(packageName)
+                        customTabsIntent.launchUrl(context, Uri.parse(url))
+                    }
+                    forceExternalBrowser -> {
+                        openBrowser(context, url)
+                    }
+                    else -> {
+                        openWebviewIntent(context, url, title)
+                    }
                 }
             } catch (e: Exception) {
                 if (forceExternalBrowser) {

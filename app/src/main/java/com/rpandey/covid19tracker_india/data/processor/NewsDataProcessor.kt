@@ -2,36 +2,42 @@ package com.rpandey.covid19tracker_india.data.processor
 
 import androidx.room.Transaction
 import com.rpandey.covid19tracker_india.data.model.Country
-import com.rpandey.covid19tracker_india.data.model.covidIndia.news.NewsResponse
+import com.rpandey.covid19tracker_india.data.model.covidIndia.news.NewsListResponse
 import com.rpandey.covid19tracker_india.database.entity.NewsEntity
 import com.rpandey.covid19tracker_india.database.provider.CovidDatabase
 import java.lang.Exception
 
-class NewsDataProcessor(covidDatabase: CovidDatabase) : ResponseProcessor<NewsResponse>(covidDatabase) {
+class NewsDataProcessor(covidDatabase: CovidDatabase) :
+    ResponseProcessor<NewsListResponse>(covidDatabase) {
 
-    override fun process(data: NewsResponse) {
-        val items = mutableListOf<NewsEntity>()
-        val headlines = data.headlines
-        val images = data.images
-        val summaries = data.summary
+    override fun process(data: NewsListResponse) {
+        try {
+            if (data.success) {
+                val items = mutableListOf<NewsEntity>()
+                data.data?.forEach { news ->
+                    val headline = news.title
+                    val summary = news.content
+                    val image = news.imageUrl
+                    val link = news.readMoreUrl
 
-        for (index in data.headlines.indices) {
-            try {
-                val headline = headlines[index]
-                val summary = summaries?.get(index)
-                val image = images?.get(index)
-
-                if (summary != null && image != null) {
-                    items.add(
-                        NewsEntity(Country.INDIA.code, data.source, headline, summary, image, null)
-                    )
+                    if (headline != null && summary != null && image != null) {
+                        items.add(
+                            NewsEntity(
+                                Country.INDIA.code,
+                                "inShorts",
+                                headline,
+                                summary,
+                                image,
+                                link
+                            )
+                        )
+                    }
                 }
-            } catch (e: Exception) {}
-        }
-
-        if (items.isNotEmpty()) {
-            persists(items)
-        }
+                if (items.isNotEmpty()) {
+                    persists(items)
+                }
+            }
+        } catch (e: Exception) { }
     }
 
     @Transaction
