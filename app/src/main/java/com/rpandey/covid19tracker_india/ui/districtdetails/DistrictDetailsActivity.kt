@@ -101,7 +101,6 @@ class DistrictDetailsActivity : BaseActivity() {
             binding.title.text = it.district
             binding.stateName.text = it.stateName+" ↗"
             generateUiCaseMode(it)
-            setZoneUI(it.zone)
             checkForEssentialData(it.stateName, it.district)
         }
 
@@ -143,18 +142,6 @@ class DistrictDetailsActivity : BaseActivity() {
         val state = IndianStates.fromName(stateName)
         if (state != IndianStates.UN) {
             startActivity(StateDetailsActivity.getIntent(this, state.stateCode, state.stateName))
-        }
-    }
-
-    private fun setZoneUI(zone: String?) {
-        if (zone.isNullOrEmpty()) {
-            indicator_layout.visibility = View.GONE
-
-        } else {
-            val color = Util.getZoneColor(this, zone)
-            Util.setTint(binding.ivZone, color)
-            binding.tvZone.setTextColor(color)
-            binding.tvZone.text = "$zone Zone"
         }
     }
 

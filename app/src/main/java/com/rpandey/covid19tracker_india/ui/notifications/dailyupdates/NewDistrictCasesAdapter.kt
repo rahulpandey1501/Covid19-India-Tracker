@@ -44,9 +44,6 @@ class NewDistrictCasesAdapter(var data: MutableList<DistrictEntity>, private val
                     val state = IndianStates.fromName(district.stateName)
                     val stateText = if (state != IndianStates.UN) state.stateCode else district.stateName
                     tvTitle.text = "${district.district} ($stateText)"
-                    if (district.stateName.equals(IndianStates.DL.stateName, true)) {
-                        tvTitle.text = IndianStates.DL.stateName
-                    }
                 }
             }
         }

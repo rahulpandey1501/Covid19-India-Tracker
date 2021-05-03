@@ -99,7 +99,6 @@ class StateDetailsActivity : BaseActivity(), SelectStateBottomSheet.Callback {
 
         viewModel.getDistricts(stateName).observe(this) {
             inflateDistricts(it)
-            inflateZoneDistribution(it)
         }
 
         setupSortClickListeners()
@@ -139,42 +138,6 @@ class StateDetailsActivity : BaseActivity(), SelectStateBottomSheet.Callback {
         container_district_title.visibility = district_header.visibility
 
         adapter.update(data as MutableList<DistrictEntity>)
-    }
-
-    private fun inflateZoneDistribution(data: List<DistrictEntity>) {
-        zone_distribution_container.removeAllViews()
-
-        var orangeCount = 0
-        var redCount = 0
-        var greenCount = 0
-
-        data.forEach {
-            when(it.zone) {
-                Zone.Green.name -> { ++greenCount }
-                Zone.Orange.name -> { ++orangeCount }
-                Zone.Red.name -> { ++redCount }
-            }
-        }
-        val totalZoneCount = orangeCount + greenCount + redCount
-        inflateZoneItem(Zone.Red, redCount, totalZoneCount)
-        inflateZoneItem(Zone.Orange, orangeCount, totalZoneCount)
-        inflateZoneItem(Zone.Green, greenCount, totalZoneCount)
-    }
-
-    private fun inflateZoneItem(zone: Zone, currentZoneCount: Int, totalZoneCount: Int) {
-        val inflater = LayoutInflater.from(this)
-        val zoneItem = inflater.inflate(R.layout.item_zone_distribution, zone_distribution_container, false)
-        zoneItem.indicator.setBackgroundColor(Util.getZoneColor(this, zone.name))
-        zoneItem.distribution.text = Util.getPercentage(currentZoneCount, totalZoneCount)
-        val param = LinearLayout.LayoutParams(
-            LinearLayout.LayoutParams.MATCH_PARENT,
-            LinearLayout.LayoutParams.MATCH_PARENT,
-            1.0f
-        )
-        param.marginStart = Util.dpToPx(10f)
-        zoneItem.layoutParams = param
-        zoneItem.tv_zone.text = "${zone.name} zone"
-        zone_distribution_container.addView(zoneItem)
     }
 
     private fun openDistrictDetailsView(district: DistrictEntity) {

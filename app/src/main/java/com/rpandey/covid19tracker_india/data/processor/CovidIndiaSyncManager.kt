@@ -52,12 +52,6 @@ class CovidIndiaSyncManager(
                     syncOverallData(callback)
                 }
 
-                RequestId.ZONE_DATA -> {
-                    launch {
-                        syncZone(callback)
-                    }
-                }
-
                 RequestId.TIME_SERIES -> {
                     launch {
                         syncTimeSeriesData(callback)
