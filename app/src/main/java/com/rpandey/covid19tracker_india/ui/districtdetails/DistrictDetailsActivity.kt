@@ -151,7 +151,8 @@ class DistrictDetailsActivity : BaseActivity() {
             UICaseType.TYPE_ACTIVE to CountModel(district.getCurrentActive(), district.getActive()),
             UICaseType.TYPE_RECOVERED to CountModel(district.recovered, district.totalRecovered),
             UICaseType.TYPE_DEATH to CountModel(district.deceased, district.totalDeceased),
-            UICaseType.TYPE_TESTING to CountModel(district.tested, district.totalTested)
+            UICaseType.TYPE_TESTING to CountModel(district.tested, district.totalTested),
+            UICaseType.TYPE_VACCINATION to CountModel(district.totalVaccinated, district.totalVaccinated)
         )
 
         uiCaseMap.forEach { (uiCase, _) ->
@@ -169,6 +170,7 @@ class DistrictDetailsActivity : BaseActivity() {
                 UICaseType.TYPE_RECOVERED -> recoverVm = itemModel
                 UICaseType.TYPE_DEATH -> deathVm = itemModel
                 UICaseType.TYPE_TESTING -> testingVm = itemModel
+                UICaseType.TYPE_VACCINATION -> vaccinationVm = itemModel
             }
         }
     }

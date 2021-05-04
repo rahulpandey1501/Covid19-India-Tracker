@@ -22,7 +22,8 @@
     <string name="state_tracker">State/UTs</string>
     <string name="title_daily_updates">Today\'s updates</string>
     <string name="no_new_updates">No new updates</string>
-    <string name="total_testing">Total testing </string>
+    <string name="total_testing">Testing: </string>
+    <string name="total_vaccination">Vaccination: </string>
     <string name="top_district">Top Districts</string>
     <string name="view_all">View All</string>
     <string name="affected_district">Affected Districts</string>
@@ -85,5 +86,4 @@
     <string name="show_all">Show all</string>
     <string name="hide_all">Hide all</string>
     <string name="daily_new_cases">Daily new cases</string>
-    <string name="active_count">*Active cases</string>
 </resources>

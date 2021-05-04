@@ -20,6 +20,9 @@ interface CovidIndiaApiService {
     @GET("resources/resources.json")
     suspend fun getResources(): ResourceResponse
 
+    @GET("crowdsourced_resources_links.json")
+    suspend fun getCovidResources(): CovidResourceResponse
+
     @GET("v4/timeseries.json")
     suspend fun getTimeSeries(): HashMap<String, TimeSeriesResponse>
 

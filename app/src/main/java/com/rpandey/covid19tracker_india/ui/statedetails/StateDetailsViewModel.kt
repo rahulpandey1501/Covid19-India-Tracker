@@ -22,6 +22,8 @@ class StateDetailsViewModel(private val repository: CovidIndiaRepository) : View
 
     private fun getTestingCount(state: String) = repository.getTestingCount(state)
 
+    private fun getVaccinationCount(state: String) = repository.getVaccinationCount(state)
+
     fun getDistricts(stateName: String) = repository.getDistricts(stateName)
 
     fun getCount(state: String, stateName: String): MediatorLiveData<Map<UICaseType, CountModel>> {
@@ -59,6 +61,13 @@ class StateDetailsViewModel(private val repository: CovidIndiaRepository) : View
             addSource(getTestingCount(stateName), Observer {
                 it?.let {
                     allCases[UICaseType.TYPE_TESTING] = it
+                    value = allCases
+                }
+            })
+
+            addSource(getVaccinationCount(stateName), Observer {
+                it?.let {
+                    allCases[UICaseType.TYPE_VACCINATION] = it
                     value = allCases
                 }
             })

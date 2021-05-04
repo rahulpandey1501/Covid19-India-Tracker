@@ -51,7 +51,9 @@ class OverallDataProcessor(covidDatabase: CovidDatabase) :
                             Country.INDIA.code,
                             TestEntity.OVER_ALL,
                             deltaData?.tested ?: 0,
-                            totalData?.tested ?: 0
+                            totalData?.tested ?: 0,
+                            0,
+                            totalData?.vaccinated ?: 0
                         )
                     )
                     return@loop
@@ -112,7 +114,9 @@ class OverallDataProcessor(covidDatabase: CovidDatabase) :
                         Country.INDIA.code,
                         stateName,
                         deltaData?.tested ?: 0,
-                        totalData?.tested ?: 0
+                        totalData?.tested ?: 0,
+                        0,
+                        totalData?.vaccinated ?: 0
                     )
                 )
 
@@ -147,7 +151,9 @@ class OverallDataProcessor(covidDatabase: CovidDatabase) :
                         data.delta?.tested ?: 0,
                         data.total?.tested ?: 0,
                         data.meta?.population ?: 0,
-                        null
+                        null,
+                        0,
+                        data.total?.vaccinated ?: 0
                     )
                 )
             }

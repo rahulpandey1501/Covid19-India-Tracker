@@ -17,4 +17,7 @@ interface TestDao {
 
     @Query("select total_tested as totalCount, tested as currentCount from test where country = :country and stateName = :stateName")
     fun getTotalCount(stateName: String, country: String = Country.INDIA.code): LiveData<CountModel>
+
+    @Query("select total_vaccinated as totalCount, vaccinated as currentCount from test where country = :country and stateName = :stateName")
+    fun getVaccinationCount(stateName: String, country: String = Country.INDIA.code): LiveData<CountModel>
 }

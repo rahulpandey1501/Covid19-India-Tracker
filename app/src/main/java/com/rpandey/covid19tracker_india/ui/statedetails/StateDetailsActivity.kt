@@ -129,6 +129,7 @@ class StateDetailsActivity : BaseActivity(), SelectStateBottomSheet.Callback {
                 UICaseType.TYPE_RECOVERED -> recoverVm = itemModel
                 UICaseType.TYPE_DEATH -> deathVm = itemModel
                 UICaseType.TYPE_TESTING -> testingVm = itemModel
+                UICaseType.TYPE_VACCINATION -> vaccinationVm = itemModel
             }
         }
     }
