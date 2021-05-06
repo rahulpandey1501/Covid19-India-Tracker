@@ -6,14 +6,6 @@ apply plugin: 'com.google.gms.google-services'
 apply plugin: 'com.google.firebase.crashlytics'
 
 android {
-    signingConfigs {
-        release {
-            storeFile file('release-key-pandey')
-            storePassword 'Rahul@1501'
-            keyAlias 'Rahul@1501'
-            keyPassword 'Rahul@1501'
-        }
-    }
     compileSdkVersion 30
 
     dataBinding {
