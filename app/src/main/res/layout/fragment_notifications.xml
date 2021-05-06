@@ -86,9 +86,8 @@
                 app:drawableTint="#212121"
                 android:paddingLeft="24dp"
                 android:paddingRight="24dp"
-                android:alpha="0.8"
                 android:drawablePadding="8dp"
-                android:text="@string/states"
+                android:text="@string/districts"
                 android:textColor="#212121"
                 android:textStyle="bold" />
         </androidx.cardview.widget.CardView>

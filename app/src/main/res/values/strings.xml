@@ -22,7 +22,8 @@
     <string name="state_tracker">State/UTs</string>
     <string name="title_daily_updates">Today\'s updates</string>
     <string name="no_new_updates">No new updates</string>
-    <string name="total_testing">Total testing </string>
+    <string name="total_testing">Testing: </string>
+    <string name="total_vaccination">Vaccination: </string>
     <string name="top_district">Top Districts</string>
     <string name="view_all">View All</string>
     <string name="affected_district">Affected Districts</string>
@@ -64,7 +65,7 @@
     <string name="share_stats">Share stats</string>
     <string name="finding_trouble_install"><u>install not working, try this</u></string>
     <string name="district_state_delta_percentage">Contributes %1$s cases across %2$s</string>
-    <string name="district_state_meta_testing">%1$s found Covid positive on testing</string>
+    <string name="district_state_meta_testing">%1$s found Covid positive during testing</string>
     <string name="district_state_rank">Position %1$s in %2$s</string>
     <string name="district_overall_rank">Position %s in India</string>
     <string name="district_rank_combined">No. %1$s in %2$s and %3$s in India</string>

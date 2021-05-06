@@ -101,7 +101,6 @@ class DistrictDetailsActivity : BaseActivity() {
             binding.title.text = it.district
             binding.stateName.text = it.stateName+" ↗"
             generateUiCaseMode(it)
-            setZoneUI(it.zone)
             checkForEssentialData(it.stateName, it.district)
         }
 
@@ -146,25 +145,14 @@ class DistrictDetailsActivity : BaseActivity() {
         }
     }
 
-    private fun setZoneUI(zone: String?) {
-        if (zone.isNullOrEmpty()) {
-            indicator_layout.visibility = View.GONE
-
-        } else {
-            val color = Util.getZoneColor(this, zone)
-            Util.setTint(binding.ivZone, color)
-            binding.tvZone.setTextColor(color)
-            binding.tvZone.text = "$zone Zone"
-        }
-    }
-
     private fun generateUiCaseMode(district: DistrictEntity) {
         val uiCaseMap = mapOf(
             UICaseType.TYPE_CONFIRMED to CountModel(district.confirmed, district.totalConfirmed),
             UICaseType.TYPE_ACTIVE to CountModel(district.getCurrentActive(), district.getActive()),
             UICaseType.TYPE_RECOVERED to CountModel(district.recovered, district.totalRecovered),
             UICaseType.TYPE_DEATH to CountModel(district.deceased, district.totalDeceased),
-            UICaseType.TYPE_TESTING to CountModel(district.tested, district.totalTested)
+            UICaseType.TYPE_TESTING to CountModel(district.tested, district.totalTested),
+            UICaseType.TYPE_VACCINATION to CountModel(district.totalVaccinated, district.totalVaccinated)
         )
 
         uiCaseMap.forEach { (uiCase, _) ->
@@ -182,6 +170,7 @@ class DistrictDetailsActivity : BaseActivity() {
                 UICaseType.TYPE_RECOVERED -> recoverVm = itemModel
                 UICaseType.TYPE_DEATH -> deathVm = itemModel
                 UICaseType.TYPE_TESTING -> testingVm = itemModel
+                UICaseType.TYPE_VACCINATION -> vaccinationVm = itemModel
             }
         }
     }

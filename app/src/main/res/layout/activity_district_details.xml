@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/page_background">
@@ -91,38 +91,8 @@
                             app:layout_constrainedWidth="true"
                             app:layout_constraintHorizontal_bias="0"
                             app:layout_constraintLeft_toLeftOf="parent"
-                            app:layout_constraintRight_toLeftOf="@+id/indicator_layout"
                             app:layout_constraintTop_toBottomOf="@+id/state_name"
                             tools:text="Bengaluru" />
-
-                        <LinearLayout
-                            android:id="@+id/indicator_layout"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="12dp"
-                            android:orientation="vertical"
-                            app:layout_constraintBottom_toBottomOf="@+id/last_update"
-                            app:layout_constraintRight_toRightOf="parent"
-                            app:layout_constraintTop_toTopOf="@+id/title">
-
-                            <ImageView
-                                android:id="@+id/iv_zone"
-                                android:layout_width="30dp"
-                                android:layout_height="30dp"
-                                android:layout_gravity="center_horizontal"
-                                android:src="@drawable/ic_baseline_traffic_24"
-                                tools:tint="@color/text_primary" />
-
-                            <androidx.appcompat.widget.AppCompatTextView
-                                android:id="@+id/tv_zone"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:textSize="14sp"
-                                android:textStyle="bold"
-                                app:layout_constraintRight_toRightOf="parent"
-                                app:layout_constraintTop_toBottomOf="@+id/title"
-                                tools:text="Red Zone" />
-                        </LinearLayout>
 
                         <androidx.appcompat.widget.AppCompatTextView
                             android:id="@+id/last_update"

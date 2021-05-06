@@ -46,6 +46,8 @@ class CovidIndiaRepository(private val covidDatabase: CovidDatabase) {
 
     fun getTestingCount(state: String = TestEntity.OVER_ALL) = covidDatabase.testDao().getTotalCount(state)
 
+    fun getVaccinationCount(state: String = TestEntity.OVER_ALL) = covidDatabase.testDao().getVaccinationCount(state)
+
     fun searchDistrict(district: String?) = covidDatabase.districtDao().getByDistrictName("%${district}%")
 
     fun getDistricts(stateName: String?, count: Int = -1): LiveData<List<DistrictEntity>> {

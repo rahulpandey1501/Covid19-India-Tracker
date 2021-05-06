@@ -63,6 +63,12 @@ class ItemCountCaseBindingModel(private val context: Context) {
                     deltaCount.set("(+${Util.formatNumber(countModel.currentCount)})")
                 }
             }
+            UICaseType.TYPE_VACCINATION -> {
+                title.set(context.getString(R.string.total_vaccination))
+                if (countModel.currentCount > 0) {
+                    deltaCount.set("(+${Util.formatNumber(countModel.currentCount)})")
+                }
+            }
         }
     }
 

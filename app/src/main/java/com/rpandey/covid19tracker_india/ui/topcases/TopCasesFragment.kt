@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.rpandey.covid19tracker_india.R
-import com.rpandey.covid19tracker_india.database.entity.DistrictEntity
 import com.rpandey.covid19tracker_india.databinding.ItemDistrictCasesMinimalBinding
 import com.rpandey.covid19tracker_india.ui.BaseFragment
 import com.rpandey.covid19tracker_india.ui.districtdetails.DistrictDetailsActivity
@@ -31,13 +30,13 @@ class TopCasesFragment : BaseFragment() {
     }
 
     override fun observeLiveData() {
-        viewModel.topCases.observe(this) { data ->
+        viewModel.topCases.observe(viewLifecycleOwner) { data ->
             GridViewInflater(3, top_district_container) {
                 data.forEach { data ->
                     val binding: ItemDistrictCasesMinimalBinding = addView(R.layout.item_district_cases_minimal)
                     binding.apply {
                         tvTitle.text = data.name
-                        tvCount.text = Util.formatNumber(data.totalConfirmed)
+                        tvCount.text = Util.formatNumber(data.totalActive)
                         root.setOnClickListener {
                             if (data.type == TopCasesViewModel.Type.DISTRICT)
                                 openDistrictDetailsView(data)

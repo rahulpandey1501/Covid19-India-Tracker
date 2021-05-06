@@ -94,7 +94,7 @@ class DailyUpdatesFragment : BaseFragment() {
 
         toggle.setOnClickListener {
             if (district_container.visibility == View.VISIBLE) {
-                tv_action_button.text = getString(R.string.states)
+                tv_action_button.text = getString(R.string.districts)
 
                 district_container.animate()
                     .alpha(0f)
@@ -109,7 +109,7 @@ class DailyUpdatesFragment : BaseFragment() {
 
 
             } else {
-                tv_action_button.text = getString(R.string.districts)
+                tv_action_button.text = getString(R.string.states)
 
                 state_container.animate()
                     .alpha(0f)

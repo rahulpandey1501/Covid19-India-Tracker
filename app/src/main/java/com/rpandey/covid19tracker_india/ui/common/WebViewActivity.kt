@@ -15,8 +15,6 @@ class WebViewActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_web_view)
-        supportActionBar?.setDisplayShowHomeEnabled(true)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
         readIntent()
     }
 
@@ -36,6 +34,8 @@ class WebViewActivity : AppCompatActivity() {
 
             }
         }
+        webview_url.text = url
+        nav_icon.setOnClickListener { onBackPressed() }
         webview.settings.setAppCacheEnabled(true)
         webview.settings.databaseEnabled = true
         webview.settings.domStorageEnabled = true
@@ -44,7 +44,7 @@ class WebViewActivity : AppCompatActivity() {
     }
 
     private fun setPageTitle(title: String?) {
-        supportActionBar?.title = title
+        webview_title.text = title
     }
 
     override fun onBackPressed() {

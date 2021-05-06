@@ -17,6 +17,8 @@ class HomeViewModel(private val repository: CovidIndiaRepository) : ViewModel() 
 
     private fun getTestingCount() = repository.getTestingCount()
 
+    private fun getVaccinationCount() = repository.getVaccinationCount()
+
     fun getCount(): MediatorLiveData<Map<UICaseType, CountModel>> {
         val allCases = mutableMapOf<UICaseType, CountModel>()
 
@@ -50,6 +52,13 @@ class HomeViewModel(private val repository: CovidIndiaRepository) : ViewModel() 
             addSource(getTestingCount()) {
                 it?.let {
                     allCases[UICaseType.TYPE_TESTING] = it
+                    value = allCases
+                }
+            }
+
+            addSource(getVaccinationCount()) {
+                it?.let {
+                    allCases[UICaseType.TYPE_VACCINATION] = it
                     value = allCases
                 }
             }

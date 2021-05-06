@@ -5,5 +5,6 @@ enum class UICaseType {
     TYPE_ACTIVE,
     TYPE_RECOVERED,
     TYPE_DEATH,
-    TYPE_TESTING
+    TYPE_TESTING,
+    TYPE_VACCINATION
 }

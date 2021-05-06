@@ -23,7 +23,9 @@ data class DistrictEntity constructor(
     @ColumnInfo(name = "tested") val tested: Int,
     @ColumnInfo(name = "total_tested") val totalTested: Int,
     @ColumnInfo(name = "population") val population: Long,
-    @ColumnInfo(name = "zone") val zone: String?
+    @ColumnInfo(name = "zone") val zone: String?,
+    @ColumnInfo(name = "vaccinated") val vaccinated: Int,
+    @ColumnInfo(name = "total_vaccinated") val totalVaccinated: Int
 ) {
     fun getActive() = (totalConfirmed - totalRecovered - totalDeceased)
     fun getCurrentActive() = (confirmed - recovered - deceased)
