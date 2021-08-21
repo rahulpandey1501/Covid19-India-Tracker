@@ -1,5 +1,6 @@
 package com.rpandey.covid19tracker_india
 
+import android.annotation.SuppressLint
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
@@ -15,7 +16,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.firebase.iid.FirebaseInstanceId
+import com.google.firebase.messaging.FirebaseMessaging
 import com.google.gson.Gson
 import com.rpandey.covid19tracker_india.data.Constants
 import com.rpandey.covid19tracker_india.data.RequestId
@@ -70,13 +71,11 @@ class MainActivity : BaseActivity() {
     }
 
     private fun initFCM() {
-        FirebaseInstanceId.getInstance().instanceId
+        FirebaseMessaging.getInstance().token
             .addOnCompleteListener(OnCompleteListener { task ->
                 if (!task.isSuccessful) {
                     return@OnCompleteListener
                 }
-                // Get new Instance ID token
-                val token = task.result?.token
             })
 
 //        FirebaseMessaging.getInstance().subscribeToTopic("DEV_TESTING").addOnCompleteListener {
@@ -84,6 +83,7 @@ class MainActivity : BaseActivity() {
 //        }
     }
 
+    @SuppressLint("RestrictedApi")
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.toolbar_menu, menu)
         try {

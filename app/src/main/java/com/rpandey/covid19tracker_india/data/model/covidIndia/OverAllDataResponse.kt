@@ -41,8 +41,14 @@ class Data {
     val deceased: Int = 0
     @SerializedName("tested")
     val tested: Int = 0
-    @SerializedName("vaccinated")
-    val vaccinated: Int = 0
+    @SerializedName("vaccinated1")
+    private val vaccinated1: Int = 0
+    @SerializedName("vaccinated2")
+    private val vaccinated2: Int = 0
+
+    val vaccinated by lazy {
+        vaccinated1 + vaccinated2
+    }
 
     fun getActive(): Int = confirmed - recovered - deceased
 }

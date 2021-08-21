@@ -10,16 +10,18 @@
     <application
         android:name=".CovidApplication"
         android:allowBackup="true"
+        android:usesCleartextTraffic="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.essentials.EssentialsActivity"></activity>
+        <activity android:name=".ui.essentials.EssentialsActivity" />
         <activity android:name=".ui.caseshistory.HistoryCasesActivity" />
         <activity android:name=".ui.help.HelpActivity" />
 
-        <receiver android:name=".widgets.OverallCasesWidget">
+        <receiver android:name=".widgets.OverallCasesWidget"
+            android:exported="false">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
@@ -29,14 +31,15 @@
                 android:resource="@xml/overall_cases_widget_info" />
         </receiver>
 
-        <activity android:name=".widgets.OverallCasesWidgetConfigureActivity">
+        <activity android:name=".widgets.OverallCasesWidgetConfigureActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
             </intent-filter>
         </activity>
         <activity android:name=".ui.notifications.todaysnews.details.NewsDetailsActivity" /> <!-- <service -->
         <!-- android:name=".FCMService" -->
-        <!-- android:exported="false"> -->
+        <!-- android:exported="true"> -->
         <!-- <intent-filter> -->
         <!-- <action android:name="com.google.firebase.MESSAGING_EVENT" /> -->
         <!-- </intent-filter> -->
@@ -67,7 +70,8 @@
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.Launcher">
+            android:theme="@style/AppTheme.Launcher"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

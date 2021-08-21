@@ -52,7 +52,7 @@ class OverallDataProcessor(covidDatabase: CovidDatabase) :
                             TestEntity.OVER_ALL,
                             deltaData?.tested ?: 0,
                             totalData?.tested ?: 0,
-                            0,
+                            deltaData?.vaccinated ?: 0,
                             totalData?.vaccinated ?: 0
                         )
                     )
@@ -115,7 +115,7 @@ class OverallDataProcessor(covidDatabase: CovidDatabase) :
                         stateName,
                         deltaData?.tested ?: 0,
                         totalData?.tested ?: 0,
-                        0,
+                        deltaData?.vaccinated ?: 0,
                         totalData?.vaccinated ?: 0
                     )
                 )
@@ -152,7 +152,7 @@ class OverallDataProcessor(covidDatabase: CovidDatabase) :
                         data.total?.tested ?: 0,
                         data.meta?.population ?: 0,
                         null,
-                        0,
+                        data.delta?.vaccinated ?: 0,
                         data.total?.vaccinated ?: 0
                     )
                 )

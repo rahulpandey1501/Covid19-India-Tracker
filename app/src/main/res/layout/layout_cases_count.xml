@@ -120,6 +120,17 @@
                 android:textStyle="bold"
                 tools:text="1234" />
 
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/vaccination_current"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:includeFontPadding="false"
+                android:text="@{vaccinationVm.deltaCount}"
+                android:textColor="@color/text_primary"
+                android:textSize="12sp"
+                app:fontFamily="@font/open_sans"
+                tools:text="+12" />
+
         </LinearLayout>
 
         <LinearLayout

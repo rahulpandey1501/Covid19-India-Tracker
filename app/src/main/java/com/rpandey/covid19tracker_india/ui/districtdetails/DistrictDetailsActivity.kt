@@ -152,7 +152,7 @@ class DistrictDetailsActivity : BaseActivity() {
             UICaseType.TYPE_RECOVERED to CountModel(district.recovered, district.totalRecovered),
             UICaseType.TYPE_DEATH to CountModel(district.deceased, district.totalDeceased),
             UICaseType.TYPE_TESTING to CountModel(district.tested, district.totalTested),
-            UICaseType.TYPE_VACCINATION to CountModel(district.totalVaccinated, district.totalVaccinated)
+            UICaseType.TYPE_VACCINATION to CountModel(district.vaccinated, district.totalVaccinated)
         )
 
         uiCaseMap.forEach { (uiCase, _) ->
