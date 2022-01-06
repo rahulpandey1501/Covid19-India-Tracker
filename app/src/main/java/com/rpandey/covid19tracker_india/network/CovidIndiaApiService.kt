@@ -8,10 +8,10 @@ import retrofit2.http.Url
 interface CovidIndiaApiService {
 
     companion object {
-        const val BASE_URL = "https://api.covid19india.org/"
+        const val BASE_URL = "https://data.incovid19.org/"
     }
 
-    @GET("v4/data.json")
+    @GET("v4/min/data.min.json")
     suspend fun getOverAllData(): HashMap<String, OverAllDataResponse>
 
     @GET("zones.json")
@@ -23,7 +23,7 @@ interface CovidIndiaApiService {
     @GET("crowdsourced_resources_links.json")
     suspend fun getCovidResources(): CovidResourceResponse
 
-    @GET("v4/timeseries.json")
+    @GET("v4/mini/timeseries.min.json")
     suspend fun getTimeSeries(): HashMap<String, TimeSeriesResponse>
 
     @GET
